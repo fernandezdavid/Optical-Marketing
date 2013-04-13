@@ -1,15 +1,13 @@
-
 # Ignored files
-*.suo 
-*.user 
-bin 
-obj 
-*.pdb 
-*.cache 
-*_svn 
-*.svn 
-*.suo 
-*.user 
-*.build-res 
-TestResults 
-_ReSharper*
+.nuget/
+OMKT/bin/
+OMKT/obj/
+OMKT/Content/
+OMKT/img/
+*.csproj
+*.cs
+*.sln
+*.suo
+*.config
+*.user
+*.asax
