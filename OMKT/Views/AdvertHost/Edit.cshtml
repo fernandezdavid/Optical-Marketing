@@ -1,0 +1,83 @@
+﻿@model OMKT.Business.AdvertHost
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>AdvertHost</legend>
+
+        @Html.HiddenFor(model => model.AdvertHostId)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AdvertHostName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AdvertHostName)
+            @Html.ValidationMessageFor(model => model.AdvertHostName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AdvertHostCategoryId, "AdvertHostCategory")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("AdvertHostCategoryId", String.Empty)
+            @Html.ValidationMessageFor(model => model.AdvertHostCategoryId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StartTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.StartTime)
+            @Html.ValidationMessageFor(model => model.StartTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EndTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EndTime)
+            @Html.ValidationMessageFor(model => model.EndTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastDownTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastDownTime)
+            @Html.ValidationMessageFor(model => model.LastDownTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UpTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UpTime)
+            @Html.ValidationMessageFor(model => model.UpTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LocationId, "Location")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("LocationId", String.Empty)
+            @Html.ValidationMessageFor(model => model.LocationId)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

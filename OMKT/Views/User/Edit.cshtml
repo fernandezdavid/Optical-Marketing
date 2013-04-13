@@ -1,0 +1,13 @@
+﻿@model OMKT.Business.User
+
+@{
+    ViewBag.Title = "Editar";
+    
+}
+
+@using (Html.BeginForm("Edit","User")) {
+    @Html.ValidationSummary(true)
+   <text>
+    @{Html.RenderPartial("EditOrCreateUserPartial", Model);}
+    </text> 
+}

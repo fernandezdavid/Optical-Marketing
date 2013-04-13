@@ -1,0 +1,50 @@
+﻿@model OMKT.Business.AdvertHost
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>AdvertHost</legend>
+
+    <div class="display-label">AdvertHostName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AdvertHostName)
+    </div>
+
+    <div class="display-label">AdvertHostCategory</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AdvertHostCategory.Name)
+    </div>
+
+    <div class="display-label">StartTime</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StartTime)
+    </div>
+
+    <div class="display-label">EndTime</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EndTime)
+    </div>
+
+    <div class="display-label">LastDownTime</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastDownTime)
+    </div>
+
+    <div class="display-label">UpTime</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UpTime)
+    </div>
+
+    <div class="display-label">Location</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Location.Latitude)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.AdvertHostId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

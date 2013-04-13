@@ -1,0 +1,59 @@
+﻿
+@model IEnumerable<OMKT.Business.AdvertCampaignDetail>
+<table class="table table-striped table-bordered dataTable">
+    <thead>
+        <th >
+            Nombre 
+        </th>
+        <th >
+            Campaña
+        </th>
+        <th>
+            Fecha de vigencia
+        </th>
+        <th >
+            Fecha de caducidad
+        </th>
+         
+        <th >
+            Fecha de modificación
+        </th>
+   </thead>
+
+    @if (Model!=null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href="@Url.Action("Edit", "Catalog", new {id = item.Advert.AdvertId})">@item.Advert.Name</a>
+            
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdvertCampaign.Name)         
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Advert.StartDatetime)         
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Advert.EndDatetime)         
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Advert.LastUpdate)
+                </td>
+        
+            </tr>
+        }
+    }else
+    {
+        <tr><td colspan="5">No hay anuncios disponibles.</td></tr>
+    }
+  @*<tfoot>
+        <tr>
+            <td colspan=3><span class="label">TOTAL: </span></td>
+            <td nowrap="nowrap">@String.Format("{0:C}", Model.Sum(i => i.TotalToPay))</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>*@
+</table>

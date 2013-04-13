@@ -1,0 +1,48 @@
+﻿@model IEnumerable<OMKT.Business.AdvertCampaignDetail>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<table class="zebra-striped">
+    <thead>
+        <th>
+            Anuncio
+        </th>
+       
+        <th>
+            Fecha de vigencia
+        </th>
+        <th>
+            Fecha de caducidad
+        </th>
+       <th></th>
+    </thead>
+
+@foreach (var item in Model)
+{
+    var advertCampaignDetail = "advertCampaignDetail" + item.AdvertCampaignDetailId;
+    <tr id="@advertCampaignDetail">
+        <td>
+            @Html.DisplayFor(modelItem => item.Advert.Name)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+
+        <td nowrap>
+            <div class="btn-group">
+                <a href="@Url.Action("Edit", new { id = item.AdvertCampaignDetailId })" class="btn primary small editAdvertCampaignDetail" idAdvertCampaignDetail="@item.AdvertCampaignDetailId"><i class=" icon-edit icon-white"></i></a>
+        @*        <a href="@Url.Action("Details", new { id = item.AdvertDetailId })" class="btn small"><i class=" icon-align-justify "></i></a>*@
+                <a href="@Url.Action("Delete", new { id = item.AdvertCampaignDetailId })" idAdvertCampaignDetail = "@item.AdvertCampaignDetailId" class="btn small deleteAdvertCampaignDetail"><i class=" icon-trash "></i></a>
+            </div>
+            
+        </td>
+    </tr>
+}
+
+</table>

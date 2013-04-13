@@ -1,0 +1,30 @@
+﻿@model OMKT.Business.AdvertDetail
+@{
+    ViewBag.Title = "Borrar";
+    //Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+<div class="alert-message warning">
+    <a class="close" href="#">×</a>
+    <p>
+        <strong>¿Estás seguro que deseas borrar este registro?</strong></p>
+</div>
+<fieldset>
+    <legend></legend>
+    <p>
+        <strong>Catálogo: </strong>@Html.DisplayFor(model => model.Catalog.Name)
+    </p>
+    <p>
+        <strong>Producto: </strong>@Html.DisplayFor(model => model.CommercialProduct.ProductName)
+    </p>
+    <p>
+        <strong>Orden: </strong>@Html.DisplayFor(model => model.Position)
+    </p>
+</fieldset>
+@using (Html.BeginForm())
+{
+
+    <div class="actions">
+        <input type="submit" class="btn primary" value="Borrar" />
+        <input type="button" class="btn closeModal" value="Cerrar" />
+    </div>
+}

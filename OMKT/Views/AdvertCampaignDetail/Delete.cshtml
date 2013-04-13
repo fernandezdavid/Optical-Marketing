@@ -1,0 +1,28 @@
+﻿@model OMKT.Business.AdvertCampaignDetail
+
+@{
+    ViewBag.Title = "Borrar";
+}
+<div class="alert-message warning">
+    <a class="close" href="#">×</a>
+    <p>
+        <strong>¿Estás seguro que deseas borrar este registro?</strong></p>
+</div>
+<fieldset>
+    <p>
+        <strong>Anuncio: </strong>@Html.DisplayFor(model => model.Advert.Name)
+    </p>
+    
+    <p>
+        <strong>Fecha de vigencia:</strong>@Html.DisplayFor(model => model.StartDate)
+    </p>
+    <p>
+        <strong>Fecha de caducidad:</strong>@Html.DisplayFor(model => model.EndDate)
+    </p>    
+</fieldset>
+@using (Html.BeginForm()) {
+    <div class="actions">
+        <input type="submit" value="Borrar" class="btn primary" />
+        <input type="button" class="btn closeModal" value="Cerrar" />
+    </div>
+}

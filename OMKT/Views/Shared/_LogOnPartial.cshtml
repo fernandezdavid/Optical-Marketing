@@ -1,0 +1,18 @@
+﻿<span class="pull-right">
+    @if (Request.IsAuthenticated)
+    {
+
+        <div class="btn-group">
+            <input type="button" class="btn btn-danger " value="@User.Identity.Name"  />
+            <a href="@Url.Action("Index", "Dashboard")" class="btn btn-danger">Administración</a>
+            <a href="@Url.Action("LogOff", "Account")" class="btn btn-danger">Cerrar Sesión</a>
+        </div>
+    }
+    else
+    {
+        <div class="btn-group">
+        <a href="@Url.Action("Register", "Account")" class="btn btn-danger">Regístrate</a>
+        <a href="@Url.Action("LogOn", "Account")" class="btn btn-danger">Inicia Sesión</a>
+        </div>
+    }
+</span>

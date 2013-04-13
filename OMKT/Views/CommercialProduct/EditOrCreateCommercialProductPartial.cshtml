@@ -1,0 +1,83 @@
+﻿@model OMKT.Business.CommercialProduct
+<fieldset>
+    @*<legend>Edición de Producto</legend>*@
+    @Html.HiddenFor(model => model.CommercialProductId)
+    @Html.HiddenFor(model => model.ProductImageId)
+    @Html.HiddenFor(model => model.CustomerId)
+    <div class="clearfix">
+        <div class="span4">
+            @Html.LabelFor(model => model.ProductName)
+            <div class="input">
+                @Html.TextBoxFor(model => model.ProductName, new { @class = "span5", autofocus = "autofocus" }) @Html.ValidationMessageFor(model => model.ProductName)
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">
+        <div class="span4">
+            @Html.LabelFor(model => model.Description)
+            <div class="input">
+                @Html.TextAreaFor(model => model.Description, new { @class = "span5" }) @Html.ValidationMessageFor(model => model.Description)
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">
+        <div class="span4">
+            @Html.LabelFor(model => model.Price)
+            <div class="input">
+                @Html.TextBoxFor(model => model.Price, new { @class = "span5" }) @Html.ValidationMessageFor(model => model.Price)
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">
+        <div class="span4">
+            @Html.LabelFor(model => model.CommercialProductTypeId, "Categoría")
+            <div class="input chzn-select">
+                @Html.DropDownList("CommercialProductTypeId", String.Empty)
+                @Html.ValidationMessageFor(model => model.CommercialProductTypeId)
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">
+        <div class="span4">
+            @Html.LabelFor(model => model.Stock)
+            <div class="input">
+                @Html.TextBoxFor(model => model.Stock, new { @class = "span5" }) @Html.ValidationMessageFor(model => model.Stock)
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">
+        <div class="span4">
+            @Html.LabelFor(model => model.ProductImage)
+            <div class="input">
+                
+                <input type="file" name="image" class="span5" id="image" />
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">
+        @if(ViewBag.Mode=="Edit" && Model.ProductImage!=null)
+        {
+            <text>
+                <div class="input">
+                <div class="span4">
+                    <img src="http://hp.static.adidas.com/@Url.Content(Model.ProductImage.Path)" class="img-rounded" title="@Model.ProductImage.Title" alt="@Model.ProductImage.Caption" width="100px" height="100px"/>
+                </div></div>
+            </text>
+        }
+        
+    </div>
+    <div class="actions">
+        <input type="submit" class="btn primary" value="Guardar" />
+        @if (Model != null && Model.CommercialProductId > 0)
+        {   <text> @Html.ActionLink("Borrar", "Delete", new { id = Model.CommercialProductId }, new { @class = "btn" })
+            </text>
+        }
+        <a href="@Url.Action("Index")" class="btn">Volver</a>
+    </div>
+</fieldset>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("div.chzn-select select").chosen();
+        $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
+    });
+        </script>

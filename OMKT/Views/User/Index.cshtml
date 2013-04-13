@@ -1,0 +1,112 @@
+﻿@using Paging
+@model IPagedList<OMKT.Business.User>
+
+@{
+    ViewBag.Title = "Usuarios";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+
+<div id="ajaxResponse">
+
+<h1>Listado <small>de Usuarios</small></h1>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        function clearErrors() {
+            $('#msgErrorNewUser').html('');
+            $('#msgError').html('');
+        }
+
+        function writeError(control, msg) {
+            var err_msg = '<div class="alert-message error"><a class="close" href="#">×</a><p>' + msg + '</p></div>';
+            $('#' + control).html(err_msg);
+        }
+
+        function getRequest(url) {
+            $.ajax({
+                url: url,
+                context: document.body,
+                success: function (data) {
+                    $('.modal-body p.body').html(data);
+                    $(this).addClass("done");
+                    $('#my-modal').modal('show');
+                },
+                error: function (err) {
+                    writeError('msgErrorNewUser', err);
+                }
+            });
+        }
+
+        $('.closeModal').live('click', function () {
+            $('#my-modal').modal('hide');
+        });
+
+        $('#my-modal form').live('submit', function () {
+            clearErrors();
+
+            $.post($(this).attr('action'), $(this).serialize(), function (data, status) {
+                $('#my-modal').modal('hide');
+                $("#userList").html(data);
+
+            }).error(function (error, status) {
+                writeError('msgError', 'Ups! Algo salió mal. Por favor, intenta nuevamente.');
+                $('.modal-body p.body').html(error.responseText);
+
+            });
+            return false;
+        });
+
+
+
+        $('.editUser').live('click', function () {
+            clearErrors();
+
+            var id = $(this).attr("idUser");
+            var url = '@Url.Content("~/User/Edit")/' + id;
+
+            getRequest(url);
+
+            return false;
+        });
+
+
+        $('a.newUser').live('click', function () {
+            clearErrors();
+            var url = '@Url.Content("~/User/Create")';
+
+            getRequest(url);
+
+            return false;
+        });
+    });
+</script>
+    <p>
+        <a href="@Url.Action("Create", "User")" class="btn newUser primary">
+            <i class="icon-plus icon-white "></i>Nuevo</a>
+    </p>
+@{Html.RenderPartial("SearchBoxCompany", "User");}
+
+<div id="msgErrorNewUser"></div>
+     <div id="my-modal" class="modal hide fade" >
+            <div class="modal-header">
+                <a href="#" class="close">&times;</a>
+                <h3>Edición</h3>
+            </div>
+            <div class="modal-body">
+                <div id="msgError"></div>
+                <p class="body">
+                   
+                </p>
+            </div>
+            <div class="modal-footer">
+             
+            </div>
+    </div>
+
+
+    <div id="customerList">
+        @{Html.RenderPartial("UserListPartial", Model);}
+    </div>
+</div>

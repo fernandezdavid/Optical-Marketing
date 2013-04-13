@@ -1,0 +1,23 @@
+﻿@model OMKT.Business.AdvertCampaignDetail
+
+@{
+    ViewBag.Title = "Detalle";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+<fieldset>
+    <legend>Detalle de Campaña</legend>
+     <p>
+        <strong>Anuncio: </strong>@Html.DisplayFor(model => model.Advert.Name)
+    </p>
+    
+   <p>
+        <strong>Fecha de vigencia:</strong>@Html.DisplayFor(model => model.StartDate)
+    </p>
+    <p>
+        <strong>Fecha de caducidad:</strong>@Html.DisplayFor(model => model.EndDate)
+    </p>    
+</fieldset>
+<p>
+   @Html.ActionLink("Editar", "Edit", new { id = Model.AdvertCampaignDetailId }, new { @class = "btn primary" })
+    @Html.ActionLink("Volver", "Details", "AdvertCampaign", new { id = Model.AdvertCampaignId}, new { @class = "btn" })
+</p>

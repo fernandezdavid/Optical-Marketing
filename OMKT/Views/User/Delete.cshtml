@@ -1,0 +1,58 @@
+﻿@model OMKT.Business.User
+
+@{
+    ViewBag.Title = "Borrar";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+
+<h2>Borrar</h2>
+
+
+<div class="alert-message warning">
+  <a class="close" href="#">×</a>
+  <p><strong>¿Estás seguro que deseas eliminar este Usuario?</strong></p>
+</div>
+
+<fieldset>
+    <legend>Usuario</legend>
+    <p>
+        <strong>Nombre de usuario: </strong>
+        @Html.DisplayFor(model => model.Username)
+    </p>
+    <p>
+        <strong>Email: </strong>
+        @Html.DisplayFor(model => model.Email)
+    </p>
+    <p>
+        <strong>Nombre: </strong>
+        @Html.DisplayFor(model => model.FirstName)
+    </p>
+    <p>
+        <strong>Apellido: </strong>
+		@Html.DisplayFor(model => model.LastName)
+  </p>
+    <p>
+        <strong>Aprobado: </strong>
+		@Html.DisplayFor(model => model.IsApproved)
+  </p>
+    <p>
+        <strong>Última visita: </strong>
+		@Html.DisplayFor(model => model.LastLoginDate)
+  </p>
+    <p>
+        <strong>Fecha de creación: </strong>
+		@Html.DisplayFor(model => model.CreateDate)
+  </p>
+    <p>
+        <strong>Bloqueado: </strong>
+        @Html.DisplayFor(model => model.IsLockedOut)
+    </p>
+   
+    
+</fieldset>
+@using (Html.BeginForm()) {
+	<div class="actions">
+            <input type="submit" class="btn primary" value="Borrar" />
+			@Html.ActionLink("Volver", "Index", null, new { @class = "btn"})
+    </div>
+}

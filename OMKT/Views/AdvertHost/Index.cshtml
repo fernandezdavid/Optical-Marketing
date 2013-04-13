@@ -1,0 +1,69 @@
+﻿@model IEnumerable<OMKT.Business.AdvertHost>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            AdvertHostName
+        </th>
+        <th>
+            AdvertHostCategory
+        </th>
+        <th>
+            StartTime
+        </th>
+        <th>
+            EndTime
+        </th>
+        <th>
+            LastDownTime
+        </th>
+        <th>
+            UpTime
+        </th>
+        <th>
+            Location
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdvertHostName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdvertHostCategory.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastDownTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location.Latitude)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AdvertHostId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AdvertHostId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AdvertHostId })
+        </td>
+    </tr>
+}
+
+</table>

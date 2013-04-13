@@ -1,0 +1,53 @@
+﻿@model OMKT.Business.AdvertHost
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>AdvertHost</legend>
+
+    <div class="display-label">AdvertHostName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AdvertHostName)
+    </div>
+
+    <div class="display-label">AdvertHostCategory</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AdvertHostCategory.Name)
+    </div>
+
+    <div class="display-label">StartTime</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StartTime)
+    </div>
+
+    <div class="display-label">EndTime</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EndTime)
+    </div>
+
+    <div class="display-label">LastDownTime</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastDownTime)
+    </div>
+
+    <div class="display-label">UpTime</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UpTime)
+    </div>
+
+    <div class="display-label">Location</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Location.Latitude)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

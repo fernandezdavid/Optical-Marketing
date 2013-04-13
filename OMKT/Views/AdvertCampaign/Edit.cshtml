@@ -1,0 +1,143 @@
+﻿@model OMKT.Business.AdvertCampaign
+@{
+    ViewBag.Title = "Editar";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+@section Header{
+    <script type="text/javascript">
+
+        var sorter_options = {
+            headers: {
+                1: { sorter: 'decimal' },
+                2: { sorter: 'decimal' },
+                3: { sorter: 'decimal' },
+                4: { sorter: 'decimal' },
+                5: { sorter: 'decimal' }
+            }
+        };
+
+        function clearErrors() {
+            $('#msgErrorNewCampaignDetail').html('');
+            $('#msgError').html('');
+        }
+
+        function writeError(control, msg) {
+            var errMsg = '<div class="alert-message error"><a class="close" href="#">×</a><p>' + msg + '</p></div>';
+            $('#' + control).html(errMsg);
+        }
+
+        $(document).ready(function () {
+
+            $('.closeModal').on('click', function () {
+                $('#my-modal').modal('hide');
+            });
+
+            $('#my-modal form').on('submit', function () {
+                clearErrors();
+
+                $.post($(this).attr('action'), $(this).serialize(), function (data, status) {
+                    $('#my-modal').modal('hide');
+                    $("#advertCampaignDetailList").html(data);
+
+                }).error(function (error, status, a, b) {
+                    writeError('msgError', 'Ups! Algo anduvo mal. Por favor, intenta nuevamente.');
+                    $('.modal-body p.body').html(error.responseText);
+
+                });
+                return false;
+            });
+
+            function getRequest(url) {
+                $.ajax({
+                    url: url,
+                    context: document.body,
+                    success: function (data) {
+                        $('.modal-body p.body').html(data);
+                        $(this).addClass("done");
+                        $('#my-modal').modal('show');
+
+                    },
+                    error: function (err) {
+                        writeError('msgErrorNewAdvertCampaignDetail', err);
+                    }
+                });
+            }
+
+            $('a.newAdvertCampaignDetail').on('click', function () {
+                clearErrors();
+                //alert('sdf');
+                var id = $(this).attr("idAdvertCampaign");
+                var url = '@Url.Content("~/AdvertCampaignDetail/Create")/' + id;
+
+                getRequest(url);
+
+                return false;
+            });
+
+            $('.deleteAdvertCampaignDetail').on('click', function () {
+                clearErrors();
+
+                var id = $(this).attr("idAdvertCampaignDetail");
+                var url = '@Url.Content("~/AdvertCampaignDetail/Delete")/' + id;
+
+                getRequest(url);
+
+                return false;
+            });
+
+
+
+            $('.editAdvertCampaignDetail').on('click', function () {
+                clearErrors();
+
+                var id = $(this).attr("idAdvertCampaignDetail");
+                var url = '@Url.Content("~/AdvertCampaignDetail/Edit")/' + id;
+
+                getRequest(url);
+
+                return false;
+            });
+
+
+
+
+        }); 
+    </script>
+}
+<div class="span5">
+    <h2>
+        Edición de Campaña</h2>
+    @using (Html.BeginForm())
+            {
+        @Html.ValidationSummary(true)
+        <text>
+        @{Html.RenderPartial("EditOrCreateAdvertCampaignPartial", Model);}
+        </text>
+            }
+</div>
+<div class="span5">
+    <span class="span5">
+        <a href="@Url.Action("Create", "AdvertCampaignDetail", new { id = Model.AdvertCampaignId })" idAdvertCampaign="@Model.AdvertCampaignId" class="btn btn-primary newAdvertCampaignDetail">
+            <i class="icon-plus icon-white "></i> Nuevo</a>
+    </span>
+    <div id="msgErrorNewAdvertCampaignDetail">
+    </div>
+    <div id="advertCampaignDetailList">
+        @{Html.RenderAction("IndexByCampaign", "AdvertCampaignDetail", new { id = Model.AdvertCampaignId });}
+    </div>
+</div>
+<div id="my-modal" class="modal hide fade">
+    <div class="modal-header">
+        <a href="#" class="close">&times;</a>
+        <h3>
+            Agregar Anuncio</h3>
+    </div>
+    <div class="modal-body">
+        <div id="msgError">
+        </div>
+        <p class="body">
+        </p>
+    </div>
+    <div class="modal-footer">
+    </div>
+</div>

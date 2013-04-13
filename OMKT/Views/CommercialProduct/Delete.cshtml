@@ -1,0 +1,42 @@
+﻿@model OMKT.Business.CommercialProduct
+@{
+    ViewBag.Title = "Borrar producto";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+
+<h2>Borrar <small>producto</small></h2>
+<div class="alert-message warning">
+    <a class="close" href="#">×</a>
+    <p>
+        <strong>¿Estás seguro que deseas eliminar este producto?</strong></p>
+</div>
+<fieldset>
+    <img src="@Url.Content(Model.ProductImage.Path)" class="img-rounded" title="@Model.ProductImage.Title" alt="@Model.ProductImage.Caption" width="100px" height="100px"/>
+    <p>
+        <strong>Nombre de producto: </strong>@Html.DisplayFor(model => model.ProductName)
+    </p>
+    <p>
+        <strong>Categoría: </strong>@Html.DisplayFor(model => model.CommercialProductType.Description)
+    </p>
+    <p>
+        <strong>Descripción: </strong>@Html.DisplayFor(model => model.Description)
+    </p>
+    <p>
+        <strong>Precio de producto: </strong>@Html.DisplayFor(model => model.Price)
+    </p>
+    <p>
+        <strong>Ruta de la imagen: </strong>@Html.DisplayFor(model => model.ProductImage.Path)
+    </p>
+    <p>
+        <strong>Ruta del video: </strong>@Html.DisplayFor(model => model.VideoPath)
+    </p>
+</fieldset>
+@using (Html.BeginForm())
+{
+
+    <div class="actions">
+        <input type="submit" class="btn primary" value="Borrar" />
+        @Html.ActionLink("Volver", "Index", null, new { @class = "btn" })
+    </div>
+}
+

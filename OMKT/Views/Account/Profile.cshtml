@@ -1,0 +1,38 @@
+﻿@model OMKT.Business.User
+
+<div class="span7">
+<fieldset>
+    <p>
+        <strong>Usuario: </strong>
+        @User.Identity.Name
+    </p>
+    <p>
+        <strong>Nombre: </strong>
+         @Html.DisplayFor(model => model.FirstName)
+    </p>
+    <p>
+        <strong>Email: </strong>
+        @Html.DisplayFor(model => model.Email)
+    </p>
+    <hr/>
+	<p>
+        <strong>Empresa: </strong>
+        @Html.DisplayFor(model => model.Customer.Name)
+    </p>   
+    <p>
+        <strong>Dirección: </strong>
+        @Html.DisplayFor(model => model.Customer.Address)
+    </p>   
+    <p>
+        <strong>Contacto: </strong>
+        @Html.DisplayFor(model => model.Customer.ContactPerson)
+    </p>
+    <p>
+        <strong>Campañas activas: </strong>
+        @Html.DisplayFor(model => model.Customer.AdvertCampaigns.Count)
+    </p>   
+
+
+</fieldset>
+
+</div>

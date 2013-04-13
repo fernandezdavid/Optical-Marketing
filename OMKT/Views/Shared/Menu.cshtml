@@ -1,0 +1,55 @@
+﻿ <div class="nav-collapse collapse navbar-inverse-collapse">    
+    <ul class="nav">
+        <li class="@((Request.RawUrl.Contains("/AdvertCampaign")) ? "active" : "")">
+            <a href="@Url.Action("Index", "AdvertCampaign")">@*<i class='icon-calendar icon-white'></i>*@Campañas</a>
+        </li>
+        <li class="@((Request.RawUrl.Contains("/Catalog"))? "active" : "")">
+            <ul class="nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@*<i class="icon-hdd icon-white"></i>*@Anuncios <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="@Url.Action("Index", "Catalog")">@*<i class='icon-book icon-white'></i>*@Catálogos</a></li>
+                </ul>
+            </li>
+        </ul>
+            
+        </li>
+        <li class="@((Request.RawUrl.Contains("/CommercialProduct")) ? "active" : "")">
+            <a href="@Url.Action("Index", "CommercialProduct")">@*<i class='icon-barcode icon-white'></i>*@Productos</a>
+        </li>
+       
+        <li class="@((Request.RawUrl.Contains("/Help")) ? "active" : "")">
+            <a href="@Url.Action("Help", "Dashboard")">@*<i class='icon-question-sign icon-white'></i>*@Ayuda</a>
+            
+        </li>
+         <li class="@((Request.RawUrl.Contains("/Messages")) ? "active" : "")">
+            <a href="@Url.Action("Index", "CommercialProduct")">@*<i class='icon-envelope icon-white'></i>*@Buzón</a>
+            @*<span class="notification">1</span>*@
+        </li>
+    </ul>
+    @if (User.IsInRole("Administrador"))
+    {
+        <ul class="nav" id="adminmenu">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@*<i class="icon-wrench icon-white"></i>*@Admin <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="@Url.Action("Index", "User")">Usuarios</a></li>
+                    <li><a href="@Url.Action("Index", "User")">Puestos</a></li>
+                    <li><a href="@Url.Action("Index", "User")">Ubicaciones</a></li>
+                    <li><a href="@Url.Action("Index", "User")">Permisos</a></li>
+                    <li><a href="@Url.Action("Index", "Customer")">Clientes</a></li>
+                </ul>
+            </li>
+        </ul>
+    }
+         @*<ul class="nav" id="reportsmenu">
+            <li class="dropdown" data-dropdown="dropdown">
+              <a href="#" class="dropdown-toggle">Reports</a>
+              <ul class="dropdown-menu">
+                <li><a href="@Url.Action("ByYear", "Reports", new { id = DateTime.Now.Year})">@DateTime.Now.Year</a></li>
+                <li><a href="@Url.Action("ByYear", "Reports", new { id = DateTime.Now.Year-1})">@(DateTime.Now.Year-1)</a></li>
+                <li><a href="@Url.Action("QuarterDetails", "Reports")">Details by quarter</a></li>
+              </ul>
+            </li>
+        </ul>*@
+   </div>

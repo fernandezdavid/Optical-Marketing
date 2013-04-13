@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Administración de Campañas";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+<h2>
+    Todas las Campañas <small>en línea</small></h2>
+<div class="row-fluid">
+    <div class="span2">
+        <a href="@Url.Action("Create", "AdvertCampaign")" class="btn btn-primary"><i class="icon-plus icon-white ">
+        </i> Nueva Campaña</a>
+    </div>
+    <div class="span2">
+        <div class="input chzn-select pull-righ" style="width: 450px">
+            <form action="" method="get">
+                <select name="campaign-search" id="campaign-search">
+                <option value="0" @((Request["state"]=="0") ? "selected" : "")>Todas las campañas</option>
+                <option value="1" @((Request["state"]=="1") ? "selected" : "")>Campañas activas</option>
+                <option value="2" @((Request["state"]=="2") ? "selected" : "")>Campañas finalizadas</option>
+            </select>
+            </form>
+        </div>
+    </div>    
+    <div class="span2">
+        <div class="input chzn-select pull-righ" style="width: 450px">
+            <select name="since" id="campaign-period">
+                <option value="7" @((Request["period"]=="7") ? "selected" : "")>Últimos 7 días</option>
+                <option value="15" @((Request["period"] == "15") ? "selected" : "")>Últimos 15 días</option>
+                <option value="30" @((Request["period"] == "30") ? "selected" : "")>Últimos 30 días</option>
+            </select>
+        </div>
+    </div>
+    <div class="span12">
+        @*@{Html.RenderAction("AdvertCampaignsPerformance", "Stats");}*@
+    </div>
+</div>
+@{Html.RenderAction("LatestCampaigns", "AdvertCampaign", new { state = Request["state"], period = Request["period"] });}
+<script type"text/javascript">
+    $(document).ready(function () {
+        $("#campaign-search").on('change', function () {
+            window.location.href = '@Url.Content("~/AdvertCampaign?state=")' + $('select#campaign-search option:selected').val();
+        });
+    });
+</script>

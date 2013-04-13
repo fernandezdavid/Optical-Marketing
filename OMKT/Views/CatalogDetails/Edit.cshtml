@@ -1,0 +1,13 @@
+﻿@model OMKT.Business.AdvertDetail
+
+@{
+    ViewBag.Title = "Editar";
+}
+
+@using (Html.BeginForm("Edit", "CatalogDetails"))
+{
+    @Html.ValidationSummary(true)
+    <text>
+        @{ Html.RenderPartial("EditOrAddCatalogDetailsPartial", Model); }
+    </text>
+}

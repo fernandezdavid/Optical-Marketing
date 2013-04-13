@@ -1,0 +1,36 @@
+﻿@model OMKT.Business.Inbox
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Inbox</legend>
+
+    <div class="display-label">Message</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Message)
+    </div>
+
+    <div class="display-label">From</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FromId)
+    </div>
+
+    <div class="display-label">To</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.To)
+    </div>
+
+    <div class="display-label">Timestamp</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Timestamp)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.InboxId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

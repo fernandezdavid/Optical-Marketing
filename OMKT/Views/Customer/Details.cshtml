@@ -1,0 +1,70 @@
+﻿@model OMKT.Business.Customer
+
+@{
+    ViewBag.Title = "Detalle";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+
+@section Header{
+<script type="text/javascript">
+    var sorter_options = {
+        headers: {
+            3: { sorter: 'decimal' },
+            4: { sorter: 'datetime' },
+            5: { sorter: 'datetime' }
+        }
+    };
+</script>
+}
+
+<div class="span7">
+<fieldset>
+ <legend>Detalle de Cliente</legend>
+    
+    <p>
+        <strong>Nombre: </strong>
+         @Html.DisplayFor(model => model.Name)
+    </p>
+	<p>
+        <strong>CUIT: </strong>
+         @Html.DisplayFor(model => model.CompanyNumber)
+    </p>
+   
+    <hr />
+     <p>
+        <strong>Email: </strong>
+         @Html.DisplayFor(model => model.Email)
+    </p>
+	<p>
+        <strong>Dirección: </strong>
+         @Html.DisplayFor(model => model.Address)
+    </p>
+	<p>
+        <strong>Código Postal: </strong>
+         @Html.DisplayFor(model => model.CP)
+    </p>
+	<p>
+        <strong>Ciudad: </strong>
+         @Html.DisplayFor(model => model.City)
+    </p>
+	<p>
+        <strong>Teléfono: </strong>
+         @Html.DisplayFor(model => model.Phone1)
+    </p>
+	<p>
+        <strong>Móvil: </strong>
+         @Html.DisplayFor(model => model.Phone2)
+    </p>
+	</fieldset>
+<p>
+    @Html.ActionLink("Volver", "Index", null, new { @class = "btn primary"})
+</p>
+</div>
+
+<div class="span12">
+    <h2>Últimos Catálogos</h2>
+    @{Html.RenderAction("LastInvoicesByCustomer", "Invoice", new { id = Model.CustomerID });}
+    
+    <h2>Últimos Pagos</h2>
+    @{Html.RenderAction("LastProposalsByCustomer", "Invoice", new { id = Model.CustomerID });}
+</div>

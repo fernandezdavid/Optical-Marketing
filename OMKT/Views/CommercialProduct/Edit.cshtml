@@ -1,0 +1,13 @@
+﻿@model OMKT.Business.CommercialProduct
+
+@{
+    ViewBag.Title = "Editar";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Edit","CommercialProduct", FormMethod.Post, new { @enctype = "multipart/form-data" })) {
+    @Html.ValidationSummary(true)
+   <text>
+    @{Html.RenderPartial("EditOrCreateCommercialProductPartial", Model);}
+    </text> 
+}

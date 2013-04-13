@@ -1,0 +1,51 @@
+﻿@model OMKT.Business.Advert
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Advert</legend>
+
+    <div class="display-label">Name</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">AdvertType</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AdvertType.Description)
+    </div>
+
+    <div class="display-label">LastUpdate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastUpdate)
+    </div>
+
+    <div class="display-label">EndDatetime</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EndDatetime)
+    </div>
+
+    <div class="display-label">StartDatetime</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StartDatetime)
+    </div>
+
+    <div class="display-label">CreatedDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreatedDate)
+    </div>
+
+    <div class="display-label">AdvertState</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AdvertState.Description)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.AdvertId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

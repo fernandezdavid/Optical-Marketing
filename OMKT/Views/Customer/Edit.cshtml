@@ -1,0 +1,13 @@
+﻿@model OMKT.Business.Customer
+
+@{
+    ViewBag.Title = "Editar";
+    //Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Edit","Customer")) {
+    @Html.ValidationSummary(true)
+   <text>
+    @{Html.RenderPartial("EditOrCreateCustomerPartial", Model);}
+    </text> 
+}

@@ -1,0 +1,28 @@
+﻿@model OMKT.Business.AdvertDetail
+
+@{
+    ViewBag.Title = "Detalle";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+
+<fieldset>
+ <legend>Detalle de Catálogo</legend>
+	<p>
+        <strong>Catálogo: </strong>
+         @Html.DisplayFor(model => model.Catalog.Name)
+    </p>
+
+   <p>
+        <strong>Producto: </strong>
+         @Html.DisplayFor(model => model.CommercialProduct.ProductName)
+    </p>
+    <p>
+        <strong>Position: </strong>
+         @Html.DisplayFor(model => model.Position)
+    </p>
+    
+</fieldset>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id=Model.AdvertDetailId }, new { @class = "btn primary"})
+    @Html.ActionLink("Volver", "Details", "Catalog", new { id = Model.AdvertId }, new { @class = "btn" })
+</p>

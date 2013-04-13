@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+<h2>
+    Dashboard</h2>
+<div class="clear">
+</div>
+<div class="input chzn-select" style="width: 450px; float: right">
+    <select name="">
+        <option>Últimos 7 días</option>
+        <option>Últimos 15 días</option>
+        <option>Últimos 30 días</option>
+    </select>
+</div>
+<div class="input chzn-select" style="width: 450px; float: left">
+    <select name="">
+        <option>Todas las campañas</option>
+        <option>Sólo campañas activas</option>
+        <option>Todas las campañas menos las eliminadas</option>
+    </select>
+</div>
+
+@{Html.RenderAction("SummaryBoard", "Stats");}
+
+<table width="100%" class="dashboard">
+    <tr>
+        <td width="50%">
+            @* <h3>
+                Perfil</h3>
+            @{Html.RenderAction("Profile", "Account");}
+            <div class="clear"></div>*@
+            <h3>
+                Alertas</h3>
+            @{Html.RenderAction("CurrentAlerts", "Alert");}
+            <h3>
+                Productos Activos</h3>
+            @{Html.RenderAction("ActiveProducts", "CommercialProduct", new { top = 5 });}
+        </td>
+        <td>
+        
+            <h3>
+                Rendimiento
+            </h3>
+            <div class="pie_charts">
+                @{Html.RenderAction("AdvertCampaignsPerformance", "Stats");}
+               @* @{Html.RenderAction("CommercialProductsViews", "Stats");}
+                @{Html.RenderAction("CommercialProductsLikes", "Stats");}
+                @{Html.RenderAction("AdvertsPerformance", "Stats");}*@
+            </div>
+        
+            <h3>
+                Campañas Activas</h3>
+            @{Html.RenderAction("ActiveCampaigns", "AdvertCampaign");}
+            <h3>
+                Anuncios Activos</h3>
+            @{Html.RenderAction("LatestCatalogs", "Catalog", new { top = 5 });}
+        </td>
+    </tr>
+</table>

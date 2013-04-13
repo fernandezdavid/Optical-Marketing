@@ -1,0 +1,18 @@
+﻿@model OMKT.Business.User
+
+@{
+    ViewBag.Title = "Crear";
+    //Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Create","User"))
+{
+    @Html.ValidationSummary(true)
+    <text>
+    @{Html.RenderPartial("EditOrCreateUserPartial", Model);}
+    </text> 
+}
+
+
+
+

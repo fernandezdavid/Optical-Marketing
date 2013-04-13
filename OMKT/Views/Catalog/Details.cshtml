@@ -1,0 +1,35 @@
+﻿@model OMKT.Business.Catalog
+
+@{
+    ViewBag.Title = "Detalle";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+
+<h2>Detalle</h2>
+
+<fieldset>
+    <legend>Catálogo</legend>
+    <p>
+    <strong>Nombre:</strong>
+    @Html.DisplayFor(model => model.Name)
+    </p>
+    <p>
+        <strong>Fecha de vigencia:</strong>
+        @Html.DisplayFor(model => model.StartDatetime)
+    </p>
+     <p>
+    <strong>Fecha de caducidad:</strong>
+    
+        @Html.DisplayFor(model => model.EndDatetime)
+    </p>
+
+    <p>
+    <strong>Última modificación:</strong>
+    
+        @Html.DisplayFor(model => model.LastUpdate)
+    </p>
+    </fieldset>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.AdvertId }, new { @class = "btn primary" })
+    @Html.ActionLink("Volver", "Index", null, new { @class = "btn" })
+</p>

@@ -1,0 +1,57 @@
+﻿@model OMKT.Models.ContactUsModel
+@{
+    ViewBag.Title = "Contacto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page rounded wbox">
+    <div class="page-content">
+        <div class="page-header">
+        <h2>Contáctanos</h2>    </div>
+        <p>¡Trabaja con nosotros! ¡Empieza a conectar con tu audiencia!</p>
+        <p>Gracias por tu interés en Optical Marketing. Por favor, completa el siguiente formulario, y nos pondremos en contacto a la brevedad.</p>
+    
+        <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+        @using (Html.BeginForm()) {
+            @Html.ValidationSummary(true, "Ups! Algo anduvo mal. Por favor, intenta nuevamente.")
+            <div>
+                <fieldset>
+                    <legend>Contacto</legend>
+    
+                    @Html.LabelFor(m => m.Name)
+    
+                    @Html.TextBoxFor(m => m.Name)
+                    @Html.ValidationMessageFor(m => m.Name)
+    
+                    @Html.LabelFor(m => m.Email)
+    
+                    @Html.TextBoxFor(m => m.Email)
+                    @Html.ValidationMessageFor(m => m.Email)
+    
+                    @Html.LabelFor(m => m.Subject)
+                
+                    @Html.TextBoxFor(m => m.Subject)
+                    @Html.ValidationMessageFor(m => m.Subject)
+                
+                    @Html.LabelFor(m => m.Phone)
+                
+                    @Html.TextBoxFor(m => m.Phone)
+                    @Html.ValidationMessageFor(m => m.Phone)
+                
+
+                
+                    @Html.LabelFor(m => m.Message)
+                
+                    @Html.TextAreaFor(m => m.Message, new { @class = "text-box multi-line" })
+                    @Html.ValidationMessageFor(m => m.Message)
+                    <p>
+                        <input type="submit" value="Enviar Mensaje" class="btn btn-danger"  />
+                    </p>
+                </fieldset>
+            </div>
+    
+        }
+    </div>
+</div>
+

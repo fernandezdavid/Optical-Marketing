@@ -1,0 +1,73 @@
+﻿
+@using Paging
+@model IPagedList<OMKT.Business.CommercialProduct>
+@{
+    ViewBag.Title = "Productos";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+    <h1>
+    Listado <small>de Productos</small></h1>
+<div class="top-bar-list clearfix">
+    <div class="noprint">
+        <a href="@Url.Action("Create", "CommercialProduct")" class="btn newCommercialProduct primary">
+            <i class="icon-plus icon-white "></i>Nuevo Producto</a>
+        <div class="pagingContainer">
+            @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
+        </div>
+    </div>
+</div>
+<div class="clearfix">@{Html.RenderPartial("SearchBoxCompany", "CommercialProduct");}</div>
+<table class="zebra-striped">
+    <thead>
+        <th></th>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Descripción
+        </th>
+        <th>
+            Cantidad
+        </th>
+        <th>
+            Categoría
+        </th>
+        <th>
+            Precio
+        </th>
+        <th>
+        </th>
+    </thead>
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td><img src="http://hp.static.adidas.com/@Url.Content(item.ProductImage.ThumbnailPath)" class="img-rounded" title="@item.ProductImage.Title" alt="@item.ProductImage.Caption" width="50px" height="50px"/></td>
+            <td>
+                
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CommercialProductType.Description)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td nowrap>
+                <div class="btn-group">
+                    <a href="@Url.Action("Edit", new { id = item.CommercialProductId })" class="btn primary small editCommercialProduct" idÇommercialProduct="@item.CommercialProductId "><i class=" icon-edit icon-white"></i></a>
+                    <a href="@Url.Action("Details", new { id = item.CommercialProductId })" class="btn small"><i class=" icon-align-justify "></i></a>
+                    <a href="@Url.Action("Delete", new { id = item.CommercialProductId })" class="btn small"><i class=" icon-trash "></i></a>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+
