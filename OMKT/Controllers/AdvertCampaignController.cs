@@ -33,6 +33,10 @@ namespace OMKT.Controllers
             {
                 campaigns.Where(i => i.CampaignStateId == state);
             }
+            if (period.HasValue && period != 0)
+            {
+                campaigns.Where(i => i.StartDatetime >= i.StartDatetime.AddDays(-(double)period));
+            }
 
             campaigns.OrderByDescending(i => i.CreatedDate);
             return PartialView("AdvertCampaignListPartial", campaigns.ToList());

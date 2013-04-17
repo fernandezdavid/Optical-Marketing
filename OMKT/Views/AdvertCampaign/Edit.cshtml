@@ -107,13 +107,13 @@
 <div class="span5">
     <h2>
         Edición de Campaña</h2>
-    @using (Html.BeginForm())
-            {
+    @using (Html.BeginForm("Edit", "AdvertCampaignController", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
         @Html.ValidationSummary(true)
         <text>
         @{Html.RenderPartial("EditOrCreateAdvertCampaignPartial", Model);}
         </text>
-            }
+    }
 </div>
 <div class="span5">
     <span class="span5">
