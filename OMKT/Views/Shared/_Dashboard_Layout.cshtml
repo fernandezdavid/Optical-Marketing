@@ -7,7 +7,7 @@
     <!-- twitter bootstrap css library-->
     <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" media="screen" />
     <link href="@Url.Content("~/Content/bootstrap-responsive.min.css")" rel="stylesheet" type="text/css" />
-    @*<link href="@Url.Content("~/Content/bootstrap.extra.css")" rel="stylesheet" type="text/css" />*@
+    <link href="@Url.Content("~/Content/bootstrap.extra.css")" rel="stylesheet" type="text/css" />
     @*<link href="@Url.Content("~/Content/jquery.cleditor.css")" rel="stylesheet" type="text/css" />*@
     <link href="@Url.Content("~/Content/datatabletheme.css")" rel="stylesheet" type="text/css" />
     @*<link href="@Url.Content("~/Content/datepicker.css")" rel="stylesheet" type="text/css" />*@
@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid" style="margin-top: 40px">
+    <div class="container-fluid">
         @{Html.RenderPartial("DisplayMessages");}
         @RenderBody()
     </div>
