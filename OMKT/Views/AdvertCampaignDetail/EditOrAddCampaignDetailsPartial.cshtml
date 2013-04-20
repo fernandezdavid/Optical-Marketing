@@ -2,25 +2,15 @@
 <fieldset>
     @Html.HiddenFor(model => model.AdvertCampaignDetailId)
     @Html.HiddenFor(model => model.AdvertCampaignId)
-    <div class="clearfix">
-        @Html.LabelFor(model => model.AdvertID, "Anuncio")
-        <div class="input chzn-select">
-            @Html.DropDownList("AdvertID", String.Empty)
-            @Html.ValidationMessageFor(model => model.AdvertID)
-            @*<a target="_blank" href="@Url.Action("Create", "CommercialProduct")" class="btn small primary">
-            <i class="icon-plus icon-white" style="margin: 0"></i></a>*@
+    <div class="control-group">
+        <label class="control-label">
+            Anuncio</label>
+        <div class="controls">
+            <div class="input chzn-select">
+                @Html.DropDownList("AdvertID", String.Empty)
+                @Html.ValidationMessageFor(model => model.AdvertID)
+            </div>
         </div>
-    </div>
-    <div class="clearfix">
-        @Html.LabelFor(model => model.EndDate, "Fecha de caducidad")
-        <div class="input">
-            @Html.EditorFor(model => model.EndDate, "Calendar")
-            @Html.ValidationMessageFor(model => model.EndDate)
-        </div>
-    </div>
-    <div class="actions">
-        <input type="submit" class="btn primary" value="Guardar" />
-        <input type="button" class="btn closeModal" value="Cerrar" />
     </div>
 </fieldset>
 <script type="text/javascript">

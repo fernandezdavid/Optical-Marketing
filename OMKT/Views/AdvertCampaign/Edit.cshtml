@@ -104,10 +104,10 @@
         }); 
     </script>
 }
-<div class="span7">
+<div class="span6">
     <h2>
         Edición de Campaña</h2>
-    @using (Html.BeginForm("Edit", "AdvertCampaignController", FormMethod.Post, new { @class = "form-horizontal" }))
+    @using (Html.BeginForm("Edit", "AdvertCampaign", FormMethod.Post, new { @class = "form-horizontal" }))
     {
         @Html.ValidationSummary(true)
         <text>
@@ -115,11 +115,12 @@
         </text>
     }
 </div>
-<div class="span5">
-    <div class="span5">
+
+<div class="span7">
+    <p>
         <a href="@Url.Action("Create", "AdvertCampaignDetail", new { id = Model.AdvertCampaignId })" idAdvertCampaign="@Model.AdvertCampaignId" class="btn btn-primary newAdvertCampaignDetail">
             <i class="icon-plus icon-white "></i> Nuevo</a>
-    </div>
+    </p>
     <div id="msgErrorNewAdvertCampaignDetail">
     </div>
     <div id="advertCampaignDetailList">
@@ -130,14 +131,18 @@
     <div class="modal-header">
         <a href="#" class="close">&times;</a>
         <h3>
-            Agregar Anuncio</h3>
+            Nuevo Anuncio</h3>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" style="overflow-y:visible">
         <div id="msgError">
         </div>
         <p class="body">
         </p>
     </div>
     <div class="modal-footer">
+        <input type="submit" class="btn btn-primary" value="Guardar" />
+        <a target="_blank" href="@Url.Action("Create", "CommercialProduct")" class="btn small btn-success">
+           @* <i class="icon-plus icon-white" style="margin: 0"></i> *@Nuevo Anuncio</a>
+        <input type="button" class="btn closeModal" value="Cerrar" />
     </div>
 </div>
