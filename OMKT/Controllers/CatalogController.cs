@@ -56,43 +56,19 @@ namespace OMKT.Controllers
 
         public PartialViewResult LatestCatalogs(int? top)
         {
-            if (!top.HasValue) top = 10;
+            if (!top.HasValue) 
+                top = 10;
             var oUser = (User)Session["User"];
-            var catalogs = _db.AdvertCampaignDetails.Where(c => c.AdvertCampaign.CustomerId == oUser.CustomerId).OrderByDescending(i => i.Advert.Name).Take(top.Value);
-            if (catalogs.Any()) return PartialView("CatalogListPartial", catalogs.ToList());
-            return PartialView("CatalogListPartial");
+            var catalogs = _db.Catalogs.OrderByDescending(i => i.Name).Take(top.Value);
+            return PartialView("CatalogListPartial", catalogs.ToList());
         }
 
         //
         // GET: /Catalog/
 
-        public ActionResult Index(string filter, int? page, int? pagesize, bool? proposal = false)
+        public ActionResult Index()
         {
-            #region remember filter stuff
-
-            if (filter == "clear")
-            {
-                Session["Text"] = null;
-                Session["From"] = null;
-                Session["To"] = null;
-            }
-            else
-            {
-                if ((Session["Text"] != null) || (Session["From"] != null) || (Session["To"] != null))
-                {
-                    return RedirectToAction("Search", new { text = Session["Text"], from = Session["From"], to = Session["To"] });
-                }
-            }
-
-            #endregion remember filter stuff
-
-            int currentPageIndex = page.HasValue ? page.Value - 1 : 0;
-            User oUser = (User)Session["User"];
-            var campaigns = _db.AdvertCampaignDetails;
-
-            IPagedList<AdvertCampaignDetail> catalogsPaged = campaigns.Where(c => c.AdvertCampaign.CustomerId == oUser.CustomerId).OrderByDescending(i => i.Advert.CreatedDate).ToPagedList(currentPageIndex, (pagesize.HasValue) ? pagesize.Value : _defaultPageSize);
-
-            return View(catalogsPaged);
+            return View();
         }
 
         // GET: /Catalog/Details/5

@@ -18,6 +18,12 @@ namespace OMKT.Controllers
         public ActionResult SummaryBoard()
         {
             return PartialView("SummaryBoard");
+
+        }
+
+        public ActionResult CatalogsOverview()
+        {
+            return PartialView("CatalogsOverview");
         }
 
         //private IEnumerable<CampaignPerformance> GetPerformance(int? advertCampaignId)
