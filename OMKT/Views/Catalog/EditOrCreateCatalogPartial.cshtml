@@ -1,51 +1,51 @@
-﻿
-@using OMKT.Business
+﻿@using OMKT.Business
 @model Catalog
-@{
-    ViewBag.Title = "Catálogos";
-    
-}
-
 <fieldset>
     @*<legend>Edición de Catálogo</legend>*@
     @Html.HiddenFor(model => model.AdvertId)
     @Html.HiddenFor(model => model.CreatedDate)
     @Html.HiddenFor(model => model.StartDatetime)
     @Html.HiddenFor(model => model.AdvertTypeId)
-    <div class="clearfix">
-        @Html.LabelFor(model => model.Name, "Nombre")
-        <div class="input">
-            @Html.TextBoxFor(model => model.Name, new { autofocus="autofocus"})
+    <div class="control-group">
+        <label class="control-label">
+            Nombre</label>
+        <div class="controls">
+            @Html.TextBoxFor(model => model.Name, new { autofocus = "autofocus" })
             @Html.ValidationMessageFor(model => model.Name)
         </div>
     </div>
-    <div class="clearfix">
-        @Html.LabelFor(model => model.SortTypeId, "Tipo de orden")
-        <div class="input chzn-select">
-            @Html.DropDownList("SortTypeId", String.Empty)
-            @Html.ValidationMessageFor(model => model.SortTypeId)
+    <div class="control-group">
+        <label class="control-label">
+            Orden</label>
+        <div class="controls">
+            <div class="input chzn-select">
+                @Html.DropDownList("SortTypeId", String.Empty)
+                @Html.ValidationMessageFor(model => model.SortTypeId)
+            </div>
         </div>
     </div>
-    <div class="clearfix">
-         @Html.LabelFor(model => model.AdvertStateId, "Estado")
-        <div class="input chzn-select">
-            @Html.DropDownList("AdvertStateId", String.Empty)
-            @Html.ValidationMessageFor(model => model.AdvertStateId)
+    <div class="control-group">
+        <label class="control-label">
+            Estado</label>
+        <div class="controls">
+            <div class="input chzn-select">
+                @Html.DropDownList("AdvertStateId", String.Empty)
+                @Html.ValidationMessageFor(model => model.AdvertStateId)
+            </div>
         </div>
     </div>
-   <div class="clearfix">
-        @Html.LabelFor(model => model.EndDatetime, "Fecha de caducidad")
-        <div class="input">
+    <div class="control-group">
+        <label class="control-label">Fecha de caducidad</label>
+        <div class="controls">
             @Html.EditorFor(model => model.EndDatetime, "Calendar")
             @Html.ValidationMessageFor(model => model.EndDatetime)
         </div>
     </div>
-    <div class="actions">
-        
-        <input type="submit" value="Guardar" class="btn primary" />
+    <div class="form-actions">
+        <input type="submit" value="Guardar" class="btn btn-primary" />
         @if (Model != null && Model.AdvertId > 0)
         {   <text>
-                @Html.ActionLink("Borrar", "Delete", new { id = Model.AdvertId }, new { @class = "btn" })
+            @Html.ActionLink("Borrar", "Delete", new { id = Model.AdvertId }, new { @class = "btn" })
             </text>
         }
         <a href="@Url.Action("Index")" class="btn">Volver</a>
