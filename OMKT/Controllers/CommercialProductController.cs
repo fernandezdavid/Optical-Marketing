@@ -6,8 +6,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OMKT.Business;
+using System.Drawing;
+using System.Drawing.Imaging;
 using OMKT.Context;
-using Paging;
 
 namespace OMKT.Controllers
 {
@@ -17,52 +18,18 @@ namespace OMKT.Controllers
         private readonly int _defaultPageSize = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["DefaultPaginationSize"]);
         private readonly OMKTDB _db = new OMKTDB();
 
-        public ViewResultBase Search(string q, int? page)
-        {
-            IQueryable<CommercialProduct> products = _db.CommercialProducts;
-
-            if (q.Length == 1)//alphabetical search, first letter
-            {
-                ViewBag.LetraAlfabetica = q;
-                products = products.Where(c => c.ProductName.StartsWith(q));
-            }
-            else if (q.Length > 1)
-            {
-                //normal search
-                products = products.Where(c => c.ProductName.IndexOf(q, StringComparison.Ordinal) > -1);
-            }
-
-            int currentPageIndex = page.HasValue ? page.Value - 1 : 0;
-            var customersListPaged = products.OrderBy(i => i.ProductName).ToPagedList(currentPageIndex, _defaultPageSize);
-
-            if (Request.IsAjaxRequest())
-                return PartialView("Index", customersListPaged);
-            return View("Index", customersListPaged);
-        }
-
         public PartialViewResult ActiveProducts(int? top)
         {
-            if (!top.HasValue) top = 5;
-            //MembershipUser user = Membership.GetUser(User.Identity.Name);
-            //if (user == null)
-            //{
-            //    throw new InvalidOperationException("User [" +
-            //        User.Identity.Name + " ] not found.");
-            //}
-            // Do whatever u want with the unique identifier.
-            //Guid guid = (Guid)user.ProviderUserKey;
+            if (!top.HasValue) top = 10;
             var oUser = (User)Session["User"];
             var catalogs = _db.CommercialProducts.Where(c => c.CustomerId == oUser.CustomerId).OrderByDescending(i => i.ProductName).Take(top.Value);
-            if (catalogs.Any())
-                return PartialView("CommercialProductListPartial", catalogs.ToList());
-            return PartialView("CommercialProductListPartial");
+            return PartialView("CommercialProductListPartial", catalogs.ToList());
         }
 
         // GET: /CommercialProduct/
         public ViewResult Index(int? page)
         {
-            int currentPageIndex = page.HasValue ? page.Value - 1 : 0;
-            return View(_db.CommercialProducts.OrderBy(c => c.ProductName).ToPagedList(currentPageIndex, _defaultPageSize));
+            return View();
         }
 
         //
@@ -95,6 +62,26 @@ namespace OMKT.Controllers
             {
                 if (image != null && image.ContentLength > 0)
                 {
+                    var new_image = Image.FromStream(image.InputStream, true, true);
+                    var thumb = new_image.GetThumbnailImage(
+                            30,
+                            30,
+                            () => false,
+                            IntPtr.Zero
+                           );
+                    // Finally, we encode and save the thumbnail.
+                    var jpgInfo = ImageCodecInfo.GetImageEncoders()
+                        .Where(codecInfo => codecInfo.MimeType == "image/jpeg").First();
+
+                    using (var encParams = new EncoderParameters(1))
+                    {
+                        // Your output path
+                        string outputPath = Path.Combine(Server.MapPath("~/Content/productImages"), jpgInfo + "_thumbnail"); ;
+                        // Image quality (should be in the range [0..100])
+                        long quality = 90;
+                        encParams.Param[0] = new EncoderParameter(Encoder.Quality, quality);
+                        thumb.Save(outputPath, jpgInfo, encParams);
+                    }
                     var fileName = Path.GetFileName(image.FileName);
                     if (fileName != null)
                     {

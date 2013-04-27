@@ -26,6 +26,11 @@ namespace OMKT.Controllers
             return PartialView("CatalogsOverview");
         }
 
+        public ActionResult CommercialProductsOverview()
+        {
+            return PartialView("CommercialProductsOverview");
+        }
+
         //private IEnumerable<CampaignPerformance> GetPerformance(int? advertCampaignId)
         //{
            
