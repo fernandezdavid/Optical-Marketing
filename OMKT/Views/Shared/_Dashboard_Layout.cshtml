@@ -35,6 +35,30 @@
         $(document).ready(function () {
             $("div.chzn-select select").chosen();
             $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
+            $('.close').on('click', function () {
+                $('#my-modal').modal('hide');
+            });
+            $('a.inbox').on('click', function () {
+                //clearErrors();
+                var url = '@Url.Content("~/Inbox")';
+                $.ajax({
+                    url: url,
+                    context: document.body,
+                    success: function (data) {
+                        $('.inbox-modal-body p.body').html(data);
+                        $(this).addClass("done");
+                        $('#inbox-modal').modal('show');
+
+                    },
+                    error: function (err) {
+                        writeError('inbox-msgError', err);
+                    }
+                });
+                return false;
+            });
+            //TODO check for new messages
+            $('span#new').text('1');
+
         });
     </script>
     @RenderSection("Header", false)
@@ -44,14 +68,29 @@
         <div class="navbar-inner">
             <div class="container-fluid">
                 <a class="brand" href="@Url.Action("Index", "Dashboard")">@System.Configuration.ConfigurationManager.AppSettings["ApplicationTitle"]</a>
-                 @Html.Partial("Menu")
-                 @Html.Partial("_Dashboard_LogOnPartial")
+                @Html.Partial("Menu")
+                @Html.Partial("_Dashboard_LogOnPartial")
             </div>
         </div>
     </div>
     <div class="container-fluid">
         @{Html.RenderPartial("DisplayMessages");}
         @RenderBody()
+        <div id="inbox-modal" class="modal hide fade">
+            <div class="inbox-modal-header modal-header">
+                <a href="#" class="close">&times;</a>
+                <h3>
+                    Mensajes</h3>
+            </div>
+            <div class="inbox-modal-body modal-body" style="overflow-y: visible">
+                <div id="inbox-msgError">
+                </div>
+                <p class="body">
+                </p>
+            </div>
+            <div class="inbox-modal-footer modal-footer">
+             </div>
+        </div>
     </div>
 </body>
 </html>
