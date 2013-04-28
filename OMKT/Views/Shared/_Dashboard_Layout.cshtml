@@ -48,6 +48,7 @@
                         $('.inbox-modal-body p.body').html(data);
                         $(this).addClass("done");
                         $('#inbox-modal').modal('show');
+                        $('span#new').text('');
 
                     },
                     error: function (err) {
