@@ -43,6 +43,23 @@ namespace OMKT.Controllers
         }
 
         /**
+         * method DashboardCampaings
+         *
+         * List a number of campaigns order by created date descending
+         *
+         * @since 04/04/2013
+         * @return advertCampaign collection
+         */
+
+        public PartialViewResult DashboardCampaigns(int? top)
+        {
+            if (!top.HasValue) top = 10;
+            var oUser = (User)Session["User"];
+            var campaigns = _db.AdvertCampaigns.Where(i => i.CustomerId == oUser.CustomerId).Take(top.Value);
+            return PartialView("AdvertCampaignListSlimPartial", campaigns.ToList());
+        }
+
+        /**
          * method ActiveCampaigns
          *
          * List a number of active campaigns order by name descending

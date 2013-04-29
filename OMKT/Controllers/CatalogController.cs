@@ -63,6 +63,15 @@ namespace OMKT.Controllers
             return PartialView("CatalogListPartial", catalogs.ToList());
         }
 
+        public PartialViewResult DashboardCatalogs(int? top)
+        {
+            if (!top.HasValue)
+                top = 10;
+            var oUser = (User)Session["User"];
+            var catalogs = _db.Catalogs.OrderByDescending(i => i.Name).Take(top.Value);
+            return PartialView("CatalogListSlimPartial", catalogs.ToList());
+        }
+
         //
         // GET: /Catalog/
 

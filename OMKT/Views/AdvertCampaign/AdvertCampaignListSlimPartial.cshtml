@@ -19,12 +19,7 @@
         <th>
             Presupuesto
         </th>
-        <th>
-            Fecha de inicio
-        </th>
-        <th>
-            Fecha de finalización
-        </th>
+       
     </thead>
     @foreach (var item in Model)
     {
@@ -47,12 +42,7 @@
             <td>
                 $@Html.DisplayFor(modelItem => item.Estimate) al día
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDatetime)
-            </td>
+          
         </tr>
     }
 </table>

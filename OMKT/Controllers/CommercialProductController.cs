@@ -26,6 +26,15 @@ namespace OMKT.Controllers
             return PartialView("CommercialProductListPartial", catalogs.ToList());
         }
 
+        public PartialViewResult DashboardProducts(int? top)
+        {
+            if (!top.HasValue) top = 10;
+            var oUser = (User)Session["User"];
+            var catalogs = _db.CommercialProducts.Where(c => c.CustomerId == oUser.CustomerId).OrderByDescending(i => i.ProductName).Take(top.Value);
+            return PartialView("CommercialProductListSlimPartial", catalogs.ToList());
+
+        }
+
         // GET: /CommercialProduct/
         public ViewResult Index(int? page)
         {
