@@ -1,13 +1,11 @@
 ﻿@model IEnumerable<OMKT.Business.Inbox>
-<p>
+@*<p>
     <a class="btn btn-primary" href="@Url.Action("Create", "Inbox")">Nuevo</a>
-</p>
+</p>*@
 @foreach (var item in Model)
 {
-    <div class="alert alert-info">
-        <button type="button" class="close" data-dismiss="alert">
-            &times;</button>
-        <h4>@Html.DisplayFor(modelItem => item.To.FirstName)</h4>
+    <div class="well">
+        <h4>Soporte de Optical Marketing</h4>
         @Html.DisplayFor(modelItem => item.Message) <strong>@Html.DisplayFor(modelItem => item.Timestamp)</strong>
     </div>
 @* <td>

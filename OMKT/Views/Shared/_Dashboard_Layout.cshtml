@@ -39,10 +39,8 @@
                 $('#my-modal').modal('hide');
             });
             $('a.inbox').on('click', function () {
-                //clearErrors();
-                var url = '@Url.Content("~/Inbox")';
                 $.ajax({
-                    url: url,
+                    url: '@Url.Content("~/Inbox")',
                     context: document.body,
                     success: function (data) {
                         $('.inbox-modal-body p.body').html(data);
@@ -57,9 +55,7 @@
                 });
                 return false;
             });
-            //TODO check for new messages
             $('span#new').text('1');
-
         });
     </script>
     @RenderSection("Header", false)
