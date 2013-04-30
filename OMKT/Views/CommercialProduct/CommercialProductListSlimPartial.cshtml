@@ -22,7 +22,7 @@
 
         <tr>
             <td>
-                <img src="http://hp.static.adidas.com/@Url.Content(item.ProductImage.ThumbnailPath)" class="img-rounded" title="@item.ProductImage.Title" alt="@item.ProductImage.Caption" />
+                <img src="http://hp.static.adidas.com/@Url.Content(item.ProductImage.ThumbnailPath)" class="img-rounded" title="@item.ProductImage.Title" alt="@item.ProductImage.Caption" width="50" height="50" />
             </td>
             <td>
                 <a href="@Url.Action("Edit", "CommercialProduct", new { id = item.CommercialProductId })">@item.ProductName</a>

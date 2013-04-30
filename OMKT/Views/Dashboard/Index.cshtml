@@ -2,55 +2,76 @@
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
-<h2>
-    Dashboard</h2>
 <div class="row-fluid">
-    <div class="span12">
-        <div class="input chzn-select" style="width: 450px; float: right">
-            <select name="">
-                <option>Últimos 7 días</option>
-                <option>Últimos 15 días</option>
-                <option>Últimos 30 días</option>
-            </select>
-        </div>
-        <div class="input chzn-select" style="width: 450px; float: left">
-            <select name="">
-                <option>Todas las campañas</option>
-                <option>Sólo campañas activas</option>
-                <option>Todas las campañas menos las eliminadas</option>
-            </select>
+    
+    <div class="span12 dashboard-row">
+        <div class="row-fluid">
+            <span class="span6"><h2>
+        Dashboard</h2></span>
+            <span class="span3 pull-right">
+                <div class="input chzn-select" style="width: 450px; padding:16px 0">
+                    <select name="">
+                        <option>Últimos 7 días</option>
+                        <option>Últimos 15 días</option>
+                        <option>Últimos 30 días</option>
+                    </select>
+                </div>
+            </span>
+            <span class="span3 pull-right">
+                <div class="input chzn-select" style="width: 450px; padding:16px 0">
+                    <select name="">
+                        <option>Todas las campañas</option>
+                        <option>Sólo campañas activas</option>
+                        <option>Todas las campañas menos las eliminadas</option>
+                    </select>
+                </div>
+            </span>
         </div>
     </div>
-    <div class="span12">
+    <div class="span12 dashboard-row">
+    <div class="row-fluid dash-stats">
         @{Html.RenderAction("SummaryBoard", "Stats");}
     </div>
-    <div class="span12">
-        <div class="span6">
-            @* <h3>
-                Perfil</h3>
-            @{Html.RenderAction("Profile", "Account");}
-            <div class="clear"></div>*@
-            <h3>
-                Alertas</h3>
-            @{Html.RenderAction("CurrentAlerts", "Alert");}
-            <h3>
-                Productos Destacados</h3>
-            @{Html.RenderAction("DashboardProducts", "CommercialProduct", new { top = 5 });}
-        </div>
-        <div class="span6">
-            <h3>
-                Rendimiento
-            </h3>
-            <div class="pie_charts">
-                @*@{Html.RenderAction("AdvertCampaignsPerformance", "Stats");}*@ @* @{Html.RenderAction("CommercialProductsViews", "Stats");}
+    </div>
+    <div class="span12 dashboard-row">
+        <h3>
+            Rendimiento
+        </h3>
+        <div class="pie_charts">
+            @{Html.RenderAction("AdvertCampaignsPerformance", "Stats");}
+            @* @{Html.RenderAction("CommercialProductsViews", "Stats");}
                 @{Html.RenderAction("CommercialProductsLikes", "Stats");}
                 @{Html.RenderAction("AdvertsPerformance", "Stats");}*@
-            </div>
-            <h3>
-                Campañas Activas</h3>
-            @{Html.RenderAction("DashboardCampaigns", "AdvertCampaign");}
-            <h3>
-                Anuncios Activos</h3>
-            @{Html.RenderAction("DashboardCatalogs", "Catalog", new { top = 5 });}
         </div>
     </div>
+    <div class="span12 dashboard-row">
+        <div class="row-fluid">
+            <div class="span6">
+                <h3>
+                    Alertas</h3>
+                @{Html.RenderAction("CurrentAlerts", "Alert");}
+                  <h3>
+                    Campañas Activas</h3>
+                @{Html.RenderAction("DashboardCampaigns", "AdvertCampaign");}
+                 <h3>
+                    Anuncios Activos</h3>
+                @{Html.RenderAction("DashboardCatalogs", "Catalog", new { top = 5 });}
+            </div>
+            <div class="span6">
+                <h3>
+                    Productos Destacados</h3>
+                @{Html.RenderAction("DashboardProducts", "CommercialProduct", new { top = 5 });}
+            </div>
+        </div>
+    </div>
+    <div class="span12 dashboard-row">
+        <div class="row-fluid">
+            <div class="span6">
+              
+            </div>
+            <div class="span6">
+               
+            </div>
+        </div>
+    </div>
+</div>
