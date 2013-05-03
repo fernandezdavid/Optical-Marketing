@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<table class="zebra-striped">
+<table id="example" class="table table-striped table-bordered">
     <thead>
         <th>
             Anuncio
@@ -36,7 +36,7 @@
 
         <td nowrap>
             <div class="btn-group">
-                <a href="@Url.Action("Edit", new { id = item.AdvertCampaignDetailId })" class="btn primary small editAdvertCampaignDetail" idAdvertCampaignDetail="@item.AdvertCampaignDetailId"><i class=" icon-edit icon-white"></i></a>
+                <a href="@Url.Action("Edit", new { id = item.AdvertCampaignDetailId })" class="btn btn-primary small editAdvertCampaignDetail" idAdvertCampaignDetail="@item.AdvertCampaignDetailId"><i class=" icon-edit icon-white"></i></a>
         @*        <a href="@Url.Action("Details", new { id = item.AdvertDetailId })" class="btn small"><i class=" icon-align-justify "></i></a>*@
                 <a href="@Url.Action("Delete", new { id = item.AdvertCampaignDetailId })" idAdvertCampaignDetail = "@item.AdvertCampaignDetailId" class="btn small deleteAdvertCampaignDetail"><i class=" icon-trash "></i></a>
             </div>

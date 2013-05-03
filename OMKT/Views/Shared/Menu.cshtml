@@ -1,5 +1,4 @@
-﻿ <div class="nav-collapse collapse navbar-inverse-collapse">    
-    <ul class="nav">
+﻿<ul class="nav">
         <li class="@((Request.RawUrl.Contains("/AdvertCampaign")) ? "active" : "")">
             <a href="@Url.Action("Index", "AdvertCampaign")">@*<i class='icon-calendar icon-white'></i>*@Campañas</a>
         </li>
@@ -23,8 +22,8 @@
             
         </li>
          <li class="@((Request.RawUrl.Contains("/Messages")) ? "active" : "")">
-            <a href="@Url.Action("Index", "CommercialProduct")">@*<i class='icon-envelope icon-white'></i>*@Buzón</a>
-            @*<span class="notification">1</span>*@
+            <a class="inbox" href="@Url.Action("Index", "CommercialProduct")">@*<i class='icon-envelope icon-white'></i>*@Buzón <span id="new" class="badge badge-important"></span></a>
+           
         </li>
     </ul>
     @if (User.IsInRole("Administrador"))
@@ -42,14 +41,3 @@
             </li>
         </ul>
     }
-         @*<ul class="nav" id="reportsmenu">
-            <li class="dropdown" data-dropdown="dropdown">
-              <a href="#" class="dropdown-toggle">Reports</a>
-              <ul class="dropdown-menu">
-                <li><a href="@Url.Action("ByYear", "Reports", new { id = DateTime.Now.Year})">@DateTime.Now.Year</a></li>
-                <li><a href="@Url.Action("ByYear", "Reports", new { id = DateTime.Now.Year-1})">@(DateTime.Now.Year-1)</a></li>
-                <li><a href="@Url.Action("QuarterDetails", "Reports")">Details by quarter</a></li>
-              </ul>
-            </li>
-        </ul>*@
-   </div>

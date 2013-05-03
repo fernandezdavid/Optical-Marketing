@@ -1,52 +1,16 @@
 ﻿@model IEnumerable<OMKT.Business.Inbox>
-
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+@*<p>
+    <a class="btn btn-primary" href="@Url.Action("Create", "Inbox")">Nuevo</a>
+</p>*@
+@foreach (var item in Model)
+{
+    <div class="well">
+        <h4>Soporte de Optical Marketing</h4>
+        @Html.DisplayFor(modelItem => item.Message) <strong>@Html.DisplayFor(modelItem => item.Timestamp)</strong>
+    </div>
+@* <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.InboxId }) |
+        @Html.ActionLink("Details", "Details", new { id = item.InboxId }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.InboxId })
+    </td>*@
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            Message
-        </th>
-        <th>
-            From
-        </th>
-        <th>
-            To
-        </th>
-        <th>
-            Timestamp
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Message)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FromId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.To)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Timestamp)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.InboxId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.InboxId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.InboxId })
-        </td>
-    </tr>
-}
-
-</table>

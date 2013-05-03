@@ -4,70 +4,73 @@
     @Html.HiddenFor(model => model.CommercialProductId)
     @Html.HiddenFor(model => model.ProductImageId)
     @Html.HiddenFor(model => model.CustomerId)
-    <div class="clearfix">
-        <div class="span4">
-            @Html.LabelFor(model => model.ProductName)
-            <div class="input">
-                @Html.TextBoxFor(model => model.ProductName, new { @class = "span5", autofocus = "autofocus" }) @Html.ValidationMessageFor(model => model.ProductName)
-            </div>
+    <div class="control-group">
+        <label class="control-label">
+            Nombre</label>
+        <div class="controls">
+            @Html.TextBoxFor(model => model.ProductName, new { @class = "", @autofocus = "autofocus" })
+            @Html.ValidationMessageFor(model => model.ProductName)
         </div>
     </div>
-    <div class="clearfix">
-        <div class="span4">
-            @Html.LabelFor(model => model.Description)
-            <div class="input">
-                @Html.TextAreaFor(model => model.Description, new { @class = "span5" }) @Html.ValidationMessageFor(model => model.Description)
-            </div>
+    <div class="control-group">
+        <label class="control-label">
+            Descripción</label>
+        <div class="controls">
+            @Html.TextAreaFor(model => model.Description, new { @class = "" })
+            @Html.ValidationMessageFor(model => model.Description)
         </div>
     </div>
-    <div class="clearfix">
-        <div class="span4">
-            @Html.LabelFor(model => model.Price)
-            <div class="input">
-                @Html.TextBoxFor(model => model.Price, new { @class = "span5" }) @Html.ValidationMessageFor(model => model.Price)
-            </div>
+    <div class="control-group">
+        <label class="control-label">
+            Precio</label>
+        <div class="controls">
+            <div class="input-prepend input-append">
+                <span class="add-on">$</span>
+                @Html.TextBoxFor(model => model.Price, new { @class = "input-small" })
+                <span class="add-on">.00</span>
+            </div>            
+            @Html.ValidationMessageFor(model => model.Price)
         </div>
     </div>
-    <div class="clearfix">
-        <div class="span4">
-            @Html.LabelFor(model => model.CommercialProductTypeId, "Categoría")
+    <div class="control-group">
+        <label class="control-label">
+            Tipo</label>
+        <div class="controls">
             <div class="input chzn-select">
                 @Html.DropDownList("CommercialProductTypeId", String.Empty)
                 @Html.ValidationMessageFor(model => model.CommercialProductTypeId)
             </div>
         </div>
     </div>
-    <div class="clearfix">
-        <div class="span4">
-            @Html.LabelFor(model => model.Stock)
-            <div class="input">
-                @Html.TextBoxFor(model => model.Stock, new { @class = "span5" }) @Html.ValidationMessageFor(model => model.Stock)
-            </div>
+    <div class="control-group">
+        <label class="control-label">
+            Unidades Disponibles</label>
+        <div class="controls">
+            @Html.TextBoxFor(model => model.Stock, new { @class = "" })
+            @Html.ValidationMessageFor(model => model.Stock)
         </div>
     </div>
-    <div class="clearfix">
-        <div class="span4">
-            @Html.LabelFor(model => model.ProductImage)
-            <div class="input">
-                
-                <input type="file" name="image" class="span5" id="image" />
-            </div>
+    <div class="control-group">
+        <label class="control-label">
+            Póster</label>
+        <div class="controls">
+            <input type="file" name="image" class="span5" id="image" />
         </div>
     </div>
-    <div class="clearfix">
-        @if(ViewBag.Mode=="Edit" && Model.ProductImage!=null)
+    <div class="control-group">
+        @if (ViewBag.Mode == "Edit" && Model.ProductImage != null)
         {
             <text>
-                <div class="input">
+            <div class="controls">
                 <div class="span4">
-                    <img src="http://hp.static.adidas.com/@Url.Content(Model.ProductImage.Path)" class="img-rounded" title="@Model.ProductImage.Title" alt="@Model.ProductImage.Caption" width="100px" height="100px"/>
-                </div></div>
+                    <img src="http://hp.static.adidas.com/@Url.Content(Model.ProductImage.ThumbnailPath)" class="img-rounded" title="@Model.ProductImage.Title" alt="@Model.ProductImage.Caption" width="100px" height="100px"/>
+                </div>
+            </div>
             </text>
         }
-        
     </div>
-    <div class="actions">
-        <input type="submit" class="btn primary" value="Guardar" />
+    <div class="form-actions">
+        <input type="submit" class="btn btn-primary" value="Guardar" />
         @if (Model != null && Model.CommercialProductId > 0)
         {   <text> @Html.ActionLink("Borrar", "Delete", new { id = Model.CommercialProductId }, new { @class = "btn" })
             </text>
@@ -80,4 +83,4 @@
         $("div.chzn-select select").chosen();
         $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
     });
-        </script>
+</script>

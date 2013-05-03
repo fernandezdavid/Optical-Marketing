@@ -1,6 +1,11 @@
 ﻿using System.Web.Mvc;
+using System;
 using OMKT.Business;
 using OMKT.Context;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
 using OMKT.Models;
 
 namespace OMKT.Controllers
@@ -13,30 +18,37 @@ namespace OMKT.Controllers
         public ActionResult SummaryBoard()
         {
             return PartialView("SummaryBoard");
+
         }
 
-        private CampaignPerformance GetPerformance()
+        public ActionResult CatalogsOverview()
         {
-            var oUser = (User)Session["User"];
-            var camp = new CampaignPerformance();
-            //for (int i = 6; i < 13; i++)
-            //{
-            //    var rend = new CampaignPerformance();
-            //    rend.Traffic = _db.Interactions.Where(
-            //        x =>
-            //        x.AdvertCampaignDetail.AdvertCampaign.CustomerId == oUser.CustomerId &&
-            //        x.StartDateTime.Day == i).Sum(a => a.Traffic);
-            //    rend.Month = i;
-            //    rend.Impressions = _db.Interactions.Where(it => it.AdvertCampaignDetail.AdvertCampaign.CustomerId == oUser.CustomerId && it.StartDateTime.Day == i).
-            //            Sum(s => s.Impressions);
-            //    perfList.Add(rend);
-            //}
-            camp.Impressions = 100;
-            camp.Traffic = 1234;
-            camp.Month = 3;
-
-            return camp;
+            return PartialView("CatalogsOverview");
         }
+
+        public ActionResult CommercialProductsOverview()
+        {
+            return PartialView("CommercialProductsOverview");
+        }
+
+        //private IEnumerable<CampaignPerformance> GetPerformance(int? advertCampaignId)
+        //{
+           
+           //for (int i = 6; i < 13; i++)
+           //{
+           //    var rend = new CampaignPerformance();
+
+
+           //    rend.Traffic = _db.Interactions.Include( x =>
+           //        x.AdvertCampaignDetail.AdvertCampaign.CustomerId == oUser.CustomerId &&
+           //        x.StartDateTime.Day == i).Sum(a => a.Traffic);
+           //    rend.Month = i;
+           //    rend.Impressions = _db.Interactions.Where(it => it.AdvertCampaignDetail.AdvertCampaign.CustomerId == oUser.CustomerId && it.StartDateTime.Day == i).
+           //            Sum(s => s.Impressions);
+           //    perfList.Add(rend);
+           //}           
+           //return camp;
+        //}
 
         //private Summary GetSummary()
         //{
@@ -92,9 +104,34 @@ namespace OMKT.Controllers
         //    return PartialView("AdvertsPerformance", GetProductsPerformance());
         //}
 
-        public ActionResult AdvertCampaignsPerformance()
+        public ActionResult AdvertCampaignsPerformance(int? period)
         {
-            return PartialView("AdvertCampaignsPerformance", GetPerformance());
+            var oUser = (User)Session["User"];
+            var detailList = new List<AdvertCampaignDetail>();
+
+            var camp = new List<CampaignPerformance>();
+            if (period.HasValue && period != 0)
+            {
+                detailList = _db.AdvertCampaignDetails.Where(a => a.AdvertCampaignId == period).ToList();
+
+            }
+            else
+            {
+
+                detailList = _db.AdvertCampaignDetails.Where(a => a.AdvertCampaign.CustomerId == oUser.CustomerId).ToList();
+            }
+            period = (period.HasValue) ? period : 12; 
+
+            for (int j = 0; j <= period; j++)
+            {
+                camp.Add(new CampaignPerformance()
+                {
+                    Impressions = new Random(j).Next(2000, 3000),
+                    Traffic = new Random(j).Next(10000, 15000),
+                    Month = j
+                });
+            }
+            return PartialView("AdvertCampaignsPerformance", camp);
         }
     }
 }

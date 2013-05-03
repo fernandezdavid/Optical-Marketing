@@ -1,0 +1,38 @@
+﻿@model IEnumerable<OMKT.Business.Catalog>
+<table class="table table-striped table-bordered dataTable">
+    <thead>
+       
+        <th>
+            Nombre
+        </th>
+        <th>
+            Tipo
+        </th>
+        <th>
+            Estado
+        </th>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+           
+            <td>
+                <a href="@Url.Action("Edit", "Catalog", new { id = item.AdvertId })">@item.Name</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdvertType.Description)
+            </td>
+            <td>
+                <span class="label label-@((item.AdvertState.AdvertstateId == 1) ? "success" : "important")">@Html.DisplayFor(modelItem => item.AdvertState.Description)</span>
+            </td>
+        </tr>
+    }
+    @*<tfoot>
+        <tr>
+            <td colspan=3><span class="label">TOTAL: </span></td>
+            <td nowrap="nowrap">@String.Format("{0:C}", Model.Sum(i => i.TotalToPay))</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>*@
+</table>
