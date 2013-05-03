@@ -1,36 +1,26 @@
-﻿
-@model OMKT.Business.AdvertDetail
-
+﻿@model OMKT.Business.AdvertDetail
 <fieldset>
-    
     @Html.HiddenFor(model => model.AdvertDetailId)
     @Html.Hidden("AdvertId", Model.AdvertId)
-    @Html.HiddenFor(model=>model.CreatedDate)
-   
-    <div class="clearfix">
-        @Html.LabelFor(model => model.CommercialProductId, "Producto")
-         
-        <div class="input chzn-select">
-            @Html.DropDownList("CommercialProductId", String.Empty)
-            @Html.ValidationMessageFor(model => model.CommercialProductId)
-            @*<a target="_blank" href="@Url.Action("Create", "CommercialProduct")" class="btn small primary">
-            <i class="icon-plus icon-white" style="margin: 0"></i></a>*@
+    @Html.HiddenFor(model => model.CreatedDate)
+    <div class="control-group">
+        <label class="control-label">
+            Producto</label>
+        <div class="controls">
+            <div class="input chzn-select">
+                @Html.DropDownList("CommercialProductId", String.Empty)
+                @Html.ValidationMessageFor(model => model.CommercialProductId)
+                <a target="_blank" href="@Url.Action("Create", "CommercialProduct")" class="btn small btn-primary">
+            <i class="icon-plus icon-white" style="margin: 0"></i></a>
+            </div>
         </div>
-        
     </div>
-    <div class="clearfix">
-        @Html.LabelFor(model => model.Position, "Orden por defecto")
-        
-        <div class="input">
+    <div class="control-group">
+    <label class="control-label">Posición en catálogo</label>
+        <div class="controls">
             @Html.EditorFor(model => model.Position)
             @Html.ValidationMessageFor(model => model.Position)
         </div>
-    </div>
-
-        
-    <div class="actions">
-        <input type="submit" class="btn primary" value="Guardar" />
-        <input type="button" class="btn closeModal" value="Cerrar" /> 
     </div>
 </fieldset>
 <script type="text/javascript">
@@ -38,4 +28,4 @@
         $("div.chzn-select select").chosen();
         $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
     });
-    </script>
+</script>

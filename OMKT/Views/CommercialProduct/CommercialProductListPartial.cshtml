@@ -1,8 +1,17 @@
 ﻿@model IEnumerable<OMKT.Business.CommercialProduct>
-           
-<table class="table table-striped table-bordered dataTable">
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#products-table').dataTable({
+            "sDom": "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>"
+            //"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>"
+        });
+    });
+   
+</script>
+<table id="products-table" class="table table-striped table-bordered dataTable">
     <thead>
-        <th></th>
+        <th>
+        </th>
         <th>
             Nombre
         </th>
@@ -12,37 +21,45 @@
         <th>
             Cantidad
         </th>
-        
+        <th>
+            Categoría
+        </th>
         <th>
             Precio
         </th>
-       
+        <th>
+        </th>
     </thead>
-    @if(Model!=null){
-        foreach (var item in Model)
+    @foreach (var item in Model)
     {
 
         <tr>
-            <td><img src="http://hp.static.adidas.com/@Url.Content(item.ProductImage.ThumbnailPath)" class="img-rounded" title="@item.ProductImage.Title" alt="@item.ProductImage.Caption" width="30" height="30"/></td>
             <td>
-                
-                @Html.DisplayFor(modelItem => item.ProductName)
+                <img src="http://hp.static.adidas.com/@Url.Content(item.ProductImage.ThumbnailPath)" class="img-rounded" title="@item.ProductImage.Title" alt="@item.ProductImage.Caption" />
             </td>
-            <td >
+            <td>
+                <a href="@Url.Action("Edit", "CommercialProduct", new { id = item.CommercialProductId})">@item.ProductName</a>
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Stock)
             </td>
-            
+            <td>
+                @Html.DisplayFor(modelItem => item.CommercialProductType.Description)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            
+            <td>
+                <div class="btn-group">
+                    <a href="@Url.Action("Edit", new { id = item.CommercialProductId })" class="btn btn-primary small editCommercialProduct" idÇommercialProduct="@item.CommercialProductId ">
+                        <i class=" icon-edit icon-white"></i></a><a href="@Url.Action("Details", new { id = item.CommercialProductId })" class="btn small">
+                            <i class=" icon-align-justify "></i></a><a href="@Url.Action("Delete", new { id = item.CommercialProductId })" class="btn small">
+                                <i class=" icon-trash "></i></a>
+                </div>
+            </td>
         </tr>
-    }
-    }else
-    {
-        <tr><td colspan="5">No hay productos disponibles.</td></tr>
     }
 </table>

@@ -1,108 +1,13 @@
-﻿@using Paging
-@model IPagedList<OMKT.Business.AdvertCampaignDetail>
-         
-@{
-    ViewBag.Title = "Listado de Catálogos";
+﻿@{
+    ViewBag.Title = "Administración de Catálogos";
     Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
-@section Header{
-    <script>
-        var sorter_options = {
-            headers: {
-                3: { sorter: 'datetime' },
-                4: { sorter: 'decimal' },
-                5: { sorter: 'decimal' }
-            }
-        };
-</script>
-}
-<h1>
-    Listado <small>de Catálogos</small></h1>
-<div class="top-bar-list clearfix">
-<div class="noprint">
-    <a href="@Url.Action("Create", "Catalog")" class="btn primary"><i class="icon-plus icon-white "></i>Nuevo Catálogo</a>
-
-    <div class="pagingContainer noprint">
-    @{
-        var r = new RouteValueDictionary {{"to", Request["to"]}, {"from", Request["from"]}, {"text", Request["text"]}};
-    }
-    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, r)
+<h2>
+    Administración <small>de Catálogos</small></h2>
+<div class="row-fluid">
+    <div class="span2">
+        <a href="@Url.Action("Create", "Catalog")" class="btn btn-primary"><i class="icon-plus icon-white "></i> Nuevo Catálogo</a>
     </div>
+    <div class="span12">@{Html.RenderAction("CatalogsOverview", "Stats");}</div>
 </div>
-</div>
-<div class="clearfix">@{Html.RenderPartial("SearchBoxItems", "Catalog");}</div>
-
-<table class="zebra-striped">
-    <thead>
-        @*<th>
-            ID
-        </th>*@
-        <th>
-            Nombre
-        </th>
-       <th>
-            Camapaña
-        </th>
-        <th>
-            Tipo de anuncio
-        </th>
-        <th>
-            Fecha de vigencia
-        </th>
-        <th>
-            Fecha de caducidad
-        </th>
-        <th>
-            Última modificación
-        </th>
-       
-        <th>
-        </th>
-    </thead>
-    @foreach (var item in Model)
-    {
-
-        <tr>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Advert.AdvertId)
-            </td>*@
-            <td>
-                <a href="@Url.Action("Edit", new { id = item.Advert.AdvertId })" class="">@item.Advert.Name</a>
-            </td>
-           <td>
-                @Html.DisplayFor(modelItem => item.AdvertCampaign.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Advert.AdvertType.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Advert.StartDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Advert.EndDatetime)
-                @if (item.Advert.EndDatetime < DateTime.Now)
-                {
-
-                    <span class="label important">Caducado</span>
-                }
-                else
-                {
-
-                    <span class="label success">Vigente</span>  
-                }
-            </td>
-            <td nowrap>
-                @Html.DisplayFor(modelItem => item.Advert.LastUpdate)
-            </td>
-            
-            <td class="noprint" nowrap>
-                <div class="btn-group">
-                    <a href="@Url.Action("Edit", new { id = item.Advert.AdvertId })" class="btn primary small" ><i class=" icon-edit icon-white"></i></a>
-                    <a href="@Url.Action("Edit", new { id = item.Advert.AdvertId })" class="btn small"><i class=" icon-print "></i></a>
-                    <a href="@Url.Action("Delete", new { id = item.Advert.AdvertId })" class="btn small"><i class=" icon-trash "></i></a>
-                </div>
-            </td>
-        </tr>
-    }
-    
-</table>
+@{Html.RenderAction("LatestCatalogs", "Catalog");}

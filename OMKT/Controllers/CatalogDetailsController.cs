@@ -21,7 +21,7 @@ namespace OMKT.Controllers
             ViewBag.Catalog = oCatalog;
 
             var oCatalogDetails = _db.CatalogDetails.Include(i => i.Catalog).Where(i => i.AdvertId == id);
-            return PartialView("Index", oCatalogDetails.ToList());
+            return PartialView("CatalogDetailsPartialList", oCatalogDetails.ToList());
         }
 
         public PartialViewResult IndexByCatalogSortable(int id)

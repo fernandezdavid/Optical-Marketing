@@ -1,113 +1,104 @@
 ﻿@using System.Globalization
 @model OMKT.Models.ProfileModel
-
 @{
     ViewBag.Title = "Mi perfil";
     Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
+<div class="span12">
+    <h2>
+        Mi Perfil</h2>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
-
-@using (Html.BeginForm("EditProfile", "Account", FormMethod.Post))
+@using (Html.BeginForm("EditProfile", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.ValidationSummary(true)
-  <fieldset>
-    <legend>Datos de cuenta</legend>
-    <div class="clearfix">
-      <div class="span4">
-          @Html.LabelFor(model => model.Firstname)
-          <div class="input">
-              @Html.TextBoxFor(model => model.Firstname, new { @class = "span5", @autofocus="true" }) 
-              @Html.ValidationMessageFor(model => model.Firstname)
-          </div>
-      </div>
-  </div>
-      <div class="clearfix">
-          <div class="span4">
-              @Html.LabelFor(model => model.Lastname)
-              <div class="input">
-                  @Html.TextBoxFor(model => model.Lastname, new { @class = "span5" }) 
-                  @Html.ValidationMessageFor(model => model.Lastname)
-              </div>
-          </div>
-      </div>
-      <div class="clearfix">
-      <div class="span4">
-          @Html.LabelFor(model => model.DateOfBirth)
-          <div class="input">
-              @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "span5" }) 
-              @Html.ValidationMessageFor(model => model.DateOfBirth)
-          </div>
-      </div>
-  </div>
-      <div class="clearfix">
-          <div class="span4">
-              @Html.LabelFor(model => model.Email)
-              <div class="input">
-                  @Html.TextBoxFor(model => model.Email, new { @class = "span5" }) 
-                  @Html.ValidationMessageFor(model => model.Email)
-              </div>
-          </div>
-      </div>
-      <hr/>
-      <div class="clearfix">
-          <div class="span4">
-              @Html.LabelFor(model => model.CompanyName)
-              <div class="input">
-                  @Html.TextBoxFor(model => model.CompanyName, new { @class = "span5" }) 
-                  @Html.ValidationMessageFor(model => model.CompanyName)
-              </div>
-          </div>
-      </div>
-      <div class="clearfix">
-          <div class="span4">
-              @Html.LabelFor(model => model.CompanyAdress)
-              <div class="input">
-                  @Html.TextBoxFor(model => model.CompanyAdress, new { @class = "span5" }) 
-                  @Html.ValidationMessageFor(model => model.CompanyAdress)
-              </div>
-          </div>
-      </div>
-      <div class="clearfix">
-          <div class="span4">
-              @Html.LabelFor(model => model.CompanyCP)
-              <div class="input">
-                  @Html.TextBoxFor(model => model.CompanyCP, new { @class = "span5" }) 
-                  @Html.ValidationMessageFor(model => model.CompanyCP)
-              </div>
-          </div>
-      </div>
-      <div class="clearfix">
-          <div class="span4">
-              @Html.LabelFor(model => model.CompanyCity)
-              <div class="input">
-                  @Html.TextBoxFor(model => model.CompanyCity, new { @class = "span5" }) 
-                  @Html.ValidationMessageFor(model => model.CompanyCity)
-              </div>
-          </div>
-      </div>
-      <div class="clearfix">
-          <div class="span4">
-              @Html.LabelFor(model => model.ContactPerson)
-              <div class="input">
-                  @Html.TextBoxFor(model => model.ContactPerson, new { @class = "span5" }) 
-                  @Html.ValidationMessageFor(model => model.ContactPerson)
-              </div>
-          </div>
-      </div>
-       <div class="clearfix">
-          <div class="span4">
-              @Html.LabelFor(model => model.CompanyPhone)
-              <div class="input">
-                  @Html.TextBoxFor(model => model.CompanyPhone, new { @class = "span5" }) 
-                  @Html.ValidationMessageFor(model => model.CompanyPhone)
-              </div>
-          </div>
-      </div>
-
-       <div class="actions">
-        <input type="submit" class="btn primary" value="Guardar" />
-        <a href="@Url.Action("Index", "Dashboard")" class="btn">Volver</a>
-    </div>
-</fieldset>
+    <fieldset>
+        <strong>Cuenta</strong>
+        <div class="control-group">
+            <label class="control-label">
+                Nombre</label>
+            <div class="controls">
+                @Html.TextBoxFor(model => model.Firstname, new { @class = "", @autofocus = "true" })
+                @Html.ValidationMessageFor(model => model.Firstname)
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Apellido</label>
+            <div class="controls">
+                @Html.TextBoxFor(model => model.Lastname, new { @class = "" })
+                @Html.ValidationMessageFor(model => model.Lastname)
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Fecha de Nacimiento</label>
+            <div class="controls">
+                @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "" })
+                @Html.ValidationMessageFor(model => model.DateOfBirth)
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Email</label>
+            <div class="controls">
+                @Html.TextBoxFor(model => model.Email, new { @class = "" })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+        <strong>Empresa</strong>
+        <div class="control-group">
+            <label class="control-label">
+                Empresa</label>
+            <div class="controls">
+                @Html.TextBoxFor(model => model.CompanyName, new { @class = "" })
+                @Html.ValidationMessageFor(model => model.CompanyName)
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Dirección</label>
+            <div class="controls">
+                @Html.TextBoxFor(model => model.CompanyAdress, new { @class = "" })
+                @Html.ValidationMessageFor(model => model.CompanyAdress)
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Código Postal</label>
+            <div class="controls">
+                @Html.TextBoxFor(model => model.CompanyCP, new { @class = "" })
+                @Html.ValidationMessageFor(model => model.CompanyCP)
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Ciudad</label>
+            <div class="controls">
+                @Html.TextBoxFor(model => model.CompanyCity, new { @class = "" })
+                @Html.ValidationMessageFor(model => model.CompanyCity)
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Contacto</label>
+            <div class="controls">
+                @Html.TextBoxFor(model => model.ContactPerson, new { @class = "" })
+                @Html.ValidationMessageFor(model => model.ContactPerson)
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Teléfono</label>
+            <div class="controls">
+                @Html.TextBoxFor(model => model.CompanyPhone, new { @class = "" })
+                @Html.ValidationMessageFor(model => model.CompanyPhone)
+            </div>
+        </div>
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary" value="Guardar" />
+            <a href="@Url.Action("Index", "Dashboard")" class="btn">Volver</a>
+        </div>
+    </fieldset>
 }
+</div>

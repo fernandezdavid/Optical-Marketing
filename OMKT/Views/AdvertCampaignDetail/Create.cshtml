@@ -1,16 +1,11 @@
 ﻿@model OMKT.Business.AdvertCampaignDetail
-
-@{
-    ViewBag.Title = "Crear";
-}
-<div class="alert-message warning" style="margin-top: 15px">
-    <p><strong>A continuación debes seleccionar un anuncio.</strong></p>
+<div class="alert alert-info">
+    <strong>Elige un tipo de anuncio para esta campaña</strong>
 </div>
-
-@using (Html.BeginForm("Create", "AdvertCampaignDetail"))
+@using (Html.BeginForm("Create", "AdvertCampaignDetail", FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.ValidationSummary(true)
     <text>
-        @{ Html.RenderPartial("EditOrAddCampaignDetailsPartial", Model); }
+    @{ Html.RenderPartial("EditOrAddCampaignDetailsPartial", Model); }
     </text>
 }

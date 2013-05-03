@@ -6,17 +6,18 @@
     @Html.HiddenFor(model => model.CreatedDate)
     @Html.HiddenFor(model => model.StartDatetime)
     @Html.HiddenFor(model => model.CampaignStateId)
-    <strong>General</strong>
-    <hr />
+    <strong>General</strong> @*    <hr />*@
     <div class="control-group">
-        @Html.LabelFor(model => model.Name, "Nombre")
+        <label class="control-label" for="name">
+            Nombre</label>
         <div class="controls">
             @Html.TextBoxFor(model => model.Name, new { @autofocus = "autofocus" })
             @Html.ValidationMessageFor(model => model.Name)
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.CampaignTypeId, "Tipo")
+        <label class="control-label" for="CampaignTypeId">
+            Tipo</label>
         <div class="controls">
             <div class="input chzn-select">
                 @Html.DropDownList("CampaignTypeId", String.Empty) @Html.ValidationMessageFor(model => model.CampaignTypeId)
@@ -24,66 +25,63 @@
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.EndDatetime, "Fecha de caducidad")
+        <label class="control-label" for="EndDatetime">
+            Fecha de finalización</label>
         <div class="controls">
             @Html.EditorFor(model => model.EndDatetime, "Calendar")
             @Html.ValidationMessageFor(model => model.EndDatetime)
         </div>
     </div>
-    <strong>Redes</strong>
-    <hr />
+    <strong>Redes</strong> @* <hr />*@
     <div class="control-group">
-        <label class="control-label">
+        <label class="control-label" for="NetworkId">
             Red</label>
         <div class="controls">
-            @Html.RadioButtonFor(model => model.NetworkId, Model.NetworkId, new { @checked = "checked" })
-            Red de difusión de Optical Marketing
+            <label class="radio">
+                @Html.RadioButtonFor(model => model.NetworkId, Model.NetworkId, new { @checked = "checked" })
+                Red de difusión de Optical Marketing
+            </label>
         </div>
     </div>
     <strong>Ubicaciones</strong>
-    <hr />
+    @*<hr />*@
     <div class="control-group">
-        <label>
+        <label class="control-label">
             Ubicaciones</label>
         <div class="controls">
             ¿A qué ubicaciones desea orientar su campaña (o cuáles desea excluir)?
-        </div>
-        <div class="input " style="margin-top: 5px">
+            <label class="radio">
             @Html.RadioButtonFor(model => model.CampaignLocationId, 1, new { @checked = "checked" })
-            Todas las ubicaciones
-        </div>
-        <div class="input ">
+            Todas las ubicaciones</label>
+            <label class="radio">
             @Html.RadioButtonFor(model => model.CampaignLocationId, 2)
-            Ubicaciones públicas
-        </div>
-        <div class="input ">
+            Ubicaciones públicas</label>
+            <label class="radio">
             @Html.RadioButtonFor(model => model.CampaignLocationId, 3)
-            Ubicaciones privadas
+            Ubicaciones privadas</label>
         </div>
     </div>
     <strong>Oferta y Presupuesto</strong>
-    <hr />
+    @*<hr />*@
     <div class="control-group">
-        <label>
+        <label class="control-label">
             Oferta</label>
-        <div class="input ">
+        <div class="controls">
             Opciones básicas
-        </div>
-        <div class="input " style="margin-top: 5px">
+        <label class="radio">
             <input type="radio" name="offerControl[]" value="1" checked="checked" />
             Dejar que Optical Marketing establezca las ofertas para maximizar las interacciones
-            dentro del presupuesto objetivo
-        </div>
-        <div class="input ">
+            dentro del presupuesto objetivo</label>
+        <label class="radio">
             <input type="radio" name="offerControl[]" value="0" disabled="disabled" />
-            Establecer mis ofertas para las interacciones de forma manual
+            Establecer mis ofertas para las interacciones de forma manual</label>
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.Estimate, "Presupuesto ($)")
-        <div class="input">
+        <label class="control-label" for="Estimate">Presupuesto</label>
+        <div class="controls">
             <div class="input-prepend input-append">
-                @*<span class="add-on">$</span>*@
+                <span class="add-on">$</span>
                 @Html.TextBoxFor(model => model.Estimate, new { @class = "input-small" })
                 <span class="add-on">.00 / día</span>
             </div>
@@ -91,18 +89,18 @@
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.Offer, "Oferta por defecto ($)")
-        <div class="input">
+        <label class="control-label">Oferta por defecto</label>
+        <div class="controls">
             <div class="input-prepend input-append">
-                @*<span class="add-on">$</span>*@
+                <span class="add-on">$</span>
                 @Html.TextBoxFor(model => model.Offer, new { @disabled = "disabled", @class = "input-small" })
                 <span class="add-on">.00</span>
             </div>
             @Html.ValidationMessageFor(model => model.Estimate)
         </div>
     </div>
-    <div class="actions">
-        <input type="submit" value="Guardar" class="btn primary" />
+    <div class="form-actions">
+        <input type="submit" value="Guardar" class="btn btn-primary" />
         @if (Model != null && Model.AdvertCampaignId > 0)
         {   <text> @Html.ActionLink("Borrar", "Delete", new { id = Model.AdvertCampaignId }, new { @class = "btn" })
             </text>

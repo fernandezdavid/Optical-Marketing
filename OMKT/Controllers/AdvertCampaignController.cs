@@ -33,9 +33,30 @@ namespace OMKT.Controllers
             {
                 campaigns.Where(i => i.CampaignStateId == state);
             }
+            if (period.HasValue && period != 0)
+            {
+                campaigns.Where(i => i.StartDatetime >= i.StartDatetime.AddDays(-(double)period));
+            }
 
             campaigns.OrderByDescending(i => i.CreatedDate);
             return PartialView("AdvertCampaignListPartial", campaigns.ToList());
+        }
+
+        /**
+         * method DashboardCampaings
+         *
+         * List a number of campaigns order by created date descending
+         *
+         * @since 04/04/2013
+         * @return advertCampaign collection
+         */
+
+        public PartialViewResult DashboardCampaigns(int? top)
+        {
+            if (!top.HasValue) top = 10;
+            var oUser = (User)Session["User"];
+            var campaigns = _db.AdvertCampaigns.Where(i => i.CustomerId == oUser.CustomerId).Take(top.Value);
+            return PartialView("AdvertCampaignListSlimPartial", campaigns.ToList());
         }
 
         /**
