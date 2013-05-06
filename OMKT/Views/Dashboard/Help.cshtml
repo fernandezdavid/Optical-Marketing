@@ -1,6 +1,36 @@
 ﻿@{
-    ViewBag.Title = "Help";
-    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+	ViewBag.Title = "Primeros Pasos | OM";
+	Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
 
-<h2>Help</h2>
+<h2>Ayuda</h2>
+<div class="row-fluid">
+	<div class="span3">
+			<ul class="nav nav-tabs nav-stacked">
+                <li class="active" href="#primerosPasos"><a href="#"><i class="icon-chevron-right"></i>Primeros pasos con OM</a></li>
+                <li><a href="#configuracionCuenta"><i class="icon-chevron-right"></i>Configuración de cuenta</a></li>
+                <li><a href="#campanyas"><i class="icon-chevron-right"></i>Campañas</a></li>
+                <li><a href="#anuncios"><i class="icon-chevron-right"></i>Anuncios</a></li>
+                <li><a href="#productos"><i class="icon-chevron-right"></i>Productos</a></li>
+                <li><a href="#rendimiento"><i class="icon-chevron-right"></i>Rendimiento</a></li>
+            </ul>
+		</div>
+	
+	
+	<div class="span9">
+        <p><img src="@Url.Content("~/Content/images/logo3.png")" width="500" style="margin:0 0 50px 0"></p>
+	    <h2 id="primerosPasos">Primeros pasos con Optical Marketing</h2>
+        <p>Cree anuncios y campañas</p>
+<p>Cómo crear una campaña</p>
+<p>Debe crear, al menos, una campaña antes de empezar a asignar anuncios en su cuenta. Aquí le mostramos cómo crear una campaña y elegir la configuración de su campaña:
+Acceda a su cuenta de Optical Marketing en http://www.opticalmarketing.com.ar/
+Si es su primera campaña, haga clic en "Nueva  campaña".</p>
+
+        <h3 id="configuracionCuenta"><i class="icon-wrench"></i> Configuración de cuenta</h3>
+        <h3 id="campanyas"><i class="icon-cogs"></i> Campañas</h3>
+        <h3 id="anuncios"><i class="icon-desktop"></i> Anuncios</h3>
+        <h3 id="productos"><i class="icon-shopping-cart"></i> Productos</h3>
+        <h3 id="rendimiento"><i class="icon-bar-chart"></i> Rendimiento</h3>
+	</div>
+
+</div>
