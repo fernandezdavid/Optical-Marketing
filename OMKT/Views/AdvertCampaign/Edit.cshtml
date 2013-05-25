@@ -140,9 +140,14 @@
         </p>
     </div>
     <div class="modal-footer">
-        <input type="submit" class="btn btn-primary" value="Guardar" />
+        <input type="submit" class="btn btn-primary save-advert" value="Guardar" />
         <a target="_blank" href="@Url.Action("Create", "CommercialProduct")" class="btn small btn-success">
            @* <i class="icon-plus icon-white" style="margin: 0"></i> *@Nuevo Anuncio</a>
         <input type="button" class="btn closeModal" value="Cerrar" />
     </div>
 </div>
+<script type="text/javascript"">
+    $('input.save-advert').on('click', function () {
+        $('#my-modal form').trigger('submit');
+    });
+</script>

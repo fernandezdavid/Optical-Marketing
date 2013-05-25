@@ -21,17 +21,17 @@ namespace OMKT.Models.Helper
         public static void ActionImage(this HtmlHelper html, string imagePath, string alt, string cssClass,
             string action, string controllerName, object routeValues)
         {
-            //var currentUrl = new UrlHelper(html.ViewContext.RequestContext);
-            //var imgTagBuilder = new TagBuilder("img"); // build the <img> tag
-            //imgTagBuilder.MergeAttribute("src", currentUrl.Content(imagePath));
-            //imgTagBuilder.MergeAttribute("alt", alt);
-            //imgTagBuilder.MergeAttribute("class", cssClass);
-            //string imgHtml = imgTagBuilder.ToString(TagRenderMode.SelfClosing);
-            //var anchorTagBuilder = new TagBuilder("a"); // build the <a> tag
-            //anchorTagBuilder.MergeAttribute("href", currentUrl.Action(action, controllerName, routeValues));
-            //anchorTagBuilder.InnerHtml = imgHtml; // include the <img> tag inside
-            //string anchorHtml = anchorTagBuilder.ToString(TagRenderMode.Normal);
-            //return MvcHtmlString.Create(anchorHtml);
+            //var currenturl = new urlhelper(html.viewcontext.requestcontext);
+            //var imgtagbuilder = new tagbuilder("img"); // build the <img> tag
+            //imgtagbuilder.mergeattribute("src", currenturl.content(imagepath));
+            //imgtagbuilder.mergeattribute("alt", alt);
+            //imgtagbuilder.mergeattribute("class", cssclass);
+            //string imghtml = imgtagbuilder.tostring(tagrendermode.selfclosing);
+            //var anchortagbuilder = new tagbuilder("a"); // build the <a> tag
+            //anchortagbuilder.mergeattribute("href", currenturl.action(action, controllername, routevalues));
+            //anchortagbuilder.innerhtml = imghtml; // include the <img> tag inside
+            //string anchorhtml = anchortagbuilder.tostring(tagrendermode.normal);
+            //return mvchtmlstring.create(anchorhtml);
         }
 
         public static string GetConfigValue(string configValue, string defaultValue)
@@ -41,5 +41,6 @@ namespace OMKT.Models.Helper
 
             return configValue;
         }
+      
     }
 }

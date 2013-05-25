@@ -199,7 +199,7 @@ namespace OMKT.Controllers
         public ActionResult Delete(int id)
         {
             CommercialProduct commercialproduct = _db.CommercialProducts.Find(id);
-            return View(commercialproduct);
+            return PartialView(commercialproduct);
         }
 
         //
@@ -211,7 +211,7 @@ namespace OMKT.Controllers
             CommercialProduct commercialproduct = _db.CommercialProducts.Find(id);
             _db.CommercialProducts.Remove(commercialproduct);
             _db.SaveChanges();
-            return RedirectToAction("Index");
+            return Json(new { });
         }
 
         protected override void Dispose(bool disposing)
