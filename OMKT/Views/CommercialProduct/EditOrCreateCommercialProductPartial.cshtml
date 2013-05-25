@@ -18,14 +18,6 @@
     </div>
     <div class="control-group">
         <label class="control-label">
-            Descripción</label>
-        <div class="controls">
-            @Html.TextAreaFor(model => model.Description, new { @rows = "5", @class = "" })
-            @Html.ValidationMessageFor(model => model.Description)
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label">
             Precio</label>
         <div class="controls">
             <div class="input-prepend input-append">
@@ -34,6 +26,14 @@
                 <span class="add-on">.00</span>
             </div>
             @Html.ValidationMessageFor(model => model.Price, "*")
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Unidades Disponibles</label>
+        <div class="controls">
+            @Html.TextBoxFor(model => model.Stock, new { @class = "" })
+            @Html.ValidationMessageFor(model => model.Stock, "*")
         </div>
     </div>
     <div class="control-group">
@@ -53,17 +53,17 @@
     </div>
     <div class="control-group">
         <label class="control-label">
-            Unidades Disponibles</label>
+            Póster</label>
         <div class="controls">
-            @Html.TextBoxFor(model => model.Stock, new { @class = "" })
-            @Html.ValidationMessageFor(model => model.Stock, "*")
+            <input type="file" name="image" class="span5" id="image" />
         </div>
     </div>
     <div class="control-group">
         <label class="control-label">
-            Póster</label>
+            Descripción</label>
         <div class="controls">
-            <input type="file" name="image" class="span5" id="image" />
+            @Html.TextAreaFor(model => model.Description, new { @rows = "5", @class = "input-xxlarge" })
+            @Html.ValidationMessageFor(model => model.Description)
         </div>
     </div>
     <div class="control-group">
