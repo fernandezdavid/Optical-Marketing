@@ -35,7 +35,7 @@
 
         <tr>
             <td>
-                <img src="http://hp.static.adidas.com/@Url.Content(item.ProductImage.ThumbnailPath)" class="img-rounded" title="@item.ProductImage.Title" alt="@item.ProductImage.Caption" />
+                <img src="@Url.Content(item.ProductImage.ThumbnailPath)" class="" title="@item.ProductImage.Title" alt="@item.ProductImage.Caption" />
             </td>
             <td>
                 <a href="@Url.Action("Edit", "CommercialProduct", new { id = item.CommercialProductId})">@item.ProductName</a>
@@ -55,11 +55,18 @@
             <td>
                 <div class="btn-group">
                     <a href="@Url.Action("Edit", new { id = item.CommercialProductId })" class="btn btn-primary small editCommercialProduct" idÇommercialProduct="@item.CommercialProductId ">
-                        <i class=" icon-edit icon-white"></i></a><a href="@Url.Action("Details", new { id = item.CommercialProductId })" class="btn small">
-                            <i class=" icon-align-justify "></i></a><a href="@Url.Action("Delete", new { id = item.CommercialProductId })" class="btn small">
+                        <i class=" icon-edit icon-white"></i></a>
+                    <a href="@Url.Action("Details", new { id = item.CommercialProductId })" class="btn small">
+                            <i class=" icon-align-justify "></i></a>
+                    <a href="@Url.Action("Delete", new { id = item.CommercialProductId })" class="btn small delete-product" product-id="@item.CommercialProductId">
                                 <i class=" icon-trash "></i></a>
                 </div>
             </td>
         </tr>
     }
 </table>
+
+
+
+
+
