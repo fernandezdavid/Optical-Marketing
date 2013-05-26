@@ -2,7 +2,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#example').dataTable({
-            "sDom": "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>"
+            "sDom": "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [0, 5] },
+            ] 
             //"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>"
         });
     });
@@ -48,8 +51,12 @@
             <td>
                 <div class="btn-group">
                     <a href="@Url.Action("Edit", new { id = item.AdvertId })" class="btn btn-primary small" >
-                        <i class=" icon-edit icon-white"></i></a><a href="@Url.Action("Delete", new { id = item.AdvertId })" class="btn small">
-                            <i class=" icon-trash "></i></a>
+                        <i class=" icon-edit icon-white"></i></a>
+                    <a href="@Url.Action("Details", new { id = item.AdvertId })" class="btn small" >
+                        <i class="icon-align-justify"></i></a>
+                    <a href="@Url.Action("Delete", new { id = item.AdvertId })" class="btn small">
+                        <i class=" icon-trash "></i></a>
+
                 </div>
             </td>
         </tr>
@@ -63,3 +70,8 @@
         </tr>
     </tfoot>*@
 </table>
+
+
+
+
+

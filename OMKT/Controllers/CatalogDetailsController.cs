@@ -24,6 +24,16 @@ namespace OMKT.Controllers
             return PartialView("CatalogDetailsPartialList", oCatalogDetails.ToList());
         }
 
+        public PartialViewResult IndexByCatalogCarousel(int id)
+        {
+            ViewBag.AdvertId = id;
+            var oCatalog = _db.Catalogs.FirstOrDefault(i => i.AdvertId == id);
+            ViewBag.Catalog = oCatalog;
+
+            var oCatalogDetails = _db.CatalogDetails.Include(i => i.Catalog).Where(i => i.AdvertId == id);
+            return PartialView("CarouselPartialList", oCatalogDetails.ToList());
+        }
+
         public PartialViewResult IndexByCatalogSortable(int id)
         {
             ViewBag.AdvertId = id;

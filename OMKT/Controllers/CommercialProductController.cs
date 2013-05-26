@@ -214,6 +214,11 @@ namespace OMKT.Controllers
             return Json(new { });
         }
 
+        public ActionResult CatalogsOverview()
+        {
+            return PartialView("CatalogsOverview");
+        }
+
         protected override void Dispose(bool disposing)
         {
             _db.Dispose();
