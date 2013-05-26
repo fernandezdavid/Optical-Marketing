@@ -1,4 +1,8 @@
 ﻿@model OMKT.Business.CommercialProduct
+@if (ViewBag.Mode == "Editar" && !string.IsNullOrEmpty(ViewBag.Result))
+{  
+  <text><div class="alert alert-success">@ViewBag.Result<button type="button" class="close" data-dismiss="alert">&times;</button></div></text>
+}
 <fieldset>
     @*<legend>Edición de Producto</legend>*@
     @Html.HiddenFor(model => model.CommercialProductId)
@@ -16,7 +20,7 @@
         <label class="control-label">
             Descripción</label>
         <div class="controls">
-            @Html.TextAreaFor(model => model.Description, new { @class = "" })
+            @Html.TextAreaFor(model => model.Description, new { @rows = "5", @class = "" })
             @Html.ValidationMessageFor(model => model.Description)
         </div>
     </div>
@@ -26,20 +30,25 @@
         <div class="controls">
             <div class="input-prepend input-append">
                 <span class="add-on">$</span>
-                @Html.TextBoxFor(model => model.Price, new { @class = "input-small" })
+                @Html.TextBoxFor(model => model.Price, new { @style = "width:148px" })
                 <span class="add-on">.00</span>
-            </div>            
-            @Html.ValidationMessageFor(model => model.Price)
+            </div>
+            @Html.ValidationMessageFor(model => model.Price, "*")
         </div>
     </div>
     <div class="control-group">
         <label class="control-label">
             Tipo</label>
         <div class="controls">
+        <div class="span3" style="margin-left:0">
             <div class="input chzn-select">
                 @Html.DropDownList("CommercialProductTypeId", String.Empty)
                 @Html.ValidationMessageFor(model => model.CommercialProductTypeId)
             </div>
+            </div>
+            <div class="span2" style="margin-left:-10px">
+            <a target="_blank" href="#" class="btn small btn-primary">
+                    <i class="icon-plus icon-white" style="margin: 0"></i></a></div>
         </div>
     </div>
     <div class="control-group">
@@ -47,7 +56,7 @@
             Unidades Disponibles</label>
         <div class="controls">
             @Html.TextBoxFor(model => model.Stock, new { @class = "" })
-            @Html.ValidationMessageFor(model => model.Stock)
+            @Html.ValidationMessageFor(model => model.Stock, "*")
         </div>
     </div>
     <div class="control-group">
@@ -58,12 +67,12 @@
         </div>
     </div>
     <div class="control-group">
-        @if (ViewBag.Mode == "Edit" && Model.ProductImage != null)
+        @if (ViewBag.Mode == "Editar" && Model.ProductImage != null)
         {
             <text>
             <div class="controls">
                 <div class="span4">
-                    <img src="http://hp.static.adidas.com/@Url.Content(Model.ProductImage.ThumbnailPath)" class="img-rounded" title="@Model.ProductImage.Title" alt="@Model.ProductImage.Caption" width="100px" height="100px"/>
+                    <img src="@Url.Content(Model.ProductImage.ThumbnailPath)" class="img-rounded" title="@Model.ProductImage.Title" alt="@Model.ProductImage.Caption" />
                 </div>
             </div>
             </text>
@@ -71,10 +80,10 @@
     </div>
     <div class="form-actions">
         <input type="submit" class="btn btn-primary" value="Guardar" />
-        @if (Model != null && Model.CommercialProductId > 0)
+        @*@if (Model != null && Model.CommercialProductId > 0)
         {   <text> @Html.ActionLink("Borrar", "Delete", new { id = Model.CommercialProductId }, new { @class = "btn" })
             </text>
-        }
+        }*@
         <a href="@Url.Action("Index")" class="btn">Volver</a>
     </div>
 </fieldset>

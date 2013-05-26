@@ -4,7 +4,7 @@
     ViewBag.Title = "Crear";
 }
 
-@using (Html.BeginForm("Create", "CatalogDetails"))
+@using (Html.BeginForm("Create", "CatalogDetails", FormMethod.Post, new { @class="form-horizontal" }))
 {
     @Html.ValidationSummary(true)
     <text>

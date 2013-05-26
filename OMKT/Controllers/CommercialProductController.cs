@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Data;
 using System.Globalization;
 using System.IO;
@@ -6,8 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OMKT.Business;
-using System.Drawing;
-using System.Drawing.Imaging;
+using Simple.ImageResizer;
 using OMKT.Context;
 
 namespace OMKT.Controllers
@@ -71,42 +71,33 @@ namespace OMKT.Controllers
             {
                 if (image != null && image.ContentLength > 0)
                 {
-                    var new_image = Image.FromStream(image.InputStream, true, true);
-                    var thumb = new_image.GetThumbnailImage(
-                            30,
-                            30,
-                            () => false,
-                            IntPtr.Zero
-                           );
-                    // Finally, we encode and save the thumbnail.
-                    var jpgInfo = ImageCodecInfo.GetImageEncoders()
-                        .Where(codecInfo => codecInfo.MimeType == "image/jpeg").First();
+                    // Thumbnail logic
+                    BinaryReader b = new BinaryReader(image.InputStream);
+                    var binaryImage = b.ReadBytes(image.ContentLength);
 
-                    using (var encParams = new EncoderParameters(1))
-                    {
-                        // Your output path
-                        string outputPath = Path.Combine(Server.MapPath("~/Content/productImages"), jpgInfo + "_thumbnail"); ;
-                        // Image quality (should be in the range [0..100])
-                        long quality = 90;
-                        encParams.Param[0] = new EncoderParameter(Encoder.Quality, quality);
-                        thumb.Save(outputPath, jpgInfo, encParams);
-                    }
-                    var fileName = Path.GetFileName(image.FileName);
+                    var imageResizer = new ImageResizer(binaryImage);
+                    // 50 width, 50 height, scaleToFill, encoding
+                    imageResizer.Resize(100, 100, true, ImageEncoding.Png);
+                    
+                    var fileName = image.FileName;
+                    var imagePath = "~/Content/productImages/";
+                    imageResizer.SaveToFile(Path.Combine(Server.MapPath(imagePath + "thumbnails"), fileName));
+                    //var fileName = Path.GetFileName(image.FileName);
                     if (fileName != null)
                     {
-                        var path = Path.Combine(Server.MapPath("~/Content/productImages"), fileName);
+                        var path = Path.Combine(Server.MapPath(imagePath), fileName);
                         image.SaveAs(path);
                     }
                     var prodType = _db.CommercialProductTypes.Find(commercialProduct.CommercialProductTypeId);
                     var img = new ProductImage
                                   {
-                                      Path = Url.Content("~/brand/product-images/" + fileName),
+                                      Path = Url.Content(imagePath + fileName),
                                       Caption = image.FileName.Substring(0, image.FileName.Length - 4),
                                       Title = image.FileName.Substring(0, image.FileName.Length - 4),
                                       Extension = image.FileName.Substring(image.FileName.Length - 4, 4),
                                       CreatedDate = DateTime.Now,
                                       Size = image.ContentLength.ToString(CultureInfo.InvariantCulture),
-                                      ThumbnailPath = Url.Content("~/brand/product-images/" + fileName)
+                                      ThumbnailPath = Url.Content(imagePath + "thumbnails/" + fileName)
                                   };
                     var oUser = (User)Session["User"];
                     if (oUser != null)
@@ -118,12 +109,10 @@ namespace OMKT.Controllers
                         try
                         {
                             _db.SaveChanges();
-                            ViewBag.Success = "El producto fue registrado satisfactorimente.";
-                            return RedirectToAction("Edit", new { id = commercialProduct.CommercialProductId });
+                            return RedirectToAction("Edit", new { id = commercialProduct.CommercialProductId, result = "success" });
                         }
                         catch (Exception)
                         {
-                            ViewBag.Error = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud.";
                             return View(commercialProduct);
                         }
                     }
@@ -137,11 +126,13 @@ namespace OMKT.Controllers
         //
         // GET: /CommercialProduct/Edit/5
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id, string result)
         {
-            ViewBag.Mode = "Edit";
+            ViewBag.Mode = "Editar";
+            ViewBag.Result = (!string.IsNullOrEmpty(result)) ? "El producto fue guardado con éxito." : result;
             CommercialProduct commercialproduct = _db.CommercialProducts.Find(id);
             ViewBag.CommercialProductTypeId = new SelectList(_db.CommercialProductTypes, "CommercialProductTypeId", "Description", commercialproduct.CommercialProductTypeId);
+            commercialproduct.Price = Convert.ToInt16(commercialproduct.Price);
             return View(commercialproduct);
         }
 
@@ -151,23 +142,32 @@ namespace OMKT.Controllers
         [HttpPost]
         public ActionResult Edit(CommercialProduct commercialProduct, HttpPostedFileBase image)
         {
-            ViewBag.Mode = "Edit";
+            ViewBag.Mode = "Editar";
             ViewBag.CommercialProductTypeId = new SelectList(_db.CommercialProductTypes, "CommercialProductTypeId", "Description", commercialProduct.CommercialProductTypeId);
             var img = _db.ProductImages.Find(commercialProduct.ProductImageId);
             if (ModelState.IsValid)
             {
                 if (image != null && image.ContentLength > 0)
                 {
-                    // extract only the fielname
-                    var fileName = Path.GetFileName(image.FileName);
-                    // store the file inside ~/App_Data/uploads folder
+                    // Thumbnail logic
+                    BinaryReader b = new BinaryReader(image.InputStream);
+                    var binaryImage = b.ReadBytes(image.ContentLength);
+
+                    var imageResizer = new ImageResizer(binaryImage);
+                    // 50 width, 50 height, scaleToFill, encoding
+                    imageResizer.Resize(100, 100, true, ImageEncoding.Png);
+
+                    var fileName = image.FileName;
+                    var imagePath = "~/Content/productImages/";
+                    imageResizer.SaveToFile(Path.Combine(Server.MapPath(imagePath + "thumbnails"), fileName));
+                    //var fileName = Path.GetFileName(image.FileName);
                     if (fileName != null)
                     {
-                        var path = Path.Combine(Server.MapPath("~/Content/productImages"), fileName);
+                        var path = Path.Combine(Server.MapPath(imagePath), fileName);
                         image.SaveAs(path);
                     }
-                    img.Path = Url.Content("~/brand/product-images/" + fileName);
-                    img.ThumbnailPath = Url.Content("~/brand/product-images/" + fileName);
+                    img.Path = Url.Content(imagePath + fileName);
+                    img.ThumbnailPath = Url.Content(imagePath + "thumbnails/" + fileName);
                     img.Caption = image.FileName.Substring(0, image.FileName.Length - 4);
                     img.Title = image.FileName.Substring(0, image.FileName.Length - 4);
                     img.Extension = image.FileName.Substring(image.FileName.Length - 4, 4);
@@ -181,12 +181,12 @@ namespace OMKT.Controllers
                 try
                 {
                     _db.SaveChanges();
-                    ViewBag.Success = "El producto fue editado satisfactorimente.";
-                    return RedirectToAction("Edit", new { id = commercialProduct.CommercialProductId });
+                    //return Json(new { result = true, message = "El producto fue editado satisfactorimente." });
+                    return RedirectToAction("Edit", new { id = commercialProduct.CommercialProductId, result = "success" });
                 }
                 catch (Exception)
                 {
-                    ViewBag.Error = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud.";
+                    //return Json(new { result = false, message = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud." });
                     return View(commercialProduct);
                 }
             }
@@ -199,7 +199,7 @@ namespace OMKT.Controllers
         public ActionResult Delete(int id)
         {
             CommercialProduct commercialproduct = _db.CommercialProducts.Find(id);
-            return View(commercialproduct);
+            return PartialView(commercialproduct);
         }
 
         //
@@ -211,7 +211,7 @@ namespace OMKT.Controllers
             CommercialProduct commercialproduct = _db.CommercialProducts.Find(id);
             _db.CommercialProducts.Remove(commercialproduct);
             _db.SaveChanges();
-            return RedirectToAction("Index");
+            return Json(new { });
         }
 
         protected override void Dispose(bool disposing)
