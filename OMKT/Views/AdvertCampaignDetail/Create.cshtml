@@ -2,7 +2,7 @@
 <div class="alert alert-info">
     <strong>Elige un tipo de anuncio para esta campaña</strong>
 </div>
-@using (Html.BeginForm("Create", "AdvertCampaignDetail", FormMethod.Post, new { @class = "form-horizontal" }))
+@using (Html.BeginForm("Create", "AdvertCampaignDetail", FormMethod.Post, new { @class = "form-horizontal", @id = "save-detail" }))
 {
     @Html.ValidationSummary(true)
     <text>
