@@ -67,23 +67,18 @@ namespace OMKT.Controllers
 
         public ActionResult Create(int? id)
         {
-            //ViewBag.AdvertId = new SelectList(_db.Catalogs, "AdvertId", "CatalogName");
             ViewBag.CommercialProductId = new SelectList(_db.CommercialProducts.OrderBy(c => c.ProductName), "CommercialProductId", "ProductName");
             AdvertDetail oDetail = null;
             if (id.HasValue)
             {
-                Catalog oCatalog = (from cat in _db.Catalogs where cat.AdvertId == id select cat).FirstOrDefault();
+                Catalog oCatalog = _db.Catalogs.Find(id);// (from cat in _db.Catalogs where cat.AdvertId == id select cat).FirstOrDefault();
                 if (oCatalog != null)
                 {
                     oDetail = new AdvertDetail { AdvertId = id.Value, Catalog = oCatalog };
                 }
                 //ViewBag.AdvertId = new SelectList(_db.Catalogs, "AdvertId", "CatalogName", id.Value);
             }
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView("Create", oDetail);
-            }
-            return View("Create", oDetail);
+            return PartialView("Create", oDetail);          
         }
 
         //
@@ -95,17 +90,30 @@ namespace OMKT.Controllers
             ViewBag.CommercialProductId = new SelectList(_db.CommercialProducts.OrderBy(c => c.ProductName), "CommercialProductId", "ProductName");
             if (ModelState.IsValid)
             {
-                catalogdetail.CreatedDate = DateTime.Now;
-                _db.CatalogDetails.Add(catalogdetail);
-                _db.SaveChanges();
+                var check = _db.CatalogDetails.Where(a => a.CommercialProductId == catalogdetail.CommercialProductId && a.AdvertId == catalogdetail.AdvertId).FirstOrDefault();
+                if (check == null)
+                {
+                    catalogdetail.CreatedDate = DateTime.Now;
+                    _db.CatalogDetails.Add(catalogdetail);
+                    try
+                    {
+                        _db.SaveChanges();
+                    }
+                    catch (Exception)
+                    {
+                        //TODO
+                    }
 
-                var oCatalog = (from cat in _db.Catalogs where cat.AdvertId == catalogdetail.AdvertId select cat).FirstOrDefault();
+                }
+                else
+                {
+                    //TODO
+                }
+                var oCatalog = _db.Catalogs.Find(catalogdetail.AdvertId);// (from cat in _db.Catalogs where cat.AdvertId == catalogdetail.AdvertId select cat).FirstOrDefault();
                 ViewBag.Catalog = oCatalog;
 
-                return PartialView("Index", _db.CatalogDetails.Where(cd => cd.AdvertId == catalogdetail.AdvertId).Include(i => i.CommercialProduct));
+                return PartialView("CatalogDetailsPartialList", _db.CatalogDetails.Where(cd => cd.AdvertId == catalogdetail.AdvertId).Include(i => i.CommercialProduct));                
             }
-            //ViewBag.AdvertId = new SelectList(_db.Catalogs, "AdvertId", "CatalogName", catalogdetail.AdvertId);
-            Response.StatusCode = 400;
             return PartialView("Create", catalogdetail);
         }
 
@@ -128,18 +136,31 @@ namespace OMKT.Controllers
             ViewBag.CommercialProductId = new SelectList(_db.CommercialProducts, "CommercialProductId", "ProductName", catalogdetail.CommercialProductId);
             if (ModelState.IsValid)
             {
-                var oCatalog = _db.Catalogs.Find(catalogdetail.AdvertId);
-                oCatalog.LastUpdate = DateTime.Now;
-                _db.Entry(oCatalog).State = EntityState.Modified;
-                catalogdetail.LastUpdate = DateTime.Now;
-                _db.Entry(catalogdetail).State = EntityState.Modified;
-                _db.SaveChanges();
-                ViewBag.Catalog = oCatalog;
+                var check = _db.CatalogDetails.Where(a => a.CommercialProductId == catalogdetail.CommercialProductId && a.AdvertId == catalogdetail.AdvertId).FirstOrDefault();
+                if (check == null)
+                {
+                    var oCatalog = _db.Catalogs.Find(catalogdetail.AdvertId);
+                    oCatalog.LastUpdate = DateTime.Now;
+                    _db.Entry(oCatalog).State = EntityState.Modified;
+                    catalogdetail.LastUpdate = DateTime.Now;
+                    _db.Entry(catalogdetail).State = EntityState.Modified;
+                    ViewBag.Catalog = oCatalog;
+                    try
+                    {
+                        _db.SaveChanges();  
+                    }
+                    catch (Exception)
+                    {
+                        //TODO
+                    }
 
-                return PartialView("Index", _db.CatalogDetails.Where(cd => cd.AdvertId == catalogdetail.AdvertId).Include(i => i.CommercialProduct).ToList());
+                }
+                else
+                {
+                    //TODO
+                }
+                return PartialView("CatalogDetailsPartialList", _db.CatalogDetails.Where(cd => cd.AdvertId == catalogdetail.AdvertId).Include(i => i.CommercialProduct).ToList());
             }
-            ViewBag.AdvertId = new SelectList(_db.Catalogs, "AdvertId", "CatalogName", catalogdetail.AdvertId);
-            Response.StatusCode = 400;
             return PartialView("Edit", catalogdetail);
         }
 
@@ -162,10 +183,18 @@ namespace OMKT.Controllers
             if (catalogdetail != null)
             {
                 _db.CatalogDetails.Remove(catalogdetail);
-                _db.SaveChanges();
-                return RedirectToAction("IndexByCatalog", "CatalogDetails", new { id = catalogdetail.AdvertId });
+                try
+                {
+                    _db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+                
+                return PartialView("CatalogDetailsPartialList", _db.CatalogDetails.Where(cd => cd.AdvertId == catalogdetail.AdvertId).Include(i => i.CommercialProduct));                
             }
-            Response.StatusCode = 400;
             return Content("El registro no fue encontrado.");
         }
 

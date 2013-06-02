@@ -1,10 +1,9 @@
 ﻿@model OMKT.Business.CommercialProduct
-@if (ViewBag.Mode == "Editar" && !string.IsNullOrEmpty(ViewBag.Result))
+@*@if (ViewBag.Mode == "Editar" && !string.IsNullOrEmpty(ViewBag.Result))
 {  
   <text><div class="alert alert-success">@ViewBag.Result<button type="button" class="close" data-dismiss="alert">&times;</button></div></text>
-}
+}*@
 <fieldset>
-    @*<legend>Edición de Producto</legend>*@
     @Html.HiddenFor(model => model.CommercialProductId)
     @Html.HiddenFor(model => model.ProductImageId)
     @Html.HiddenFor(model => model.CustomerId)
@@ -67,7 +66,7 @@
         </div>
     </div>
     <div class="control-group">
-        @if (ViewBag.Mode == "Editar" && Model.ProductImage != null)
+        @if (Model.ProductImage != null)
         {
             <text>
             <div class="controls">

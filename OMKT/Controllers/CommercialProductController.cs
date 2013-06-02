@@ -109,10 +109,11 @@ namespace OMKT.Controllers
                         try
                         {
                             _db.SaveChanges();
-                            return RedirectToAction("Edit", new { id = commercialProduct.CommercialProductId, result = "success" });
+                            return RedirectToAction("Edit", new { id = commercialProduct.CommercialProductId });
                         }
                         catch (Exception)
                         {
+                            ViewBag.Error = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud.";
                             return View(commercialProduct);
                         }
                     }
@@ -128,8 +129,6 @@ namespace OMKT.Controllers
 
         public ActionResult Edit(int id, string result)
         {
-            ViewBag.Mode = "Editar";
-            ViewBag.Result = (!string.IsNullOrEmpty(result)) ? "El producto fue guardado con éxito." : result;
             CommercialProduct commercialproduct = _db.CommercialProducts.Find(id);
             ViewBag.CommercialProductTypeId = new SelectList(_db.CommercialProductTypes, "CommercialProductTypeId", "Description", commercialproduct.CommercialProductTypeId);
             commercialproduct.Price = Convert.ToInt16(commercialproduct.Price);
@@ -142,7 +141,6 @@ namespace OMKT.Controllers
         [HttpPost]
         public ActionResult Edit(CommercialProduct commercialProduct, HttpPostedFileBase image)
         {
-            ViewBag.Mode = "Editar";
             ViewBag.CommercialProductTypeId = new SelectList(_db.CommercialProductTypes, "CommercialProductTypeId", "Description", commercialProduct.CommercialProductTypeId);
             var img = _db.ProductImages.Find(commercialProduct.ProductImageId);
             if (ModelState.IsValid)
@@ -181,14 +179,13 @@ namespace OMKT.Controllers
                 try
                 {
                     _db.SaveChanges();
-                    //return Json(new { result = true, message = "El producto fue editado satisfactorimente." });
-                    return RedirectToAction("Edit", new { id = commercialProduct.CommercialProductId, result = "success" });
+                    ViewBag.Success = "El producto fue editado satisfactoriamente.";
                 }
                 catch (Exception)
                 {
-                    //return Json(new { result = false, message = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud." });
-                    return View(commercialProduct);
+                    ViewBag.Error = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud.";
                 }
+                return View(commercialProduct);
             }
             return View(commercialProduct);
         }

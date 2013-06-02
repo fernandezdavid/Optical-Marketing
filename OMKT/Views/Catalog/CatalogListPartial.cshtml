@@ -54,7 +54,7 @@
                         <i class=" icon-edit icon-white"></i></a>
                     <a href="@Url.Action("Details", new { id = item.AdvertId })" class="btn small" >
                         <i class="icon-align-justify"></i></a>
-                    <a href="@Url.Action("Delete", new { id = item.AdvertId })" class="btn small">
+                    <a href="@Url.Action("Delete", new { id = item.AdvertId })" class="btn small delete-catalog" catalog-id="@item.AdvertId">
                         <i class=" icon-trash "></i></a>
 
                 </div>
