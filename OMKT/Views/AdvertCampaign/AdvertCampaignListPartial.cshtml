@@ -95,7 +95,7 @@
                 <div class="btn-group">
                     <a href="@Url.Action("Edit", new { id = item.AdvertCampaignId })" class="btn btn-primary small" >
                         <i class=" icon-edit icon-white"></i></a>@* <a href="@Url.Action("Details", new { id = item.AdvertCampaignId })" class="btn small"><i class=" icon-print "></i></a>*@
-                    <a href="@Url.Action("Delete", new { id = item.AdvertCampaignId })" class="btn small">
+                    <a href="@Url.Action("Delete", new { id = item.AdvertCampaignId })" class="btn small delete-campaign" campaign-id="@item.AdvertCampaignId">
                         <i class=" icon-trash "></i></a>
                 </div>
             </td>

@@ -230,7 +230,7 @@ namespace OMKT.Controllers
         public ActionResult Delete(int id)
         {
             AdvertCampaign advertcampaign = _db.AdvertCampaigns.Find(id); //@TODO customer check
-            return View(advertcampaign);
+            return PartialView(advertcampaign);
         }
 
         /**
@@ -254,7 +254,7 @@ namespace OMKT.Controllers
             }
             catch (Exception)
             {
-                return View();
+                return PartialView(advertcampaign);
             }
         }
 
