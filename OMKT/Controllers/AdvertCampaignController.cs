@@ -181,6 +181,7 @@ namespace OMKT.Controllers
         public ActionResult Edit(int id)
         {
             AdvertCampaign advertcampaign = _db.AdvertCampaigns.Find(id); //@TODO customer check
+            advertcampaign.Estimate = Convert.ToInt32(advertcampaign.Estimate);
             ViewBag.CampaignTypeId = new SelectList(_db.CampaignTypes.OrderBy(c => c.Name), "CampaignTypeId", "Name", advertcampaign.CampaignTypeId);
 
             return View(advertcampaign);

@@ -9,18 +9,15 @@ namespace OMKT.Business
         public int AdvertCampaignId { get; set; }
 
         public int CustomerId { get; set; }
-
         public virtual Customer Customer { get; set; }
 
         [DisplayName("Nombre de campaña")]
         public string Name { get; set; }
 
         public int NetworkId { get; set; }
-
         public virtual Network Network { get; set; }
 
         public int CampaignLocationId { get; set; }
-
         public virtual CampaignLocation CampaignLocation { get; set; }
 
         public DateTime EndDatetime { get; set; }
@@ -32,11 +29,9 @@ namespace OMKT.Business
         public DateTime CreatedDate { get; set; }
 
         public int CampaignStateId { get; set; }
-
         public virtual CampaignState CampaignState { get; set; }
 
         public int CampaignTypeId { get; set; }
-
         public virtual CampaignType CampaignType { get; set; }
 
         public decimal Estimate { get; set; }

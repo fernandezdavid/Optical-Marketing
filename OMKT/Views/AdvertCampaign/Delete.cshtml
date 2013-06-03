@@ -6,16 +6,34 @@
     <strong>¿Estás seguro que deseas eliminar esta campaña?</strong>
 </div>
 <p>
-    <strong>Nombre de Campaña</strong></p>
-<p>@Html.DisplayFor(model => model.Name)
+    <strong>Nombre de Campaña </strong>
+@Html.DisplayFor(model => model.Name)
 </p>
 <p>
-    <strong>Tipo</strong></p>
-<p>
+    <strong>Tipo </strong>
     @Html.DisplayFor(model => model.CampaignType.Name)
 </p>
 <p>
-    <strong>Estado</strong>
-</p>
-<p>@Html.DisplayFor(model => model.CampaignState.Description)
-</p>
+    <strong>Estado </strong>
+    @Html.DisplayFor(model => model.CampaignState.Description)</p>
+<p>
+    <strong>Ubicacion </strong>
+    @Html.DisplayFor(model => model.CampaignLocation.Description)</p>
+<p>
+    <strong>Red </strong>
+    @Html.DisplayFor(model => model.Network.Description)</p>
+<p>
+    <strong>Presupuesto </strong>
+    @Html.DisplayFor(model => model.Estimate)</p>
+<p>
+    <strong>Fecha de inicio </strong>
+    @Html.DisplayFor(model => model.StartDatetime)</p>
+<p>
+    <strong>Fecha fin </strong>
+    @Html.DisplayFor(model => model.EndDatetime)</p>
+<p>
+    <strong>Cantidad de Anuncios </strong>
+    @Html.DisplayFor(model => model.AdvertCampaignDetails.Count)</p>
+<p>
+    <strong>Costo </strong>
+    @Html.DisplayFor(model => model.Offer)</p>
