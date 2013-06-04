@@ -218,16 +218,49 @@ namespace OMKT.Context
             #endregion
 
             #region campaign locations
+            //Locations
+            var loc1 = new Location{ Latitude = "-31.419677", Longitude = "-64.1878", Detail = "Patio Olmos"};
+            context.Locations.Add(loc1);
+            var loc2 = new Location { Latitude = "-31.413133", Longitude = "-64.204357", Detail = "Nuevo Shopping" };
+            context.Locations.Add(loc2);
+            var loc3 = new Location { Latitude = "-31.442696", Longitude = "-64.194072", Detail = "Universidad Tecnológica Nacional" };
+            context.Locations.Add(loc3);
+            //Advert hosts categories
+            var cat1 = new AdvertHostCategory { Name = "Premium" };
+            context.AdvertHostCategories.Add(cat1);
+            var cat2 = new AdvertHostCategory { Name = "Estandar" };
+            context.AdvertHostCategories.Add(cat2);
+            var cat3 = new AdvertHostCategory { Name = "Gratutita" };
+            context.AdvertHostCategories.Add(cat3);
+            //Advert hosts
+            var host1 = new AdvertHost { AdvertHostName = "Patio Olmos" };
+            host1.Location = loc1;
+            host1.AdvertHostCategory = cat1;
+            context.AdvertHosts.Add(host1);
+            var host2 = new AdvertHost { AdvertHostName = "Nuevo centro" };
+            host2.Location = loc2;
+            host2.AdvertHostCategory = cat2;
+            context.AdvertHosts.Add(host2);
+            var host3 = new AdvertHost { AdvertHostName = "UTN" };
+            host3.Location = loc3;
+            host3.AdvertHostCategory = cat3;
+            context.AdvertHosts.Add(host3);            
+
+            var campLoc1 = new CampaignLocation{Description = "Todas las ubicaciones"};
+            campLoc1.AdvertHosts.Add(host1);
+            campLoc1.AdvertHosts.Add(host2);
+            campLoc1.AdvertHosts.Add(host3);
+            context.CampaignLocations.Add(campLoc1);
+            
             var locations = new List<CampaignLocation>
-                                {
-                                   new CampaignLocation{Description = "Todas las ubicaciones"},
-                                   new CampaignLocation{Description = "Ubicaciones privadas"},
+                                {  new CampaignLocation{Description = "Ubicaciones privadas"},
                                    new CampaignLocation{Description = "Ubicaciones públicas"}
-                                };
+                                };            
             foreach (var loc in locations)
             {
                 context.CampaignLocations.Add(loc);
             }
+            
             #endregion
 
             #region campaigns
@@ -240,7 +273,7 @@ namespace OMKT.Context
             campaign.CreatedDate = DateTime.Now.AddDays(-15);
             campaign.EndDatetime = DateTime.Now.AddDays(15);
             campaign.Network = new Network { Description = "Red de difusión de Optical Marketing" };
-            campaign.CampaignLocation = locations[0];
+            campaign.CampaignLocation = campLoc1;
             campaign.StartDatetime = campaign.CreatedDate;
             campaign.CustomerId = campaign.Customer.CustomerID;
             campaign.LastUpdate = DateTime.Now;
@@ -252,7 +285,7 @@ namespace OMKT.Context
                 });
 
             #region interactions
-
+            //TODO think this shit all over again
             foreach (var cmp in campaign.AdvertCampaignDetails)
             {
                 for (int j = 0; j < 7; j++)
