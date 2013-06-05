@@ -179,7 +179,8 @@ namespace OMKT.Context
             var catalog = new Catalog();
             catalog.Name = "Botines de Fútbol 2012";
             catalog.CreatedDate = new DateTime(DateTime.Now.Year, 1, new Random().Next(1, 28)); //random date (this month)
-            catalog.EndDatetime = catalog.CreatedDate.AddDays(90);
+            if (catalog.CreatedDate != null) 
+                catalog.EndDatetime = Convert.ToDateTime(catalog.CreatedDate).AddDays(90);
             catalog.StartDatetime = catalog.CreatedDate;
             catalog.LastUpdate = DateTime.Now;
             catalog.AdvertState = new AdvertState { Description = "Activo" };

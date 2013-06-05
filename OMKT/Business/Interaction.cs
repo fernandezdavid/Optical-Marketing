@@ -6,7 +6,7 @@ namespace OMKT.Business
     {
         public int InteractionId { get; set; }
 
-        public DateTime StartDateTime { get; set; }
+        public DateTime? StartDateTime { get; set; }
 
         public DateTime? EndDateTime { get; set; }
 

@@ -8,10 +8,9 @@ namespace OMKT.Business
 
         public string Message { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
 
         public virtual Customer Customer { get; set; }
-
         public int CustomerId { get; set; }
     }
 }

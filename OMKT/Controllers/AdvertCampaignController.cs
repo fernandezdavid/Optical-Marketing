@@ -35,7 +35,7 @@ namespace OMKT.Controllers
             }
             if (period.HasValue && period != 0)
             {
-                campaigns.Where(i => i.StartDatetime >= i.StartDatetime.AddDays(-(double)period));
+                campaigns.Where(i => i.StartDatetime >= Convert.ToDateTime(i.StartDatetime).AddDays(-(double)period));
             }
 
             campaigns.OrderByDescending(i => i.CreatedDate);
