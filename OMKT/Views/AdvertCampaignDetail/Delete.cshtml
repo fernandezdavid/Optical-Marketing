@@ -1,28 +1,37 @@
 ﻿@model OMKT.Business.AdvertCampaignDetail
 
-@{
-    ViewBag.Title = "Borrar";
-}
-<div class="alert-message warning">
+<div class="alert alert-info">
     <a class="close" href="#">×</a>
-    <p>
-        <strong>¿Estás seguro que deseas borrar este registro?</strong></p>
+    <strong>¿Estás seguro que deseas borrar este registro?</strong>
 </div>
 <fieldset>
     <p>
-        <strong>Anuncio: </strong>@Html.DisplayFor(model => model.Advert.Name)
+        <strong>Anuncio </strong>
     </p>
-    
-    <p>
-        <strong>Fecha de vigencia:</strong>@Html.DisplayFor(model => model.StartDate)
+    <p>@Html.DisplayFor(model => model.Advert.Name)
     </p>
     <p>
-        <strong>Fecha de caducidad:</strong>@Html.DisplayFor(model => model.EndDate)
-    </p>    
+        <strong>Fecha de vigencia</strong></p>
+    <p>@Html.DisplayFor(model => model.StartDate)
+    </p>
+    <p>
+        <strong>Fecha de caducidad</strong></p>
+    <p>@Html.DisplayFor(model => model.EndDate)
+    </p>
 </fieldset>
-@using (Html.BeginForm()) {
-    <div class="actions">
-        <input type="submit" value="Borrar" class="btn primary" />
-        <input type="button" class="btn closeModal" value="Cerrar" />
-    </div>
-}
+@using (Html.BeginForm("Delete", "AdvertCampaignDetail", FormMethod.Post, new { @class = "form-horizontal", @id = "del-detail" })) { }
+<script type="text/javascript">
+    $('#del-detail').on('submit', function (e) {
+        clearErrors();
+        e.preventDefault();
+        $.post($(this).attr('action'), $(this).serialize(), function (data, status) {
+            $('#campaign-modal').modal('hide');
+            $("#advertCampaignDetailList").html(data);
+        }).error(function (error, status, a, b) {
+            writeError('msgError', 'Ups! Algo anduvo mal. Por favor, intenta nuevamente.');
+            $('.modal-body p.body').html(error.responseText);
+        });
+        return false;
+    });
+    
+</script>

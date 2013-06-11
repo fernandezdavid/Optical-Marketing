@@ -74,11 +74,20 @@
         </div>
     </div>
     <div class="container-fluid dash-content">
-    @{Html.RenderPartial("DisplayMessages");}
-    @RenderBody()
-    <div id="inbox-modal" class="modal hide fade"> <div class="inbox-modal-header modal-header">
-    <a href="#" class="close">&times;</a> <h3> Mensajes</h3> </div> <div class="inbox-modal-body
-    modal-body" style="overflow-y: visible"> <div id="inbox-msgError"> </div> <p class="body">
-    </p> </div> <div class="inbox-modal-footer modal-footer"> </div> </div> </div>
+        @RenderBody()
+    <div id="inbox-modal" class="modal hide fade"> 
+        <div class="inbox-modal-header modal-header">
+         <a href="#" class="close">&times;</a> 
+         <h3> Mensajes</h3> 
+         </div> 
+         <div class="inbox-modal-body modal-body" style="overflow-y: visible"> 
+            <div id="inbox-msgError"> </div> 
+                <p class="body">
+                </p> 
+            </div> 
+         <div class="inbox-modal-footer modal-footer"> 
+         </div> 
+        </div> 
+      </div>
 </body>
 </html>

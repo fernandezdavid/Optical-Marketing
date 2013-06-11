@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using OMKT.Business;
 using Simple.ImageResizer;
 using OMKT.Context;
+using System.Collections.Generic;
+using OMKT.Models;
 
 namespace OMKT.Controllers
 {
@@ -78,7 +80,7 @@ namespace OMKT.Controllers
                     var imageResizer = new ImageResizer(binaryImage);
                     // 50 width, 50 height, scaleToFill, encoding
                     imageResizer.Resize(100, 100, true, ImageEncoding.Png);
-                    
+
                     var fileName = image.FileName;
                     var imagePath = "~/Content/productImages/";
                     imageResizer.SaveToFile(Path.Combine(Server.MapPath(imagePath + "thumbnails"), fileName));
@@ -109,10 +111,11 @@ namespace OMKT.Controllers
                         try
                         {
                             _db.SaveChanges();
-                            return RedirectToAction("Edit", new { id = commercialProduct.CommercialProductId, result = "success" });
+                            return RedirectToAction("Edit", new { id = commercialProduct.CommercialProductId });
                         }
                         catch (Exception)
                         {
+                            ViewBag.Error = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud.";
                             return View(commercialProduct);
                         }
                     }
@@ -128,8 +131,6 @@ namespace OMKT.Controllers
 
         public ActionResult Edit(int id, string result)
         {
-            ViewBag.Mode = "Editar";
-            ViewBag.Result = (!string.IsNullOrEmpty(result)) ? "El producto fue guardado con éxito." : result;
             CommercialProduct commercialproduct = _db.CommercialProducts.Find(id);
             ViewBag.CommercialProductTypeId = new SelectList(_db.CommercialProductTypes, "CommercialProductTypeId", "Description", commercialproduct.CommercialProductTypeId);
             commercialproduct.Price = Convert.ToInt16(commercialproduct.Price);
@@ -142,7 +143,6 @@ namespace OMKT.Controllers
         [HttpPost]
         public ActionResult Edit(CommercialProduct commercialProduct, HttpPostedFileBase image)
         {
-            ViewBag.Mode = "Editar";
             ViewBag.CommercialProductTypeId = new SelectList(_db.CommercialProductTypes, "CommercialProductTypeId", "Description", commercialProduct.CommercialProductTypeId);
             var img = _db.ProductImages.Find(commercialProduct.ProductImageId);
             if (ModelState.IsValid)
@@ -181,14 +181,13 @@ namespace OMKT.Controllers
                 try
                 {
                     _db.SaveChanges();
-                    //return Json(new { result = true, message = "El producto fue editado satisfactorimente." });
-                    return RedirectToAction("Edit", new { id = commercialProduct.CommercialProductId, result = "success" });
+                    ViewBag.Success = "El producto fue editado satisfactoriamente.";
                 }
                 catch (Exception)
                 {
-                    //return Json(new { result = false, message = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud." });
-                    return View(commercialProduct);
+                    ViewBag.Error = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud.";
                 }
+                return View(commercialProduct);
             }
             return View(commercialProduct);
         }
@@ -212,6 +211,23 @@ namespace OMKT.Controllers
             _db.CommercialProducts.Remove(commercialproduct);
             _db.SaveChanges();
             return Json(new { });
+        }
+
+        public ActionResult CommercialProductsOverview()
+        {
+            var oUser = (User)Session["User"];
+            var products = _db.CommercialProducts.Where(c => c.CustomerId == oUser.CustomerId);
+            var interactions = new List<ProductOverview>();
+            var likes = 0;
+            foreach (var pro in products)
+            {
+                likes = _db.AdvertDetailInteractions.Where(c => c.AdvertDetail.CommercialProductId == pro.CommercialProductId && c.Like == true).Count();   
+                var oPO = new ProductOverview();
+                oPO.Likes = likes;
+                oPO.ProductName = pro.ProductName;
+                interactions.Add(oPO);               
+            }
+            return PartialView("CommercialProductsOverview", interactions.ToList());
         }
 
         protected override void Dispose(bool disposing)

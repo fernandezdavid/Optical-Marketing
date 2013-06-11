@@ -1,20 +1,20 @@
 ﻿
 @if (!string.IsNullOrWhiteSpace(ViewBag.Error)) { 
-<div class="alert-message error">
-    @ViewBag.Error
+<div class="alert alert-error">
+    @ViewBag.Error<button type="button" class="close" data-dismiss="alert">&times;</button>
 </div>
 }
 
 @if (!string.IsNullOrWhiteSpace(ViewBag.Warning))
 { 
-<div class="alert-message warning">
-    @ViewBag.Warning
+<div class="alert alert-warning">
+    @ViewBag.Warning<button type="button" class="close" data-dismiss="alert">&times;</button>
 </div>
 }
 
 @if (!string.IsNullOrWhiteSpace(ViewBag.Success))
 { 
-<div class="alert-message success">
-    @ViewBag.Success
+<div class="alert alert-success">
+    @ViewBag.Success<button type="button" class="close" data-dismiss="alert">&times;</button>
 </div>
 }

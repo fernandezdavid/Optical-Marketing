@@ -3,110 +3,11 @@
     ViewBag.Title = "Editar";
     Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
-@section Header{
-    <script type="text/javascript">
 
-        var sorter_options = {
-            headers: {
-                1: { sorter: 'decimal' },
-                2: { sorter: 'decimal' },
-                3: { sorter: 'decimal' },
-                4: { sorter: 'decimal' },
-                5: { sorter: 'decimal' }
-            }
-        };
-
-        function clearErrors() {
-            $('#msgErrorNewCampaignDetail').html('');
-            $('#msgError').html('');
-        }
-
-        function writeError(control, msg) {
-            var errMsg = '<div class="alert-message error"><a class="close" href="#">×</a><p>' + msg + '</p></div>';
-            $('#' + control).html(errMsg);
-        }
-
-        $(document).ready(function () {
-
-            $('.close').on('click', function () {
-                $('#my-modal').modal('hide');
-            });
-
-            $('#my-modal form').on('submit', function () {
-                clearErrors();
-
-                $.post($(this).attr('action'), $(this).serialize(), function (data, status) {
-                    $('#my-modal').modal('hide');
-                    $("#advertCampaignDetailList").html(data);
-
-                }).error(function (error, status, a, b) {
-                    writeError('msgError', 'Ups! Algo anduvo mal. Por favor, intenta nuevamente.');
-                    $('.modal-body p.body').html(error.responseText);
-
-                });
-                return false;
-            });
-
-            function getRequest(url) {
-                $.ajax({
-                    url: url,
-                    context: document.body,
-                    success: function (data) {
-                        $('.modal-body p.body').html(data);
-                        $(this).addClass("done");
-                        $('#my-modal').modal('show');
-
-                    },
-                    error: function (err) {
-                        writeError('msgErrorNewAdvertCampaignDetail', err);
-                    }
-                });
-            }
-
-            $('a.newAdvertCampaignDetail').on('click', function () {
-                clearErrors();
-                //alert('sdf');
-                var id = $(this).attr("idAdvertCampaign");
-                var url = '@Url.Content("~/AdvertCampaignDetail/Create")/' + id;
-
-                getRequest(url);
-
-                return false;
-            });
-
-            $('.deleteAdvertCampaignDetail').on('click', function () {
-                clearErrors();
-
-                var id = $(this).attr("idAdvertCampaignDetail");
-                var url = '@Url.Content("~/AdvertCampaignDetail/Delete")/' + id;
-
-                getRequest(url);
-
-                return false;
-            });
-
-
-
-            $('.editAdvertCampaignDetail').on('click', function () {
-                clearErrors();
-
-                var id = $(this).attr("idAdvertCampaignDetail");
-                var url = '@Url.Content("~/AdvertCampaignDetail/Edit")/' + id;
-
-                getRequest(url);
-
-                return false;
-            });
-
-
-
-
-        }); 
-    </script>
-}
 <div class="span6">
     <h2>
         Edición de Campaña</h2>
+        @{Html.RenderPartial("DisplayMessages");}
     @using (Html.BeginForm("Edit", "AdvertCampaign", FormMethod.Post, new { @class = "form-horizontal" }))
     {
         @Html.ValidationSummary(true)
@@ -121,13 +22,15 @@
         <a href="@Url.Action("Create", "AdvertCampaignDetail", new { id = Model.AdvertCampaignId })" idAdvertCampaign="@Model.AdvertCampaignId" class="btn btn-primary newAdvertCampaignDetail">
             <i class="icon-plus icon-white "></i> Nuevo</a>
     </p>
+    
     <div id="msgErrorNewAdvertCampaignDetail">
     </div>
     <div id="advertCampaignDetailList">
+        
         @{Html.RenderAction("IndexByCampaign", "AdvertCampaignDetail", new { id = Model.AdvertCampaignId });}
     </div>
 </div>
-<div id="my-modal" class="modal hide fade">
+<div id="campaign-modal" class="modal hide fade">
     <div class="modal-header">
         <a href="#" class="close">&times;</a>
         <h3>
@@ -140,14 +43,107 @@
         </p>
     </div>
     <div class="modal-footer">
-        <input type="submit" class="btn btn-primary save-advert" value="Guardar" />
+        <input type="submit" class="btn btn-primary action-modal" value="" form="" />
         <a target="_blank" href="@Url.Action("Create", "CommercialProduct")" class="btn small btn-success">
            @* <i class="icon-plus icon-white" style="margin: 0"></i> *@Nuevo Anuncio</a>
-        <input type="button" class="btn closeModal" value="Cerrar" />
+        <input type="button" class="btn close-modal" value="Cerrar" />
     </div>
 </div>
-<script type="text/javascript"">
-    $('input.save-advert').on('click', function () {
-        $('#my-modal form').trigger('submit');
-    });
-</script>
+<script type="text/javascript">
+
+    function clearErrors() {
+        $('#msgErrorNewCampaignDetail').html('');
+        $('#msgError').html('');
+    }
+
+    function writeError(control, msg) {
+        var errMsg = '<div class="alert-message error"><a class="close" href="#">×</a><p>' + msg + '</p></div>';
+        $('#' + control).html(errMsg);
+    }
+
+    $(document).ready(function () {
+
+        $('.close-modal').on('click', function () {
+            $('#campaign-modal').modal('hide');
+        });
+
+        $('.modal-body p.body').on('submit', '#save-detail', function (e) {
+            clearErrors();
+            e.preventDefault();
+            $.post($(this).attr('action'), $(this).serialize(), function (data, status) {
+                $('#campaign-modal').modal('hide');
+                $("#advertCampaignDetailList").html(data);
+            }).error(function (error, status, a, b) {
+                writeError('msgError', 'Ups! Algo anduvo mal. Por favor, intenta nuevamente.');
+                $('.modal-body p.body').html(error.responseText);
+            });
+            return false;
+        });
+
+        $('a.newAdvertCampaignDetail').on('click', function () {
+            clearErrors();
+            var id = $(this).attr("idAdvertCampaign");
+            var url = '@Url.Content("~/AdvertCampaignDetail/Create")/' + id;
+            $.ajax({
+                url: url,
+                context: document.body,
+                success: function (data) {
+                    $('.modal-body p.body').html(data);
+                    $(this).addClass("done");
+                    $('.modal-footer input.action-modal').attr('value', 'Guardar');
+                    $('.modal-footer input.action-modal').attr('form', 'save-detail');
+                    $('.modal-header h3').text('Nuevo Detalle');
+                    $('#campaign-modal').modal('show');
+                },
+                error: function (err) {
+                    writeError('msgErrorNewAdvertCampaignDetail', err);
+                }
+            }); 
+            return false;
+        });
+
+        $('#advertCampaignDetailList').on('click', '.deleteAdvertCampaignDetail', function () {
+            clearErrors();
+            var id = $(this).attr("idAdvertCampaignDetail");
+            var url = '@Url.Content("~/AdvertCampaignDetail/Delete")/' + id;
+            $.ajax({
+                url: url,
+                context: document.body,
+                success: function (data) {
+                    $('.modal-body p.body').html(data);
+                    $(this).addClass("done");
+                    $('.modal-footer input.action-modal').attr('value', 'Borrar');
+                    $('.modal-footer input.action-modal').attr('form', 'del-detail');
+                    $('.modal-header h3').text('Quitar Detalle');
+                    $('#campaign-modal').modal('show');
+                },
+                error: function (err) {
+                    writeError('msgErrorNewAdvertCampaignDetail', err);
+                }
+            }); 
+            return false;
+        });
+
+        $('#advertCampaignDetailList').on('click', '.editAdvertCampaignDetail', function () {
+            clearErrors();
+            var id = $(this).attr("idAdvertCampaignDetail");
+            var url = '@Url.Content("~/AdvertCampaignDetail/Edit")/' + id;
+            $.ajax({
+                url: url,
+                context: document.body,
+                success: function (data) {
+                    $('.modal-body p.body').html(data);
+                    $(this).addClass("done");
+                    $('.modal-footer input.action-modal').attr('value', 'Guardar');
+                    $('.modal-footer input.action-modal').attr('form', 'save-detail');
+                    $('.modal-header h3').text('Editar Detalle');
+                    $('#campaign-modal').modal('show');
+                },
+                error: function (err) {
+                    writeError('msgErrorNewAdvertCampaignDetail', err);
+                }
+            }); 
+            return false;
+        });
+    }); 
+    </script>

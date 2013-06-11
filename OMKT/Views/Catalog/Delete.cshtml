@@ -1,29 +1,21 @@
 ﻿@model OMKT.Business.Catalog
-@{
-    ViewBag.Title = "Eliminar";
-    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
-}
-<h2>
-    Eliminar</h2>
-<div class="alert-message warning">
-    <a class="close" href="#">×</a>
-    <p>
-        <strong>¿Estás seguro que deseas eliminar este Catálogo?</strong></p>
+
+<div id="delete-info" class="alert alert-info">
+    <strong>¿Estás seguro que deseas eliminar este Catálogo?</strong>
 </div>
-<fieldset>
-    <p>
-        <strong>Nombre de Catálogo:</strong>@Html.DisplayFor(model => model.Name)
-    </p>
-    <p>
-        <strong>Fecha de vigencia:</strong> @Html.DisplayFor(model => model.StartDatetime)
-    </p>
-    <p>
-        <strong>Fecha de caducidad:</strong> @Html.DisplayFor(model => model.EndDatetime)
-    </p>
-</fieldset>
-@using (Html.BeginForm()) {
-	<div class="actions">
-            <input type="submit" class="btn primary" value="Eliminar" />
-			@Html.ActionLink("Volver", "Index", null, new { @class = "btn"})
-    </div>
-}
+<p>
+    <strong>Nombre de Catálogo</strong>
+</p>
+<p>@Html.DisplayFor(model => model.Name)
+</p>
+<p>
+    <strong>Fecha de vigencia</strong>
+</p>
+<p>@Html.DisplayFor(model => model.StartDatetime)
+</p>
+<p>
+    <strong>Fecha de caducidad:</strong></p>
+<p>
+    @Html.DisplayFor(model => model.EndDatetime)
+</p>
+@using (Html.BeginForm("Delete", "Catalog", FormMethod.Post, new { @id= "delete-catalog" })) { }

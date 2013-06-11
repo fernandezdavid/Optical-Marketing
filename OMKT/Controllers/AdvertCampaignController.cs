@@ -35,7 +35,7 @@ namespace OMKT.Controllers
             }
             if (period.HasValue && period != 0)
             {
-                campaigns.Where(i => i.StartDatetime >= i.StartDatetime.AddDays(-(double)period));
+                campaigns.Where(i => i.StartDatetime >= Convert.ToDateTime(i.StartDatetime).AddDays(-(double)period));
             }
 
             campaigns.OrderByDescending(i => i.CreatedDate);
@@ -181,6 +181,7 @@ namespace OMKT.Controllers
         public ActionResult Edit(int id)
         {
             AdvertCampaign advertcampaign = _db.AdvertCampaigns.Find(id); //@TODO customer check
+            advertcampaign.Estimate = Convert.ToInt32(advertcampaign.Estimate);
             ViewBag.CampaignTypeId = new SelectList(_db.CampaignTypes.OrderBy(c => c.Name), "CampaignTypeId", "Name", advertcampaign.CampaignTypeId);
 
             return View(advertcampaign);
@@ -230,7 +231,7 @@ namespace OMKT.Controllers
         public ActionResult Delete(int id)
         {
             AdvertCampaign advertcampaign = _db.AdvertCampaigns.Find(id); //@TODO customer check
-            return View(advertcampaign);
+            return PartialView(advertcampaign);
         }
 
         /**
@@ -254,7 +255,7 @@ namespace OMKT.Controllers
             }
             catch (Exception)
             {
-                return View();
+                return PartialView(advertcampaign);
             }
         }
 

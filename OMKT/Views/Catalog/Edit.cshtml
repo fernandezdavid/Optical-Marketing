@@ -3,109 +3,10 @@
     ViewBag.Title = "Editar";
     Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
-@section Header{
-    <script type="text/javascript">
-
-        function clearErrors() {
-            $('#msgErrorNewAdvertDetails').html('');
-            $('#msgError').html('');
-        }
-
-        function writeError(control, msg) {
-            var errMsg = '<div class="alert-message error"><a class="close" href="#">×</a><p>' + msg + '</p></div>';
-            $('#' + control).html(errMsg);
-        }
-
-        $(document).ready(function () {
-
-            $('.closeModal').on('click', function () {
-                $('#my-modal').modal('hide');
-            });
-
-            $('#my-modal form').on('submit', function () {
-                clearErrors();
-
-                $.post($(this).attr('action'), $(this).serialize(), function (data, status) {
-                    $('#my-modal').modal('hide');
-                    $("#catalogDetailsList").html(data);
-
-                }).error(function (error, status, a, b) {
-                    writeError('msgError', 'Ups! Algo anduvo mal. Por favor, intenta nuevamente.');
-                    $('.modal-body p.body').html(error.responseText);
-
-                });
-                return false;
-            });
-
-            function getRequest(url) {
-                $.ajax({
-                    url: url,
-                    context: document.body,
-                    success: function (data) {
-                        $('.modal-body p.body').html(data);
-                        $(this).addClass("done");
-                        $('#my-modal').modal('show');
-                        $('#CommercialProduct').focus();
-                    },
-                    error: function (err) {
-                        writeError('msgErrorNewAdvertDetails', err);
-                    }
-                });
-            }
-
-            $('a.newDetailCatalog').on('click', function () {
-                clearErrors();
-
-                //alert('sdf');
-                var id = $(this).attr("idCatalog");
-                var url = '@Url.Content("~/CatalogDetails/Create")/' + id;
-
-                getRequest(url);
-
-                return false;
-            });
-
-            $('a.catalogPosition').on('click', function () {
-                //alert('sdf');
-                var id = $(this).attr("idCatalog");
-                var url = '@Url.Content("~/CatalogDetails/IndexByCatalogSortable")/' + id;
-                getRequest(url);
-                return false;
-            });
-
-            $('.deleteAdvertDetails').on('click', function () {
-                clearErrors();
-
-                var id = $(this).attr("idCatalogDetails");
-                var url = '@Url.Content("~/CatalogDetails/Delete")/' + id;
-
-                getRequest(url);
-
-                return false;
-            });
-
-
-
-            $('.editAdvertDetails').on('click', function () {
-                clearErrors();
-
-                var id = $(this).attr("idCatalogDetails");
-                var url = '@Url.Content("~/CatalogDetails/Edit")/' + id;
-
-                getRequest(url);
-
-                return false;
-            });
-
-
-
-
-        }); 
-    </script>
-}
 <div class="span6">
     <h2>
-        Edición de Catálogo</h2>
+        Catálogo</h2>
+    @{Html.RenderPartial("DisplayMessages");}
     @using (Html.BeginForm("Edit", "Catalog", FormMethod.Post, new { @class = "form-horizontal" }))
     {
         @Html.ValidationSummary(true)
@@ -126,38 +27,145 @@
         @{Html.RenderAction("IndexByCatalog", "CatalogDetails", new { id = Model.AdvertId });}
     </div>
 </div>
-<div id="my-modal" class="modal hide fade">
+<div id="catalog-modal" class="modal hide fade">
     <div class="modal-header">
-        <a href="#" class="close">&times;</a>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;</button>
         <h3>
-            Productos</h3>
+            Detalle de Catálogo</h3>
     </div>
-    <div class="modal-body">
-        <div id="msgError">
+    <div class="modal-body" style="overflow-y: initial">
+        <div id="catalog-result" class="">
         </div>
         <p class="body">
         </p>
     </div>
     <div class="modal-footer">
-        <input type="submit" class="btn btn-primary" value="Guardar" />
-        <input type="button" class="btn closeModal" value="Cerrar" />
+        <input type="submit" class="btn btn-primary action-modal" value="" form="" />
+        <a href="#" class="btn close-modal">Cerrar</a>
     </div>
 </div>
-<div id="products-order" class="modal hide fade">
-    <div class="modal-header">
-        <a href="#" class="close">&times;</a>
-        <h3>
-            Ordenar Productos</h3>
-    </div>
-    <div class="modal-body">
-        <p>
-            Products</p>
-    </div>
-    <div class="modal-footer">
-        <a href="#" class="btn">Cerrar</a> <a href="#" class="btn btn-primary">Guardar</a>
-    </div>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.sortable.js")"></script>
-    <script type="text/javascript">
-        $('.sortable').sortable();
-    </script>
-</div>
+<script type="text/javascript">
+
+    function clearErrors() {
+        $('#catalog-result').html('');
+        $('#msgError').html('');
+    }
+
+    function writeError(control, msg) {
+        var errMsg = '<div class="alert alert-error"><a class="close" href="#">×</a><p>' + msg + '</p></div>';
+        $('#' + control).html(errMsg);
+    }
+
+    $(document).ready(function () {
+        $('.close-modal').on('click', function () { $('#catalog-modal').modal('hide'); });
+        $('a.newDetailCatalog').on('click', function () {
+            clearErrors();
+            var id = $(this).attr("idCatalog");
+            var url = '@Url.Content("~/CatalogDetails/Create")/' + id;
+            $.ajax({
+                url: url,
+                context: document.body,
+                success: function (data) {
+                    $('.modal-body p.body').html(data);
+                    $('.modal-footer input.action-modal').attr('value', 'Guardar');
+                    $('.modal-footer input.action-modal').attr('form', 'save-detail');
+                    $('.modal-header h3').text('Nuevo Detalle');
+                    $(this).addClass("done");
+                    $('#catalog-modal').modal('show');
+                    $('#CommercialProduct').focus();
+                },
+                error: function (err) {
+                    writeError('catalog-result', err);
+                }
+            });
+            return false;
+        });
+
+        $('#catalogDetailsList').on('click', '.deleteAdvertDetails', function (event) {
+            event.preventDefault();
+            clearErrors();
+            var id = $(this).attr("idCatalogDetails");
+            var url = '@Url.Content("~/CatalogDetails/Delete")/' + id;
+            $.ajax({
+                url: url,
+                context: document.body,
+                success: function (data) {
+                    $('.modal-body p.body').html(data);
+                    $('.modal-footer input.action-modal').attr('value', 'Borrar');
+                    $('.modal-footer input.action-modal').attr('form', 'del-detail');
+                    $('.modal-header h3').text('Quitar Detalle');
+                    $(this).addClass("done");
+                    $('#catalog-modal').modal('show');
+                    $('#CommercialProduct').focus();
+                },
+                error: function (err) {
+                    writeError('catalog-result', err);
+                }
+            });
+            return false;
+        });
+
+        $('#catalogDetailsList').on('click', '.editAdvertDetails', function (event) {
+            event.preventDefault();
+            clearErrors();
+            var id = $(this).attr("idCatalogDetails");
+            var url = '@Url.Content("~/CatalogDetails/Edit")/' + id;
+            $.ajax({
+                url: url,
+                context: document.body,
+                success: function (data) {
+                    $('.modal-body p.body').html(data);
+                    $('.modal-footer input.action-modal').attr('value', 'Guardar');
+                    $('.modal-footer input.action-modal').attr('form', 'save-detail');
+                    $('.modal-header h3').text('Editar Detalle');
+                    $(this).addClass("done");
+                    $('#catalog-modal').modal('show');
+                    $('#CommercialProduct').focus();
+                },
+                error: function (err) {
+                    writeError('catalog-result', err);
+                }
+            });
+            return false;
+        });
+
+        $('.modal-body p.body').on('submit', '#save-detail', function (e) {
+            clearErrors();
+            e.preventDefault();
+            $.post($(this).attr('action'), $(this).serialize(), function (data, status) {
+                $('#catalog-modal').modal('hide');
+                $("#catalogDetailsList").html(data);
+            }).error(function (error, status, a, b) {
+                writeError('msgError', 'Ups! Algo anduvo mal. Por favor, intenta nuevamente.');
+                $('.modal-body p.body').html(error.responseText);
+            });
+            return false;
+        });
+
+
+        // TODO
+        $('a.catalogPosition').on('click', function () {
+            var id = $(this).attr("idCatalog");
+            var url = '@Url.Content("~/CatalogDetails/IndexByCatalogSortable")/' + id;
+            $.ajax({
+                url: url,
+                context: document.body,
+                success: function (data) {
+                    $('.modal-body p.body').html(data);
+                    $('.modal-footer input.action-modal').attr('value', 'Guardar');
+                    $('.modal-footer input.action-modal').attr('form', 'save-detail');
+                    $('.modal-header h3').text('Ordenar Detalle');
+                    $(this).addClass("done");
+                    $('#catalog-modal').modal('show');
+                    $('#CommercialProduct').focus();
+                },
+                error: function (err) {
+                    writeError('catalog-result', err);
+                }
+            });
+            return false;
+        });
+
+    }); 
+</script>

@@ -1,14 +1,16 @@
 ﻿@model IEnumerable<OMKT.Business.AdvertDetail>
 <div class="alert-message block-message warning">
-    <p><strong>Arrastra los items para ordenar el catálogo.</strong> </p>
+    <p>
+        <strong>Arrastra los items para ordenar el catálogo.</strong>
+    </p>
 </div>
-<ul class="product-list sortable media-list">
-    @foreach (var item in Model) {
+<ul id="sortable" class="product-list sortable media-list">
+    @foreach (var item in Model)
+    {
         var catalogDetail = "catalogDetail" + item.AdvertDetailId; 
-        <li class="media" id="@catalogDetail">
-            <a class="pull-left" href="#">
-                <img class="media-object" src="http://hp.static.adidas.com/@Url.Content(item.CommercialProduct.ProductImage.ThumbnailPath)" width="50" alt="" title="" style="margin-right: 10px"/>
-            </a>
+        <li class="media" id="@catalogDetail"><a class="pull-left" href="#">
+            <img class="media-object" src="@Url.Content(item.CommercialProduct.ProductImage.ThumbnailPath)" width="50" alt="" title="" style="margin-right: 10px"/>
+        </a>
             <div class="media-body">
                 <h4 class="media-heading">@item.CommercialProduct.ProductName</h4>
                 <p>@item.CommercialProduct.Description</p>
@@ -18,5 +20,13 @@
 </ul>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.sortable.min.js")"></script>
 <script type="text/javascript">
-    $('.sortable').sortable();
+    $(function () {
+        $('#sortable').sortable({
+            stop: function (event, ui) {
+                alert("New position: " + ui.item.index());
+            }
+        });
+        $("#sortable").disableSelection();
+    });
+    
 </script>

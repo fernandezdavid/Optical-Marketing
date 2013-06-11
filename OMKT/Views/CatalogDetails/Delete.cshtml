@@ -1,27 +1,38 @@
 ﻿@model OMKT.Business.AdvertDetail
-@{
-    ViewBag.Title = "Borrar";
-    //Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
-}
-<div class="alert alert-warning">
-    <a class="close" href="#">×</a>
-    <strong>¿Estás seguro que deseas borrar este registro?</strong>
+<div class="alert alert-info">
+    <a class="close" href="#">×</a> <strong>¿Estás seguro que deseas borrar este registro?</strong>
 </div>
 <fieldset>
     <p>
-        <strong>Catálogo: </strong>@Html.DisplayFor(model => model.Catalog.Name)
+        <strong>Catálogo </strong>
+    </p>
+    <p>@Html.DisplayFor(model => model.Catalog.Name)
     </p>
     <p>
-        <strong>Producto: </strong>@Html.DisplayFor(model => model.CommercialProduct.ProductName)
+        <strong>Producto </strong>
+    </p>
+    <p>@Html.DisplayFor(model => model.CommercialProduct.ProductName)
     </p>
     <p>
-        <strong>Orden: </strong>@Html.DisplayFor(model => model.Position)
+        <strong>Orden </strong>
+    </p>
+    <p>@Html.DisplayFor(model => model.Position)
     </p>
 </fieldset>
-@using (Html.BeginForm())
-{
-    <div class="form-actions">
-        <input type="submit" class="btn btn-primary" value="Borrar" />
-        <input type="button" class="btn closeModal" value="Cerrar" />
-    </div>
-}
+@using (Html.BeginForm("Delete", "CatalogDetails", FormMethod.Post, new { @class = "form-horizontal", @id = "del-detail" }))
+{ }
+<script type="text/javascript">
+    $('#del-detail').on('submit', function (e) {
+        clearErrors();
+        e.preventDefault();
+        $.post($(this).attr('action'), $(this).serialize(), function (data, status) {
+            $('#catalog-modal').modal('hide');
+            $("#catalogDetailsList").html(data);
+        }).error(function (error, status, a, b) {
+            writeError('msgError', 'Ups! Algo anduvo mal. Por favor, intenta nuevamente.');
+            $('.modal-body p.body').html(error.responseText);
+        });
+        return false;
+    });
+    
+</script>

@@ -49,17 +49,12 @@ namespace OMKT.Controllers
             AdvertCampaignDetail oDetail = null;
             if (id.HasValue)
             {
-                var oCampaign =
-                    (from cam in _db.AdvertCampaigns where cam.AdvertCampaignId == id select cam).FirstOrDefault();
+                var oCampaign = _db.AdvertCampaigns.Find(id);                    
                 if (oCampaign != null)
                     oDetail = new AdvertCampaignDetail { AdvertCampaignId = id.Value, AdvertCampaign = oCampaign, EndDate = DateTime.Now.AddDays(30) };
-                //ViewBag.AdvertCampaignId = new SelectList(_db.AdvertCampaigns, "AdvertCampaignId", "Name", id.Value);
+                
             }
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView("Create", oDetail);
-            }
-            return View("Create", oDetail);
+            return PartialView("Create", oDetail);
         }
 
         //
@@ -71,26 +66,32 @@ namespace OMKT.Controllers
             ViewBag.AdvertID = new SelectList(_db.Adverts, "AdvertId", "Name", advertcampaigndetail.AdvertID);
             if (ModelState.IsValid)
             {
-                advertcampaigndetail.StartDate = DateTime.Now;
-                _db.AdvertCampaignDetails.Add(advertcampaigndetail);
-                try
+                var check = _db.AdvertCampaignDetails.Where(a => a.AdvertID == advertcampaigndetail.AdvertID && a.AdvertCampaignId == advertcampaigndetail.AdvertCampaignId).FirstOrDefault();
+                if (check == null)
                 {
-                    _db.SaveChanges();
-                    ViewBag.Success = "El anuncio fue agregado satisfactoriamente.";
+                    advertcampaigndetail.StartDate = DateTime.Now;
+                    _db.AdvertCampaignDetails.Add(advertcampaigndetail);
+                    try
+                    {
+                        _db.SaveChanges();
+                        ViewBag.Success = "El anuncio fue agregado satisfactoriamente.";
+                    }
+                    catch (Exception)
+                    {
+                        ViewBag.Error = "Lo sentimos, ocurrió un error al procesar la solicitud.";
+                        return PartialView("Create", advertcampaigndetail);
+                    }
                 }
-                catch (Exception)
-                {
-                    ViewBag.Error = "Lo sentimos, ocurrió un error al procesar la solicitud.";
-                    return PartialView("Create", advertcampaigndetail);
+                else
+                { //TODO
                 }
-                var oCampaign =
+                var oCampaign = 
                     (from cam in _db.AdvertCampaigns
                      where cam.AdvertCampaignId == advertcampaigndetail.AdvertCampaignId
                      select cam).FirstOrDefault();
                 ViewBag.Campaign = oCampaign;
                 return PartialView("Index", _db.AdvertCampaignDetails.Where(cd => cd.AdvertCampaignId == advertcampaigndetail.AdvertCampaignId).Include(i => i.Advert));
             }
-            Response.StatusCode = 400;
             return PartialView("Create", advertcampaigndetail);
         }
 
@@ -121,14 +122,16 @@ namespace OMKT.Controllers
                 try
                 {
                     _db.SaveChanges();
-                    return PartialView("Index", _db.AdvertCampaignDetails.Where(cd => cd.AdvertCampaignId == advertcampaigndetail.AdvertCampaignId).Include(i => i.Advert));
+                    ViewBag.Success = "El anuncio fue agregado satisfactoriamente.";                    
                 }
                 catch (Exception)
                 {
+                    ViewBag.Error = "Lo sentimos, ocurrió un error al procesar la solicitud.";
                     return PartialView("Edit", advertcampaigndetail);
                 }
+                return PartialView("Index", _db.AdvertCampaignDetails.Where(cd => cd.AdvertCampaignId == advertcampaigndetail.AdvertCampaignId).Include(i => i.Advert));
             }
-            Response.StatusCode = 400;
+            
             return PartialView("Edit", advertcampaigndetail);
         }
 

@@ -2,15 +2,19 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#products-table').dataTable({
-            "sDom": "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>"
+            "sDom": "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [ 0, 6 ] },
+                { "sWidth": "40%", "aTargets": [ 2 ] },
+            ] 
             //"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>"
         });
     });
    
 </script>
-<table id="products-table" class="table table-striped table-bordered dataTable">
+<table id="products-table" class="table table-striped table-bordered dataTable table-hover">
     <thead>
-        <th>
+        <th class="noSorting">
         </th>
         <th>
             Nombre
@@ -27,7 +31,7 @@
         <th>
             Precio
         </th>
-        <th>
+        <th  class="noSorting">
         </th>
     </thead>
     @foreach (var item in Model)
