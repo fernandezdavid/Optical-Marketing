@@ -1,0 +1,25 @@
+﻿@model IEnumerable<OMKT.Models.ProductOverview>
+           
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", { packages: ["corechart"] });
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Productos', 'Valoracion'],
+           @foreach (var item in Model)
+           {
+            @:['@item.ProductName', @item.Likes], 
+           }
+          ]);
+
+        var options = {
+            title: 'Valoración'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+</script>
+<div id="chart_div" style="width: 40%; height: auto">
+</div>

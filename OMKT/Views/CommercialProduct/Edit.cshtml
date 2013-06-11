@@ -6,7 +6,7 @@
 }
 <div class="span12">
 <h2>Producto</h2>
-
+@{Html.RenderPartial("DisplayMessages");}
 @using (Html.BeginForm("Edit", "CommercialProduct", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "form-horizontal" }))
 {
     @Html.ValidationSummary(true)

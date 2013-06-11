@@ -6,7 +6,6 @@ namespace OMKT.Business
     {
         public int AdvertHostCategoryId { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
         public string Detail { get; set; }

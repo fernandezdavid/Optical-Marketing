@@ -1,13 +1,9 @@
 ﻿@model OMKT.Business.AdvertDetail
-
-@{
-    ViewBag.Title = "Crear";
-}
-
-@using (Html.BeginForm("Create", "CatalogDetails", FormMethod.Post, new { @class="form-horizontal" }))
+@using (Html.BeginForm("Create", "CatalogDetails", FormMethod.Post, new { @class = "form-horizontal", @id = "save-detail" }))
 {
     @Html.ValidationSummary(true)
     <text>
-        @{ Html.RenderPartial("EditOrAddCatalogDetailsPartial", Model); }
+    @{ Html.RenderPartial("EditOrAddCatalogDetailsPartial", Model); }
     </text>
 }
+

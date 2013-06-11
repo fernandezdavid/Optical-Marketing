@@ -1,5 +1,4 @@
 ﻿@model OMKT.Business.AdvertDetail
-<fieldset>
     @Html.HiddenFor(model => model.AdvertDetailId)
     @Html.Hidden("AdvertId", Model.AdvertId)
     @Html.HiddenFor(model => model.CreatedDate)
@@ -23,11 +22,6 @@
             @Html.ValidationMessageFor(model => model.Position)
         </div>
     </div>
-    <div class="form-actions">
-        <input type="submit" class="btn btn-primary" value="Guardar" />
-        <input type="button" class="btn closeModal" value="Cerrar" />
-    </div>
-</fieldset>
 <script type="text/javascript">
     $(document).ready(function () {
         $("div.chzn-select select").chosen();

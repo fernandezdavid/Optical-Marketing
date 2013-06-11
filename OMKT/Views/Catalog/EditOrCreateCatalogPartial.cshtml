@@ -1,7 +1,6 @@
 ﻿@using OMKT.Business
 @model Catalog
 <fieldset>
-    @*<legend>Edición de Catálogo</legend>*@
     @Html.HiddenFor(model => model.AdvertId)
     @Html.HiddenFor(model => model.CreatedDate)
     @Html.HiddenFor(model => model.StartDatetime)
@@ -43,11 +42,11 @@
     </div>
     <div class="form-actions">
         <input type="submit" value="Guardar" class="btn btn-primary" />
-        @if (Model != null && Model.AdvertId > 0)
+        @*@if (Model != null && Model.AdvertId > 0)
         {   <text>
             @Html.ActionLink("Borrar", "Delete", new { id = Model.AdvertId }, new { @class = "btn" })
             </text>
-        }
+        }*@
         <a href="@Url.Action("Index")" class="btn">Volver</a>
     </div>
 </fieldset>

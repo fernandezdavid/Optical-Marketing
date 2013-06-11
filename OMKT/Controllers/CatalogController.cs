@@ -160,7 +160,7 @@ namespace OMKT.Controllers
                 try
                 {
                     _db.SaveChanges();
-                    ViewBag.Success = "El catálogo fue registrado satisfactoriamente.";
+                    ViewBag.Success = "El catálogo fue editado satisfactoriamente.";
                     return View(catalog);
                 }
                 catch (Exception)
@@ -178,7 +178,7 @@ namespace OMKT.Controllers
         public ActionResult Delete(int id)
         {
             Catalog catalog = _db.Catalogs.Find(id);
-            return View(catalog);
+            return PartialView(catalog);
         }
 
         //

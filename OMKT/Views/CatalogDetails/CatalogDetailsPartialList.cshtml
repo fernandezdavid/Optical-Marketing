@@ -27,10 +27,10 @@
     var catalogDetail = "catalogDetail" + item.AdvertDetailId; 
     <tr id="@catalogDetail">
         <td>
-            <img src="http://hp.static.adidas.com/@Url.Content(item.CommercialProduct.ProductImage.ThumbnailPath)" class="img-rounded" title="@item.CommercialProduct.ProductImage.Title" alt="@item.CommercialProduct.ProductImage.Caption" width="50px" height="50px"/>
+            <img src="@Url.Content(item.CommercialProduct.ProductImage.ThumbnailPath)" class="img-rounded" title="@item.CommercialProduct.ProductImage.Title" alt="@item.CommercialProduct.ProductImage.Caption" width="50px" height="50px"/>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CommercialProduct.ProductName)
+            <a href="@Url.Action("Edit", "CommercialProduct", new { id = item.CommercialProductId})" target="_blank">@Html.DisplayFor(modelItem => item.CommercialProduct.ProductName)</a>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Likes)
