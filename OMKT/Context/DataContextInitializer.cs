@@ -51,6 +51,7 @@ namespace OMKT.Context
                     CreatedDate = DateTime.Now,
                     Extension = "png",
                     Path = "~/brand/product-images/V21078_F_p3.png",//"~/Content/productImages/Predator-Absolado.png",
+                    ThumbnailPath = "~/brand/product-images/V21078_F_p3.png",
                     Size = "",
                     Title = "Predator-Absolado"
                 },
@@ -69,6 +70,7 @@ namespace OMKT.Context
                     Caption = "11Nova-Trx",
                     CreatedDate = DateTime.Now,
                     Extension = "png",
+                    ThumbnailPath = "~/brand/product-images/V21078_F_p3.png",
                     Path = "~/brand/product-images/G63818_F_p3.png",//"~/Content/productImages/11Nova-Trx.png",
                     Size = "",
                     Title = "11Nova-Trx"
@@ -88,6 +90,7 @@ namespace OMKT.Context
                     Caption = "11Core-Trx",
                     CreatedDate = DateTime.Now,
                     Extension = "png",
+                    ThumbnailPath = "~/brand/product-images/V21078_F_p3.png",
                     Path = "~/brand/product-images/G60009_F_p3.png",//"~/Content/productImages/11Core-Trx.png",
                     Size = "",
                     Title = "11Core-Trx"
@@ -107,6 +110,7 @@ namespace OMKT.Context
                     Caption = "F10-Trx",
                     CreatedDate = DateTime.Now,
                     Extension = "png",
+                    ThumbnailPath = "~/brand/product-images/V21078_F_p3.png",
                     Path = "~/brand/product-images/V21334_F_p3.png",//"~/Content/productImages/F10-Trx.png",
                     Size = "",
                     Title = "F10-Trx"
@@ -126,6 +130,7 @@ namespace OMKT.Context
                     Caption = "F30-Trx",
                     CreatedDate = DateTime.Now,
                     Extension = "png",
+                    ThumbnailPath = "~/brand/product-images/V21078_F_p3.png",
                     Path = "~/brand/product-images/V21350_F_p3.png",//"~/Content/productImages/F30-Trx.png",
                     Size = "",
                     Title = "F10-Trx"
@@ -179,7 +184,7 @@ namespace OMKT.Context
             var catalog = new Catalog();
             catalog.Name = "Botines de Fútbol 2012";
             catalog.CreatedDate = new DateTime(DateTime.Now.Year, 1, new Random().Next(1, 28)); //random date (this month)
-            if (catalog.CreatedDate != null) 
+            if (catalog.CreatedDate != null)
                 catalog.EndDatetime = Convert.ToDateTime(catalog.CreatedDate).AddDays(90);
             catalog.StartDatetime = catalog.CreatedDate;
             catalog.LastUpdate = DateTime.Now;
@@ -202,6 +207,8 @@ namespace OMKT.Context
             }
             //catalogs.Add(catalog);
             context.Catalogs.Add(catalog);
+            var adverts = new List<Advert>();
+            adverts.Add(catalog);
             #endregion
 
             #region campaign states
@@ -220,7 +227,7 @@ namespace OMKT.Context
 
             #region campaign locations
             //Locations
-            var loc1 = new Location{ Latitude = "-31.419677", Longitude = "-64.1878", Detail = "Patio Olmos"};
+            var loc1 = new Location { Latitude = "-31.419677", Longitude = "-64.1878", Detail = "Patio Olmos" };
             context.Locations.Add(loc1);
             var loc2 = new Location { Latitude = "-31.413133", Longitude = "-64.204357", Detail = "Nuevo Shopping" };
             context.Locations.Add(loc2);
@@ -245,23 +252,23 @@ namespace OMKT.Context
             var host3 = new AdvertHost { AdvertHostName = "UTN" };
             host3.Location = loc3;
             host3.AdvertHostCategory = cat3;
-            context.AdvertHosts.Add(host3);            
+            context.AdvertHosts.Add(host3);
 
-            var campLoc1 = new CampaignLocation{Description = "Todas las ubicaciones"};
+            var campLoc1 = new CampaignLocation { Description = "Todas las ubicaciones" };
             campLoc1.AdvertHosts.Add(host1);
             campLoc1.AdvertHosts.Add(host2);
             campLoc1.AdvertHosts.Add(host3);
             context.CampaignLocations.Add(campLoc1);
-            
+
             var locations = new List<CampaignLocation>
                                 {  new CampaignLocation{Description = "Ubicaciones privadas"},
                                    new CampaignLocation{Description = "Ubicaciones públicas"}
-                                };            
+                                };
             foreach (var loc in locations)
             {
                 context.CampaignLocations.Add(loc);
             }
-            
+
             #endregion
 
             #region campaigns
@@ -285,32 +292,65 @@ namespace OMKT.Context
                     EndDate = campaign.EndDatetime
                 });
 
-            #region interactions
-            //TODO think this shit all over again
-            foreach (var cmp in campaign.AdvertCampaignDetails)
-            {
-                for (int j = 0; j < 7; j++)
-                {
-                    var views = new Random(j).Next(2000, 3000);
-                    cmp.Interactions.Add(new Interaction
-                                             {
-                                                 StartDateTime = DateTime.Now.AddDays(-j).AddHours(-10),
-                                                 EndDateTime = DateTime.Now.AddDays(-j),
-                                                 Impressions = views,
-                                                 Traffic = new Random(j).Next(10000, 15000),
-                                                 Snapshot = new Snapshot(),
-                                                 AdvertCampaignDetail = cmp
-                                             });
+            //#region interactions
+            ////TODO think this shit all over again
+            //foreach (var cmp in campaign.AdvertCampaignDetails)
+            //{
+            //    for (int j = 0; j < 7; j++)
+            //    {
+            //        var views = new Random(j).Next(2000, 3000);
+            //        cmp.Interactions.Add(new Interaction
+            //                                 {
+            //                                     StartDateTime = DateTime.Now.AddDays(-j).AddHours(-10),
+            //                                     EndDateTime = DateTime.Now.AddDays(-j),
+            //                                     Impressions = views,
+            //                                     Traffic = new Random(j).Next(10000, 15000),
+            //                                     Snapshot = new Snapshot(),
+            //                                     AdvertCampaignDetail = cmp
+            //                                 });
 
-                }
+            //    }
 
-            }
-            #endregion
+            //}
+            //#endregion
 
             context.AdvertCampaigns.Add(campaign);
 
             #endregion
-           
+
+            #region Interactions
+
+            for (int i = 0; i < 30; i++)
+            {
+                float h = (new Random().Next(5,9)) / 10;
+                var at = new AdvertInteraction
+                {
+                    Advert = catalog,
+                    AdvertID = catalog.AdvertId,
+                    StartDatetime = DateTime.Now.AddDays(-i).AddMinutes(-5),
+                    EndDatetime = DateTime.Now.AddDays(-i),
+                    Height = (h + 1.00),
+
+                };
+                foreach (var detail in catalog.AdvertDetails)
+                {
+                    var r = new Random().Next(0, 2);
+                    var li = (r == 1) ? true : false;
+                    var nt = new AdvertDetailInteraction
+                                            {
+                                                AdvertDetail = detail,
+                                                AdvertDetailID = detail.AdvertDetailId,
+                                                View = true,
+                                                Like = li,
+                                            };
+                    at.AdvertDetailInteractions.Add(nt);
+                    //context.AdvertDetailInteractions.Add(nt);
+                }
+                context.AdvertInteractions.Add(at);
+
+            }            
+            #endregion
+
             try
             {
                 context.SaveChanges();

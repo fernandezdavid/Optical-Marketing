@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using OMKT.Business;
+using System.Data.Entity.Infrastructure;
 
 namespace OMKT.Context
 {
@@ -17,7 +18,7 @@ namespace OMKT.Context
         public DbSet<AdvertHostCategory> AdvertHostCategories { get; set; }
         public DbSet<Inbox> Inboxes { get; set; }
         public DbSet<Location> Locations { get; set; }
-        public DbSet<CampaignLocation> CampaignLocations { get; set; } 
+        public DbSet<CampaignLocation> CampaignLocations { get; set; }
         public DbSet<Network> Networks { get; set; }
         public DbSet<Advert> Adverts { get; set; }
         public DbSet<Catalog> Catalogs { get; set; }
@@ -32,10 +33,12 @@ namespace OMKT.Context
         public DbSet<Interaction> Interactions { get; set; }
         public DbSet<SortType> SortTypes { get; set; }
         public DbSet<AdvertType> AdvertTypes { get; set; }
+        public DbSet<AdvertInteraction> AdvertInteractions { get; set; }
+        public DbSet<AdvertDetailInteraction> AdvertDetailInteractions { get; set; }
         //public DbSet<Zone> Zones { get; set; }
         //public DbSet<Email> Emails { get; set; }
         //public DbSet<Snapshot> Snapshots { get; set; }
-        
+
     }
 
 }
