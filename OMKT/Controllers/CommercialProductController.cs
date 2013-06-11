@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using OMKT.Business;
 using Simple.ImageResizer;
 using OMKT.Context;
+using System.Collections.Generic;
+using OMKT.Models;
 
 namespace OMKT.Controllers
 {
@@ -78,7 +80,7 @@ namespace OMKT.Controllers
                     var imageResizer = new ImageResizer(binaryImage);
                     // 50 width, 50 height, scaleToFill, encoding
                     imageResizer.Resize(100, 100, true, ImageEncoding.Png);
-                    
+
                     var fileName = image.FileName;
                     var imagePath = "~/Content/productImages/";
                     imageResizer.SaveToFile(Path.Combine(Server.MapPath(imagePath + "thumbnails"), fileName));
@@ -211,9 +213,21 @@ namespace OMKT.Controllers
             return Json(new { });
         }
 
-        public ActionResult CatalogsOverview()
+        public ActionResult CommercialProductsOverview()
         {
-            return PartialView("CatalogsOverview");
+            var oUser = (User)Session["User"];
+            var products = _db.CommercialProducts.Where(c => c.CustomerId == oUser.CustomerId);
+            var interactions = new List<ProductOverview>();
+            var likes = 0;
+            foreach (var pro in products)
+            {
+                likes = _db.AdvertDetailInteractions.Where(c => c.AdvertDetail.CommercialProductId == pro.CommercialProductId && c.Like == true).Count();   
+                var oPO = new ProductOverview();
+                oPO.Likes = likes;
+                oPO.ProductName = pro.ProductName;
+                interactions.Add(oPO);               
+            }
+            return PartialView("CommercialProductsOverview", interactions.ToList());
         }
 
         protected override void Dispose(bool disposing)
