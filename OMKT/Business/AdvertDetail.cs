@@ -20,6 +20,8 @@ namespace OMKT.Business
 
         public int Views { get; set; }
 
+        public string Link { get; set; }
+
         public DateTime? CreatedDate { get; set; }
 
         public DateTime? LastUpdate { get; set; }
