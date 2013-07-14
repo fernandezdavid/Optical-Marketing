@@ -3,10 +3,12 @@ using System.Data;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using OMKT.Business;
 using OMKT.Context;
 using Paging;
+using OMKT.Models;
 
 namespace OMKT.Controllers
 {
@@ -191,6 +193,23 @@ namespace OMKT.Controllers
             _db.Catalogs.Remove(catalog);
             _db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult CatalogsOverview()
+        {
+            var oUser = (User)Session["User"];
+            var advertDetails = _db.AdvertCampaignDetails.Where(c => c.AdvertCampaign.CustomerId == oUser.CustomerId);
+            var interactions = new List<CatalogOverview>();
+            var views = 0;
+            foreach (var cat in advertDetails)
+            {
+                views = _db.AdvertInteractions.Where(c => c.AdvertID == cat.AdvertID).Count();
+                var oCO = new CatalogOverview();
+                oCO.Views = views;
+                oCO.CatalogtName = cat.Advert.Name;
+                interactions.Add(oCO);
+            }
+            return PartialView("CatalogsOverview", interactions.ToList());
         }
 
         protected override void Dispose(bool disposing)
