@@ -35,6 +35,7 @@ namespace OMKT.Context
         public DbSet<AdvertType> AdvertTypes { get; set; }
         public DbSet<AdvertInteraction> AdvertInteractions { get; set; }
         public DbSet<AdvertDetailInteraction> AdvertDetailInteractions { get; set; }
+        public DbSet<Monitoring> Monitoring { get; set; }
         //public DbSet<Zone> Zones { get; set; }
         //public DbSet<Email> Emails { get; set; }
         //public DbSet<Snapshot> Snapshots { get; set; }
