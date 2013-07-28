@@ -1,0 +1,27 @@
+﻿@model IEnumerable<OMKT.Models.CampaignPerformance>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", { packages: ["corechart"] });
+    google.setOnLoadCallback(drawChart);
+    
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Mes', 'Valoraciones', 'Interacciones'],
+          @foreach (var item in Model){ 
+            @:['@item.Month', @item.Impressions, @item.Traffic], 
+          }
+         ]);
+
+        var options = {
+            width: 1300,
+            height: 240,
+            title: '',
+//            colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+</script>
+<div id="chart_div" style="width: 100%; height: auto;">
+</div>
