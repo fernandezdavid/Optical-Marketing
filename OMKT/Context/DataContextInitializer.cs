@@ -26,10 +26,10 @@ namespace OMKT.Context
 
             #region product types
             var types = new List<CommercialProductType>
-            {
-                new CommercialProductType{ Description = "Deporte"}
-                
-            };
+			{
+				new CommercialProductType{ Description = "Deporte"}
+				
+			};
             foreach (var t in types)
             {
                 context.CommercialProductTypes.Add(t);
@@ -38,7 +38,7 @@ namespace OMKT.Context
 
             #region products
             var products = new List<CommercialProduct>();
-            #region 5 productos Catálogo Botines de Fútbol
+            #region 5 productos -> Botines de Fútbol
             products.Add(new CommercialProduct
             {
                 ProductName = "Predator Absolado Lz Trx Fg",
@@ -54,6 +54,26 @@ namespace OMKT.Context
                     ThumbnailPath = "~/brand/product-images/V21078_F_p3.png",
                     Size = "",
                     Title = "Predator-Absolado"
+                },
+                VideoPath = "",
+                CommercialProductType = types[0],
+                Customer = context.Customers.Find(1)
+            });
+            products.Add(new CommercialProduct
+            {
+                ProductName = "F30 Trx Fg",
+                Description = "Éstos F30 Trx cuentan con una alta densidad de tres capas superiores de excelente tacto al balón, SprintWeb para cortes rápidos y suela exterior TRAXION ® 2.0 FG para un mejor agarre.",
+                Price = 300,
+                Stock = 500,
+                ProductImage = new ProductImage
+                {
+                    Caption = "F30-Trx",
+                    CreatedDate = DateTime.Now,
+                    Extension = "png",
+                    ThumbnailPath = "~/brand/product-images/V21078_F_p3.png",
+                    Path = "~/brand/product-images/V21350_F_p3.png",//"~/Content/productImages/F30-Trx.png",
+                    Size = "",
+                    Title = "F10-Trx"
                 },
                 VideoPath = "",
                 CommercialProductType = types[0],
@@ -119,26 +139,6 @@ namespace OMKT.Context
                 CommercialProductType = types[0],
                 Customer = context.Customers.Find(1)
             });
-            products.Add(new CommercialProduct
-            {
-                ProductName = "F30 Trx Fg",
-                Description = "Éstos F30 Trx cuentan con una alta densidad de tres capas superiores de excelente tacto al balón, SprintWeb para cortes rápidos y suela exterior TRAXION ® 2.0 FG para un mejor agarre.",
-                Price = 300,
-                Stock = 500,
-                ProductImage = new ProductImage
-                {
-                    Caption = "F30-Trx",
-                    CreatedDate = DateTime.Now,
-                    Extension = "png",
-                    ThumbnailPath = "~/brand/product-images/V21078_F_p3.png",
-                    Path = "~/brand/product-images/V21350_F_p3.png",//"~/Content/productImages/F30-Trx.png",
-                    Size = "",
-                    Title = "F10-Trx"
-                },
-                VideoPath = "",
-                CommercialProductType = types[0],
-                Customer = context.Customers.Find(1)
-            });
             #endregion
 
             foreach (CommercialProduct p in products)
@@ -148,36 +148,60 @@ namespace OMKT.Context
             #endregion
 
             #region customers
+            var customer = new Customer { Name = "Adidas Argentina SA", ContactPerson = "Andrés Ponte", Address = "9 de julio 2322 piso 15", CP = "5000", CompanyNumber = "5600012", City = "Buenos Aires", Phone1 = "5600022", Email = "info@adidas.com.ar" };
+            context.Customers.Add(customer);
+            //List<Customer> customers = new List<Customer>
+            //                                   {
+            //                                       new Customer {Name="Adidas Argentina SA", ContactPerson="Andrés Ponte", Address="9 de julio 2322 piso 15", CP="5000", CompanyNumber="5600012", City="Buenos Aires", Phone1="5600022", Email="info@adidas.com.ar"},
+            //                                       //new Customer {Name="ACME International S.L", ContactPerson="Miguel Pérez", Address="12 Stree NY", CP="232323", CompanyNumber="3424324342", City="New York", Phone1="223-23232323", Email="hello@hello.com"},
+            //                                       //new Customer {Name="Apple Inc.", ContactPerson="Juan Rodriguez", Address="1233 Street NY", CP="232323", CompanyNumber="23232323", City="NN CA", Phone1="343-23232323", Email="apple@hello.com"},
+            //                                       //new Customer {Name="Zaragoza Activa", ContactPerson="José Ángel García", Address="Edificio: Antigua Azucarera, Mas de las Matas, 20 Planta B", CP="50015", CompanyNumber="BBBBBB", City="Zaragoza", Phone1="343-23232323", Email="zaragozaactiva@hello.com"},
+            //                                       //new Customer {Name="Conecta S.L", ContactPerson="Rocío Ruíz", Address="C/ San Flores 213", CP="50800", CompanyNumber="BBBBBB", City="Zaragoza", Phone1="343-23232323", Email="contacta@hello.com"},
+            //                                       //new Customer {Name="VitaminasDev", ContactPerson="Antonio Roy", Address="C/ San Pedro 79 2", CP="50800", CompanyNumber="29124609", City="Zuera, Zaragoza", Phone1="654 249068", Email="hola@vitaminasdev.com"}
+            //                                   };
 
-            List<Customer> customers = new List<Customer>
-                                               {
-                                                   new Customer {Name="Adidas Argentina SA", ContactPerson="Andrés Ponte", Address="9 de julio 2322 piso 15", CP="5000", CompanyNumber="5600012", City="Buenos Aires", Phone1="5600022", Email="info@adidas.com.ar"},
-                                                   //new Customer {Name="ACME International S.L", ContactPerson="Miguel Pérez", Address="12 Stree NY", CP="232323", CompanyNumber="3424324342", City="New York", Phone1="223-23232323", Email="hello@hello.com"},
-                                                   //new Customer {Name="Apple Inc.", ContactPerson="Juan Rodriguez", Address="1233 Street NY", CP="232323", CompanyNumber="23232323", City="NN CA", Phone1="343-23232323", Email="apple@hello.com"},
-                                                   //new Customer {Name="Zaragoza Activa", ContactPerson="José Ángel García", Address="Edificio: Antigua Azucarera, Mas de las Matas, 20 Planta B", CP="50015", CompanyNumber="BBBBBB", City="Zaragoza", Phone1="343-23232323", Email="zaragozaactiva@hello.com"},
-                                                   //new Customer {Name="Conecta S.L", ContactPerson="Rocío Ruíz", Address="C/ San Flores 213", CP="50800", CompanyNumber="BBBBBB", City="Zaragoza", Phone1="343-23232323", Email="contacta@hello.com"},
-                                                   //new Customer {Name="VitaminasDev", ContactPerson="Antonio Roy", Address="C/ San Pedro 79 2", CP="50800", CompanyNumber="29124609", City="Zuera, Zaragoza", Phone1="654 249068", Email="hola@vitaminasdev.com"}
-                                               };
-
-            foreach (Customer c in customers)
-            {
-                context.Customers.Add(c);
-            }
+            //foreach (Customer c in customers)
+            //{
+            //    context.Customers.Add(c);
+            //}
             #endregion
 
             #region sort types
             var methods = new List<SortType>
-                              {
-                                  new SortType{ Name = "Ascendente"},
-                                  new SortType{ Name ="Descendente" },
-                                  new SortType{ Name = "Aleatorio"},
-                                  new SortType{ Name = "Relevancia"},
-                                  new SortType{ Name = "Proporción"}
-                              };
+							  {
+								  new SortType{ Name = "Ascendente"},
+								  new SortType{ Name ="Descendente" },
+								  new SortType{ Name = "Aleatorio"},
+								  new SortType{ Name = "Relevancia"},
+								  new SortType{ Name = "Proporción"}
+							  };
             foreach (var sortType in methods)
             {
                 context.SortTypes.Add(sortType);
             }
+            #endregion
+
+            #region states
+            var estado = new AdvertState { Description = "Activo" };
+            context.AdvertStates.Add(estado);
+            #endregion
+
+            #region game
+
+            var game = new Game();
+            game.Name = "Memory";
+            game.CommercialProduct = products[new Random(1).Next(0, 1)];
+            game.CommercialProductId = game.CommercialProduct.CommercialProductId;
+            game.CreatedDate = new DateTime(DateTime.Now.Year, 1, new Random().Next(1, 28));
+            game.QRCode = "";
+            game.Cards = 25;
+            game.Discount = 15;
+            game.AdvertState = estado;
+            game.AdvertStateId = game.AdvertState.AdvertstateId;
+            game.AdvertType = new AdvertType { Description = "Juego Interactivo" };
+            game.AdvertTypeId = game.AdvertType.AdvertTypeId;
+            context.Games.Add(game);
+
             #endregion
 
             #region catalogs
@@ -188,13 +212,15 @@ namespace OMKT.Context
                 catalog.EndDatetime = Convert.ToDateTime(catalog.CreatedDate).AddDays(90);
             catalog.StartDatetime = catalog.CreatedDate;
             catalog.LastUpdate = DateTime.Now;
-            catalog.AdvertState = new AdvertState { Description = "Activo" };
+            catalog.AdvertState = estado;
+            catalog.AdvertStateId = catalog.AdvertState.AdvertstateId;
             catalog.AdvertType = new AdvertType { Description = "Catálogo" };
+            catalog.AdvertTypeId = catalog.AdvertType.AdvertTypeId;
             catalog.SortType = methods[new Random().Next(0, 4)];
             var position = 0;
             foreach (var prod in products)
             {
-                catalog.AdvertDetails.Add(new AdvertDetail
+                catalog.AdvertDetails.Add(new CatalogDetail
                                                {
                                                    CommercialProduct = prod,
                                                    Position = position,
@@ -205,20 +231,17 @@ namespace OMKT.Context
                                                });
                 position++;
             }
-            //catalogs.Add(catalog);
             context.Catalogs.Add(catalog);
-            var adverts = new List<Advert>();
-            adverts.Add(catalog);
             #endregion
 
             #region campaign states
             var campaignState = new List<CampaignState>
-                                    {
-                                        new CampaignState{ Description = "Cancelada"},
-                                        new CampaignState{ Description = "Pospuesta"},
-                                        new CampaignState{ Description = "Pausada"},
-                                        new CampaignState{ Description = "Terminada" }
-                                    };
+									{
+										new CampaignState{ Description = "Cancelada"},
+										new CampaignState{ Description = "Pospuesta"},
+										new CampaignState{ Description = "Pausada"},
+										new CampaignState{ Description = "Terminada" }
+									};
             foreach (var cs in campaignState)
             {
                 context.CampaignStates.Add(cs);
@@ -243,15 +266,21 @@ namespace OMKT.Context
             //Advert hosts
             var host1 = new AdvertHost { AdvertHostName = "Patio Olmos" };
             host1.Location = loc1;
+            host1.LocationId = host1.Location.LocationId;
             host1.AdvertHostCategory = cat1;
+            host1.AdvertHostCategoryId = host1.AdvertHostCategory.AdvertHostCategoryId;
             context.AdvertHosts.Add(host1);
             var host2 = new AdvertHost { AdvertHostName = "Nuevo centro" };
             host2.Location = loc2;
+            host2.LocationId = host2.Location.LocationId;
             host2.AdvertHostCategory = cat2;
+            host2.AdvertHostCategoryId = host2.AdvertHostCategory.AdvertHostCategoryId;
             context.AdvertHosts.Add(host2);
             var host3 = new AdvertHost { AdvertHostName = "UTN" };
             host3.Location = loc3;
+            host3.LocationId = host3.Location.LocationId;
             host3.AdvertHostCategory = cat3;
+            host3.AdvertHostCategoryId = host3.AdvertHostCategory.AdvertHostCategoryId;
             context.AdvertHosts.Add(host3);
 
             var campLoc1 = new CampaignLocation { Description = "Todas las ubicaciones" };
@@ -261,9 +290,9 @@ namespace OMKT.Context
             context.CampaignLocations.Add(campLoc1);
 
             var locations = new List<CampaignLocation>
-                                {  new CampaignLocation{Description = "Ubicaciones privadas"},
-                                   new CampaignLocation{Description = "Ubicaciones públicas"}
-                                };
+								{  new CampaignLocation{Description = "Ubicaciones privadas"},
+								   new CampaignLocation{Description = "Ubicaciones públicas"}
+								};
             foreach (var loc in locations)
             {
                 context.CampaignLocations.Add(loc);
@@ -273,17 +302,21 @@ namespace OMKT.Context
 
             #region campaigns
             var campaign = new AdvertCampaign();
-            campaign.Customer = context.Customers.Find(1);
+            campaign.Customer = customer;
+            campaign.CustomerId = campaign.Customer.CustomerID;
             campaign.Name = "Campaña #1";
             campaign.CampaignType = new CampaignType { Name = "Estándar", Description = "Emisión de anuncios en todos los puestos de difusión de la red Optical Marketing" };
+            campaign.CampaignTypeId = campaign.CampaignType.CampaignTypeId;
             campaign.CampaignState = new CampaignState { Description = "Vigente" };
+            campaign.CampaignStateId = campaign.CampaignState.CampaignStateId;
             campaign.Estimate = new Random(1).Next(10, 100);
             campaign.CreatedDate = DateTime.Now.AddDays(-15);
             campaign.EndDatetime = DateTime.Now.AddDays(15);
             campaign.Network = new Network { Description = "Red de difusión de Optical Marketing" };
+            campaign.NetworkId = campaign.Network.NetworkId;
             campaign.CampaignLocation = campLoc1;
+            campaign.CampaignLocationId = campaign.CampaignLocation.CampaignLocationId;
             campaign.StartDatetime = campaign.CreatedDate;
-            campaign.CustomerId = campaign.Customer.CustomerID;
             campaign.LastUpdate = DateTime.Now;
             campaign.AdvertCampaignDetails.Add(new AdvertCampaignDetail
                 {
@@ -291,71 +324,90 @@ namespace OMKT.Context
                     StartDate = campaign.StartDatetime,
                     EndDate = campaign.EndDatetime
                 });
-
-            //#region interactions
-            ////TODO think this shit all over again
-            //foreach (var cmp in campaign.AdvertCampaignDetails)
-            //{
-            //    for (int j = 0; j < 7; j++)
-            //    {
-            //        var views = new Random(j).Next(2000, 3000);
-            //        cmp.Interactions.Add(new Interaction
-            //                                 {
-            //                                     StartDateTime = DateTime.Now.AddDays(-j).AddHours(-10),
-            //                                     EndDateTime = DateTime.Now.AddDays(-j),
-            //                                     Impressions = views,
-            //                                     Traffic = new Random(j).Next(10000, 15000),
-            //                                     Snapshot = new Snapshot(),
-            //                                     AdvertCampaignDetail = cmp
-            //                                 });
-
-            //    }
-
-            //}
-            //#endregion
+            campaign.AdvertCampaignDetails.Add(new AdvertCampaignDetail
+                {
+                    Advert = game,
+                    StartDate = campaign.StartDatetime,
+                    EndDate = campaign.EndDatetime
+                });
 
             context.AdvertCampaigns.Add(campaign);
 
             #endregion
 
             #region Interactions
-
-            for (int i = 0; i < 30; i++)
-            {
-                float h = (new Random().Next(5,9)) / 10;
-                var at = new AdvertInteraction
+            /**
+			 * Let the magic begin
+			 * Fill the interactions tables
+			 * 
+			 **/
+            for (int z = 0; z < 15; z++) // last 15 days
+            {    
+                #region Campaigns intereactions
+                var ct = new AdvertCampaignInteraction
                 {
-                    Advert = catalog,
-                    AdvertID = catalog.AdvertId,
-                    StartDatetime = DateTime.Now.AddDays(-i).AddMinutes(-5),
-                    EndDatetime = DateTime.Now.AddDays(-i),
-                    Height = (h + 1.00),
+                    AdvertCampaign = campaign,
+                    AdvertCampaignID = campaign.AdvertCampaignId,
+                    StartDatetime = DateTime.Now.AddDays(-z).AddMinutes(-5),
+                    EndDatetime = DateTime.Now.AddDays(-z),
 
-                };
-                foreach (var detail in catalog.AdvertDetails)
+                }; 
+                var count = 0;
+                foreach (var detail in campaign.AdvertCampaignDetails) // only 2 (catalog and game)
                 {
-                    var r = new Random().Next(0, 2);
-                    var li = (r == 1) ? true : false;
-                    var nt = new AdvertDetailInteraction
-                                            {
-                                                AdvertDetail = detail,
-                                                AdvertDetailID = detail.AdvertDetailId,
-                                                View = true,
-                                                Like = li,
-                                            };
-                    at.AdvertDetailInteractions.Add(nt);
-                    //context.AdvertDetailInteractions.Add(nt);
+                    // 30 times a day
+                    count++;
+                    var times = new Random().Next(4, 10);
+                    for (int i = 0; i < times; i++)
+                    {
+                        #region DetailsCampaign interactions
+
+                        float h = (new Random().Next(5, 9)) / 10;
+                        var at = new AdvertCampaignDetailInteraction
+                        {
+                            Advert = detail.Advert,
+                            AdvertID = detail.AdvertID,
+                            StartDatetime = DateTime.Now.AddDays(-i).AddMinutes(-5),
+                            EndDatetime = DateTime.Now.AddDays(-i),
+                            Height = (h + 1.00),
+
+                        };
+                        ct.AdvertCampaignDetailInteractions.Add(at);
+
+                        #region catalogDetails interactions
+                        if (count > 1) {  //rusticidad para cargar fucking details
+                        foreach (var cd in catalog.AdvertDetails)
+                            {
+                                var r = new Random().Next(0, 2);
+                                var li = (r == 1) ? true : false;
+                                var nt = new CatalogDetailInteraction
+                                {
+                                    CatalogDetail = cd,
+                                    CatalogDetailID = cd.CatalogDetailId,
+                                    View = true,
+                                    Like = li,
+                                };
+                                context.CatalogDetailInteractions.Add(nt);
+                            }
+                        }
+                        #endregion
+                        #endregion
+                        
+                    }
+
                 }
-                context.AdvertInteractions.Add(at);
+                
+                context.AdvertCampaignInteractions.Add(ct);
+                #endregion
+            }
 
-            }            
             #endregion
 
             try
             {
                 context.SaveChanges();
             }
-            catch (DbEntityValidationException dbEx) //debug errors
+            catch (DbEntityValidationException dbEx)
             {
                 foreach (var validationErrors in dbEx.EntityValidationErrors)
                 {

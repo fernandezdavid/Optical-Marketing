@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace OMKT.Business
 {
@@ -7,12 +6,12 @@ namespace OMKT.Business
     {
         public int MonitoringID { get; set; }
 
-        public int AdvertHostID {get;set;}
+        public int AdvertHostID { get; set; }
+
         public virtual AdvertHost AdvertHost { get; set; }
 
         public DateTime? Timestamp { get; set; }
 
         public float Average { get; set; }
-
     }
 }

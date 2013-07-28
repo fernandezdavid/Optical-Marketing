@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="span12" style="margin-left:0">
-        @{Html.RenderAction("AdvertCampaignsPerformance", "Stats", new { period = Request["period"] });}
+        @{Html.RenderAction("AdvertCampaignsPerformance", "AdvertCampaign", new { period = Request["period"] });}
     </div>
 </div>
 @{Html.RenderAction("LatestCampaigns", "AdvertCampaign", new { state = Request["state"], period = Request["period"] });}

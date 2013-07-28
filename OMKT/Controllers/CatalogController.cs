@@ -1,14 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
-using System.Collections.Generic;
 using System.Web.Mvc;
 using OMKT.Business;
 using OMKT.Context;
-using Paging;
 using OMKT.Models;
+using Paging;
 
 namespace OMKT.Controllers
 {
@@ -58,7 +58,7 @@ namespace OMKT.Controllers
 
         public PartialViewResult LatestCatalogs(int? top)
         {
-            if (!top.HasValue) 
+            if (!top.HasValue)
                 top = 10;
             var oUser = (User)Session["User"];
             var catalogs = _db.Catalogs.OrderByDescending(i => i.Name).Take(top.Value);
@@ -203,7 +203,7 @@ namespace OMKT.Controllers
             var views = 0;
             foreach (var cat in advertDetails)
             {
-                views = _db.AdvertInteractions.Where(c => c.AdvertID == cat.AdvertID).Count();
+                views = _db.AdvertCampaignDetailInteractions.Where(c => c.AdvertID == cat.AdvertID).Count();
                 var oCO = new CatalogOverview();
                 oCO.Views = views;
                 oCO.CatalogtName = cat.Advert.Name;

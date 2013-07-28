@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using OMKT.Business;
 using OMKT.Context;
+using OMKT.Models;
 
 namespace OMKT.Controllers
 {
@@ -257,6 +259,39 @@ namespace OMKT.Controllers
             {
                 return PartialView(advertcampaign);
             }
+        }
+
+        /**
+        * method AdvertCampaignsPerformance
+        *
+        * Shows the relation interactions/likes for each advertCampaign
+        *
+        * @since 14/07/2013
+        * @return partial view
+        */
+
+        public ActionResult AdvertCampaignsPerformance()
+        {
+            var oUser = (User)Session["User"];
+            var advertCamp = _db.AdvertCampaigns.Where(c => c.CustomerId == oUser.CustomerId);
+            var interactions = new List<CampaignPerformance>();
+            var inter = 0;
+            //@TODO Contar las interacciones de cada anuncio para cada campana
+            //@TODO Calcular la valoracion
+            foreach (var camp in advertCamp)
+            {
+                foreach (var campDetail in camp.AdvertCampaignDetails)
+                {
+                    inter += _db.AdvertCampaignDetailInteractions.Where(c => c.AdvertID == campDetail.AdvertID).Count();
+                }
+                //_db.AdvertInteractions.Where(a=>a.AdvertID == cat.)
+                //views = _db.AdvertInteractions.Where(c => c.AdvertID == cat.AdvertID).Count();
+                var oCP = new CampaignPerformance();
+                //oCO.Views = views;
+                //oCO.CatalogtName = cat.Advert.Name;
+                //interactions.Add(oCO);
+            }
+            return PartialView("CatalogsOverview", interactions.ToList());
         }
 
         protected override void Dispose(bool disposing)
