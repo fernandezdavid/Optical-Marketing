@@ -7,9 +7,7 @@
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Mes', 'Valoraciones', 'Interacciones'],
-          @foreach (var item in Model){ 
-            @:['@item.Month', @item.Impressions, @item.Traffic], 
-          }
+
          ]);
 
         var options = {

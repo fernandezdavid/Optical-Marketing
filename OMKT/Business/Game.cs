@@ -1,15 +1,14 @@
-﻿namespace OMKT.Business
+﻿using System.Collections.Generic;
+
+namespace OMKT.Business
 {
     public class Game : Advert
     {
-        public string QRCode { get; set; }
+        public ICollection<GameDetail> GameDetails { get; set; }
 
-        public int CommercialProductId { get; set; }
-
-        public virtual CommercialProduct CommercialProduct { get; set; }
-
-        public int Cards { get; set; }
-
-        public double Discount { get; set; }
+        public Game()
+        {
+            GameDetails = new List<GameDetail>();
+        }
     }
 }

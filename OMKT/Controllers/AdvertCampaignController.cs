@@ -291,7 +291,7 @@ namespace OMKT.Controllers
                 //oCO.CatalogtName = cat.Advert.Name;
                 //interactions.Add(oCO);
             }
-            return PartialView("CatalogsOverview", interactions.ToList());
+            return PartialView("AdvertCampaignsPerformance", interactions.ToList());
         }
 
         protected override void Dispose(bool disposing)

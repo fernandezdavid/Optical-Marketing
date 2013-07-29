@@ -1,8 +1,4 @@
-﻿@model IEnumerable<OMKT.Business.AdvertDetail>
-
-@{
-    ViewBag.Title = "Index";
-}
+﻿@model IEnumerable<OMKT.Business.CatalogDetail>
 
 <table  class="zebra-striped">
     <thead>
@@ -30,7 +26,7 @@
     </thead>
 
 @foreach (var item in Model) {
-    var catalogDetail = "catalogDetail" + item.AdvertDetailId; 
+    var catalogDetail = "catalogDetail" + item.CatalogDetailId; 
     <tr id="@catalogDetail">
         <td>
             <img src="http://hp.static.adidas.com/@Url.Content(item.CommercialProduct.ProductImage.ThumbnailPath)" class="img-rounded" title="@item.CommercialProduct.ProductImage.Title" alt="@item.CommercialProduct.ProductImage.Caption" width="50px" height="50px"/>
@@ -52,9 +48,9 @@
         </td>
         <td nowrap>
             <div class="btn-group">
-                <a href="@Url.Action("Edit", new { id = item.AdvertDetailId })" class="btn primary small editAdvertDetails" idCatalogDetails="@item.AdvertDetailId"><i class=" icon-edit icon-white"></i></a>
+                <a href="@Url.Action("Edit", new { id = item.CatalogDetailId })" class="btn primary small editAdvertDetails" idCatalogDetails="@item.CatalogDetailId"><i class=" icon-edit icon-white"></i></a>
         @*        <a href="@Url.Action("Details", new { id = item.AdvertDetailId })" class="btn small"><i class=" icon-align-justify "></i></a>*@
-                <a href="@Url.Action("Delete", new { id = item.AdvertDetailId })" idCatalogDetails = "@item.AdvertDetailId" class="btn small deleteAdvertDetails"><i class=" icon-trash "></i></a>
+                <a href="@Url.Action("Delete", new { id = item.CatalogDetailId })" idCatalogDetails = "@item.CatalogDetailId" class="btn small deleteAdvertDetails"><i class=" icon-trash "></i></a>
             </div>
         </td>
     </tr>

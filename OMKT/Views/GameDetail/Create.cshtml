@@ -1,0 +1,9 @@
+﻿@model OMKT.Business.GameDetail
+@using (Html.BeginForm("Create", "GameDetail", FormMethod.Post, new { @class = "form-horizontal", @id = "save-detail" }))
+{
+    @Html.ValidationSummary(true)
+    <text>
+    @{ Html.RenderPartial("EditOrAddGameDetailPartial", Model); }
+    </text>
+   
+}

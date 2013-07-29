@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Web.Security;
 using OMKT.Business;
+using System.Linq;
 
 namespace OMKT.Context
 {
@@ -190,16 +191,32 @@ namespace OMKT.Context
 
             var game = new Game();
             game.Name = "Memory";
-            game.CommercialProduct = products[new Random(1).Next(0, 1)];
-            game.CommercialProductId = game.CommercialProduct.CommercialProductId;
             game.CreatedDate = new DateTime(DateTime.Now.Year, 1, new Random().Next(1, 28));
-            game.QRCode = "";
-            game.Cards = 25;
-            game.Discount = 15;
             game.AdvertState = estado;
             game.AdvertStateId = game.AdvertState.AdvertstateId;
             game.AdvertType = new AdvertType { Description = "Juego Interactivo" };
             game.AdvertTypeId = game.AdvertType.AdvertTypeId;
+            var counter = 0;
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            foreach (var prod in products)
+            {
+                var random = new Random();
+                var result = new string(
+                    Enumerable.Repeat(chars, 8)
+                              .Select(s => s[random.Next(s.Length)])
+                              .ToArray());
+                game.GameDetails.Add(new GameDetail
+                {
+                    Game = game,
+                    GameId = game.AdvertId,
+                    CommercialProduct = prod,
+                    CreatedDate = game.CreatedDate,
+                    LastUpdate = DateTime.Now,
+                    Discount = new Random(counter).Next(10, 20),
+                    QRCode = result,
+                });
+                counter++;
+            }
             context.Games.Add(game);
 
             #endregion
@@ -222,6 +239,8 @@ namespace OMKT.Context
             {
                 catalog.AdvertDetails.Add(new CatalogDetail
                                                {
+                                                   Catalog = catalog,
+                                                   CatalogId = catalog.AdvertId,
                                                    CommercialProduct = prod,
                                                    Position = position,
                                                    CreatedDate = catalog.CreatedDate,
@@ -375,8 +394,9 @@ namespace OMKT.Context
                         ct.AdvertCampaignDetailInteractions.Add(at);
 
                         #region catalogDetails interactions
-                        if (count > 1) {  //rusticidad para cargar fucking details
-                        foreach (var cd in catalog.AdvertDetails)
+                        if (count > 1)
+                        {  //rusticidad para cargar fucking details
+                            foreach (var cd in catalog.AdvertDetails)
                             {
                                 var r = new Random().Next(0, 2);
                                 var li = (r == 1) ? true : false;
@@ -388,6 +408,22 @@ namespace OMKT.Context
                                     Like = li,
                                 };
                                 context.CatalogDetailInteractions.Add(nt);
+                            }
+                        }
+                        else
+                        {
+                            foreach (var gd in game.GameDetails)
+                            {
+                                var r = new Random().Next(0, 2);
+                                var li = (r == 1) ? true : false;
+                                var gt = new GameDetailInteraction
+                                {
+                                    GameDetail = gd,
+                                    GameDetailID = gd.GameDetailId,
+                                    Win = li
+                                    
+                                };
+                                context.GameDetailInteractions.Add(gt);
                             }
                         }
                         #endregion

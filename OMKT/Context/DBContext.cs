@@ -39,6 +39,9 @@ namespace OMKT.Context
         public DbSet<CatalogDetailInteraction> CatalogDetailInteractions { get; set; }
         public DbSet<AdvertCampaignInteraction> AdvertCampaignInteractions { get; set; }
         public DbSet<Monitoring> Monitoring { get; set; }
+        public DbSet<GameDetail> GameDetails { get; set; }
+        public DbSet<GameDetailInteraction> GameDetailInteractions { get; set; }
+
         //public DbSet<Zone> Zones { get; set; }
         //public DbSet<Email> Emails { get; set; }
         //public DbSet<Snapshot> Snapshots { get; set; }

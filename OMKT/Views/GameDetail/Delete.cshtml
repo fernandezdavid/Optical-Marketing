@@ -1,33 +1,34 @@
-﻿@model OMKT.Business.CatalogDetail
+﻿@model OMKT.Business.GameDetail
 <div class="alert alert-info">
     <a class="close" href="#">×</a> <strong>¿Estás seguro que deseas borrar este registro?</strong>
 </div>
 <fieldset>
     <p>
-        <strong>Catálogo </strong>
-    </p>
-    <p>@Html.DisplayFor(model => model.Catalog.Name)
-    </p>
+        <strong>Juego</strong></p>
+    <p>
+        @Html.DisplayFor(model => model.Game.Name)</p>
     <p>
         <strong>Producto </strong>
     </p>
     <p>@Html.DisplayFor(model => model.CommercialProduct.ProductName)
     </p>
     <p>
-        <strong>Orden </strong>
-    </p>
-    <p>@Html.DisplayFor(model => model.Position)
-    </p>
+        <strong>Descuento</strong></p>
+    <p>@Html.DisplayFor(model => model.Discount)</p>
+    <p>
+        <strong>QR</strong></p>
+    <p>
+        @Html.DisplayFor(model => model.QRCode)</p>
 </fieldset>
-@using (Html.BeginForm("Delete", "CatalogDetails", FormMethod.Post, new { @class = "form-horizontal", @id = "del-detail" }))
+@using (Html.BeginForm("Delete", "GameDetail", FormMethod.Post, new { @class = "form-horizontal", @id = "del-detail" }))
 { }
 <script type="text/javascript">
     $('#del-detail').on('submit', function (e) {
         clearErrors();
         e.preventDefault();
         $.post($(this).attr('action'), $(this).serialize(), function (data, status) {
-            $('#catalog-modal').modal('hide');
-            $("#catalogDetailsList").html(data);
+            $('#game-modal').modal('hide');
+            $("#gameDetailList").html(data);
         }).error(function (error, status, a, b) {
             writeError('msgError', 'Ups! Algo anduvo mal. Por favor, intenta nuevamente.');
             $('.modal-body p.body').html(error.responseText);
@@ -36,3 +37,4 @@
     });
     
 </script>
+
