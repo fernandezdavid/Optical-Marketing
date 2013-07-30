@@ -5,9 +5,9 @@ using System.Web;
 
 namespace OMKT.Models
 {
-    public class CatalogOverview
+    public class AdvertOverview
     {
-        public string CatalogtName { get; set; }
+        public string AdvertName { get; set; }
 
         public float Views { get; set; }
     }

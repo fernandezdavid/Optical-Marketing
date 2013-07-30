@@ -30,23 +30,7 @@
             @Html.EditorFor(model => model.EndDatetime, "Calendar")
             @Html.ValidationMessageFor(model => model.EndDatetime)
         </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label">
-            Fecha de Vigencia</label>
-        <div class="controls">
-            @Html.EditorFor(model => model.StartDatetime)
-            @Html.ValidationMessageFor(model => model.StartDatetime)
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label">
-            Fecha de Caducidad</label>
-        <div class="controls">
-            @Html.EditorFor(model => model.EndDatetime)
-            @Html.ValidationMessageFor(model => model.EndDatetime)
-        </div>
-    </div>     
+    </div>    
      <div class="form-actions">
         <input type="submit" class="btn btn-primary" value="Guardar" />
         <a href="@Url.Action("Index")" class="btn">Volver</a>

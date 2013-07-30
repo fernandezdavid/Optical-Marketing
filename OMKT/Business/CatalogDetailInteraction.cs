@@ -13,5 +13,11 @@ namespace OMKT.Business
         public Boolean View { get; set; }
 
         public Boolean Like { get; set; }
+
+        public DateTime? StartDatetime { get; set; }
+
+        public DateTime? EndDatetime { get; set; }
+
+
     }
 }

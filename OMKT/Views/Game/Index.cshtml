@@ -7,7 +7,7 @@
     <div class="span2">
         <a href="@Url.Action("Create", "Game")" class="btn btn-primary"><i class="icon-plus icon-white "></i> Nuevo Juego </a>
     </div>
-    <div class="span12">@{Html.RenderAction("CatalogsOverview", "Catalog");}</div> <!--TODO-->
+    <div class="span12">@{Html.RenderAction("GamesOverview", "Game");}</div> <!--TODO-->
 </div>
 @{Html.RenderAction("LatestGames", "Game");}
 

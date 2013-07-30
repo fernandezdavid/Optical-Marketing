@@ -20,7 +20,7 @@ namespace OMKT.Controllers
             var oCatalog = _db.Catalogs.FirstOrDefault(i => i.AdvertId == id);
             ViewBag.Catalog = oCatalog;
 
-            var oCatalogDetails = _db.CatalogDetails.Include(i => i.Catalog).Where(i => i.CatalogId == id);
+            var oCatalogDetails = _db.CatalogDetails.Include(i => i.Catalog).Where(i => i.AdvertId == id);
             return PartialView("CatalogDetailsPartialList", oCatalogDetails.ToList());
         }
 
@@ -30,7 +30,7 @@ namespace OMKT.Controllers
             var oCatalog = _db.Catalogs.FirstOrDefault(i => i.AdvertId == id);
             ViewBag.Catalog = oCatalog;
 
-            var oCatalogDetails = _db.CatalogDetails.Include(i => i.Catalog).Where(i => i.CatalogId == id);
+            var oCatalogDetails = _db.CatalogDetails.Include(i => i.Catalog).Where(i => i.AdvertId == id);
             return PartialView("CarouselPartialList", oCatalogDetails.ToList());
         }
 
@@ -40,7 +40,7 @@ namespace OMKT.Controllers
             var oCatalog = _db.Catalogs.FirstOrDefault(i => i.AdvertId == id);
             ViewBag.Catalog = oCatalog;
 
-            var oCatalogDetails = _db.CatalogDetails.Include(i => i.Catalog).Where(i => i.CatalogId == id);
+            var oCatalogDetails = _db.CatalogDetails.Include(i => i.Catalog).Where(i => i.AdvertId == id);
             return PartialView("SorteableList", oCatalogDetails.ToList());
         }
 
@@ -74,7 +74,7 @@ namespace OMKT.Controllers
                 Catalog oCatalog = _db.Catalogs.Find(id);// (from cat in _db.Catalogs where cat.AdvertId == id select cat).FirstOrDefault();
                 if (oCatalog != null)
                 {
-                    oDetail = new CatalogDetail { CatalogId = id.Value, Catalog = oCatalog };
+                    oDetail = new CatalogDetail { AdvertId = id.Value, Catalog = oCatalog };
                 }
                 //ViewBag.AdvertId = new SelectList(_db.Catalogs, "AdvertId", "CatalogName", id.Value);
             }
@@ -90,7 +90,7 @@ namespace OMKT.Controllers
             ViewBag.CommercialProductId = new SelectList(_db.CommercialProducts.OrderBy(c => c.ProductName), "CommercialProductId", "ProductName");
             if (ModelState.IsValid)
             {
-                var check = _db.CatalogDetails.Where(a => a.CommercialProductId == catalogdetail.CommercialProductId && a.CatalogId == catalogdetail.CatalogId).FirstOrDefault();
+                var check = _db.CatalogDetails.Where(a => a.CommercialProductId == catalogdetail.CommercialProductId && a.AdvertId == catalogdetail.AdvertId).FirstOrDefault();
                 if (check == null)
                 {
                     catalogdetail.CreatedDate = DateTime.Now;
@@ -108,10 +108,10 @@ namespace OMKT.Controllers
                 {
                     //TODO
                 }
-                var oCatalog = _db.Catalogs.Find(catalogdetail.CatalogId);// (from cat in _db.Catalogs where cat.AdvertId == catalogdetail.AdvertId select cat).FirstOrDefault();
+                var oCatalog = _db.Catalogs.Find(catalogdetail.AdvertId);// (from cat in _db.Catalogs where cat.AdvertId == catalogdetail.AdvertId select cat).FirstOrDefault();
                 ViewBag.Catalog = oCatalog;
 
-                return PartialView("CatalogDetailsPartialList", _db.CatalogDetails.Where(cd => cd.CatalogId == catalogdetail.CatalogId).Include(i => i.CommercialProduct));
+                return PartialView("CatalogDetailsPartialList", _db.CatalogDetails.Where(cd => cd.AdvertId == catalogdetail.AdvertId).Include(i => i.CommercialProduct));
             }
             return PartialView("Create", catalogdetail);
         }
@@ -135,10 +135,10 @@ namespace OMKT.Controllers
             ViewBag.CommercialProductId = new SelectList(_db.CommercialProducts, "CommercialProductId", "ProductName", catalogdetail.CommercialProductId);
             if (ModelState.IsValid)
             {
-                var check = _db.CatalogDetails.Where(a => a.CommercialProductId == catalogdetail.CommercialProductId && a.CatalogId == catalogdetail.CatalogId).FirstOrDefault();
+                var check = _db.CatalogDetails.Where(a => a.CommercialProductId == catalogdetail.CommercialProductId && a.AdvertId == catalogdetail.AdvertId).FirstOrDefault();
                 if (check == null)
                 {
-                    var oCatalog = _db.Catalogs.Find(catalogdetail.CatalogId);
+                    var oCatalog = _db.Catalogs.Find(catalogdetail.AdvertId);
                     oCatalog.LastUpdate = DateTime.Now;
                     _db.Entry(oCatalog).State = EntityState.Modified;
                     catalogdetail.LastUpdate = DateTime.Now;
@@ -157,7 +157,7 @@ namespace OMKT.Controllers
                 {
                     //TODO
                 }
-                return PartialView("CatalogDetailsPartialList", _db.CatalogDetails.Where(cd => cd.CatalogId == catalogdetail.CatalogId).Include(i => i.CommercialProduct).ToList());
+                return PartialView("CatalogDetailsPartialList", _db.CatalogDetails.Where(cd => cd.AdvertId == catalogdetail.AdvertId).Include(i => i.CommercialProduct).ToList());
             }
             return PartialView("Edit", catalogdetail);
         }
@@ -190,7 +190,7 @@ namespace OMKT.Controllers
                     throw;
                 }
 
-                return PartialView("CatalogDetailsPartialList", _db.CatalogDetails.Where(cd => cd.CatalogId == catalogdetail.CatalogId).Include(i => i.CommercialProduct));
+                return PartialView("CatalogDetailsPartialList", _db.CatalogDetails.Where(cd => cd.AdvertId == catalogdetail.AdvertId).Include(i => i.CommercialProduct));
             }
             return Content("El registro no fue encontrado.");
         }

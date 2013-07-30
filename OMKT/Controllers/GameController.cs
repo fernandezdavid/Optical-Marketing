@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using OMKT.Business;
 using OMKT.Context;
+using OMKT.Models;
 
 namespace OMKT.Controllers
 {
@@ -134,6 +135,23 @@ namespace OMKT.Controllers
         {
             Game game = db.Games.Find(id);
             return PartialView(game);
+        }
+
+        public ActionResult GamesOverview()
+        {
+            var oUser = (User)Session["User"];
+            var advertDetails = db.AdvertCampaignDetails.Where(c => c.AdvertCampaign.CustomerId == oUser.CustomerId);
+            var interactions = new List<AdvertOverview>();
+            var views = 0;
+            foreach (var cat in advertDetails)
+            {
+                views = db.AdvertCampaignDetailInteractions.Where(c => c.AdvertID == cat.AdvertID && c.Advert.AdvertTypeId == 1).Count();
+                var oCO = new AdvertOverview();
+                oCO.Views = views;
+                oCO.AdvertName = cat.Advert.Name;
+                interactions.Add(oCO);
+            }
+            return PartialView("GamesOverview", interactions.ToList());
         }
 
         //

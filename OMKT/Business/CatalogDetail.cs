@@ -6,7 +6,7 @@ namespace OMKT.Business
     {
         public int CatalogDetailId { get; set; }
 
-        public int CatalogId { get; set; }
+        public int AdvertId { get; set; }
 
         public virtual Catalog Catalog { get; set; }
 

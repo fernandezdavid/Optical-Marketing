@@ -161,14 +161,14 @@ namespace OMKT.Controllers
         {
             var oUser = (User)Session["User"];
             var advertDetails = _db.AdvertCampaignDetails.Where(c => c.AdvertCampaign.CustomerId == oUser.CustomerId);
-            var interactions = new List<CatalogOverview>();
+            var interactions = new List<AdvertOverview>();
             var views = 0;
             foreach (var cat in advertDetails)
             {
-                views = _db.AdvertCampaignDetailInteractions.Where(c => c.AdvertID == cat.AdvertID).Count();
-                var oCO = new CatalogOverview();
+                views = _db.AdvertCampaignDetailInteractions.Where(c => c.AdvertID == cat.AdvertID && c.Advert.AdvertTypeId == 2).Count();
+                var oCO = new AdvertOverview();
                 oCO.Views = views;
-                oCO.CatalogtName = cat.Advert.Name;
+                oCO.AdvertName = cat.Advert.Name;
                 interactions.Add(oCO);
             }
             return PartialView("CatalogsOverview", interactions.ToList());

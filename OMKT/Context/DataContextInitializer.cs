@@ -208,7 +208,7 @@ namespace OMKT.Context
                 game.GameDetails.Add(new GameDetail
                 {
                     Game = game,
-                    GameId = game.AdvertId,
+                    AdvertId = game.AdvertId,
                     CommercialProduct = prod,
                     CreatedDate = game.CreatedDate,
                     LastUpdate = DateTime.Now,
@@ -240,7 +240,7 @@ namespace OMKT.Context
                 catalog.AdvertDetails.Add(new CatalogDetail
                                                {
                                                    Catalog = catalog,
-                                                   CatalogId = catalog.AdvertId,
+                                                   AdvertId = catalog.AdvertId,
                                                    CommercialProduct = prod,
                                                    Position = position,
                                                    CreatedDate = catalog.CreatedDate,
@@ -321,7 +321,7 @@ namespace OMKT.Context
 
             #region campaigns
             var campaign = new AdvertCampaign();
-            campaign.Customer = customer;
+            campaign.Customer = context.Customers.Find(1);
             campaign.CustomerId = campaign.Customer.CustomerID;
             campaign.Name = "Campaña #1";
             campaign.CampaignType = new CampaignType { Name = "Estándar", Description = "Emisión de anuncios en todos los puestos de difusión de la red Optical Marketing" };
@@ -404,6 +404,8 @@ namespace OMKT.Context
                                 {
                                     CatalogDetail = cd,
                                     CatalogDetailID = cd.CatalogDetailId,
+                                    StartDatetime = at.StartDatetime,
+                                    EndDatetime = at.EndDatetime,
                                     View = true,
                                     Like = li,
                                 };
@@ -420,6 +422,8 @@ namespace OMKT.Context
                                 {
                                     GameDetail = gd,
                                     GameDetailID = gd.GameDetailId,
+                                    StartDatetime = at.StartDatetime,
+                                    EndDatetime = at.EndDatetime,
                                     Win = li
                                     
                                 };

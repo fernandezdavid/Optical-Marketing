@@ -20,7 +20,7 @@ namespace OMKT.Controllers
             ViewBag.AdvertId = id;
             var oGame = db.Games.Find(id);
             ViewBag.Game = oGame;
-            var oGameDetails = db.GameDetails.Include(i => i.Game).Where(i => i.GameId == id);
+            var oGameDetails = db.GameDetails.Include(i => i.Game).Where(i => i.AdvertId == id);
             return PartialView("GameDetailPartialList", oGameDetails.ToList());
         }
 
@@ -30,7 +30,7 @@ namespace OMKT.Controllers
             var oGame = db.Games.FirstOrDefault(i => i.AdvertId == id);
             ViewBag.Game = oGame;
 
-            var oGameDetails = db.GameDetails.Include(i => i.Game).Where(i => i.GameId == id);
+            var oGameDetails = db.GameDetails.Include(i => i.Game).Where(i => i.AdvertId == id);
             return PartialView("MemoryGamePartialList", oGameDetails.ToList());
 
         }
@@ -64,7 +64,7 @@ namespace OMKT.Controllers
                 Game oGame = db.Games.Find(id);
                 if (oGame != null)
                 {
-                    oGameDetail = new GameDetail { GameId = id.Value, Game = oGame };
+                    oGameDetail = new GameDetail { AdvertId = id.Value, Game = oGame };
                 }
             }
             return PartialView("Create", oGameDetail);
@@ -79,7 +79,7 @@ namespace OMKT.Controllers
             ViewBag.CommercialProductId = new SelectList(db.CommercialProducts.OrderBy(c => c.ProductName), "CommercialProductId", "ProductName", gamedetail.CommercialProductId);
             if (ModelState.IsValid)
             {
-                var check = db.GameDetails.Where(a => a.CommercialProductId == gamedetail.CommercialProductId && a.GameId == gamedetail.GameId).FirstOrDefault();
+                var check = db.GameDetails.Where(a => a.CommercialProductId == gamedetail.CommercialProductId && a.AdvertId == gamedetail.AdvertId).FirstOrDefault();
                 if (check == null)
                 {
                     gamedetail.CreatedDate = DateTime.Now;
@@ -98,10 +98,10 @@ namespace OMKT.Controllers
                 {
                     //TODO
                 }
-                var oGame = db.Games.Find(gamedetail.GameId);
+                var oGame = db.Games.Find(gamedetail.AdvertId);
                 ViewBag.Game = oGame;
 
-                return PartialView("GameDetailPartialList", db.GameDetails.Where(cd => cd.GameId == gamedetail.GameId).Include(i => i.CommercialProduct));
+                return PartialView("GameDetailPartialList", db.GameDetails.Where(cd => cd.AdvertId == gamedetail.AdvertId).Include(i => i.CommercialProduct));
             }            
             return PartialView("Create", gamedetail);
         }
@@ -125,13 +125,13 @@ namespace OMKT.Controllers
             ViewBag.CommercialProductId = new SelectList(db.CommercialProducts, "CommercialProductId", "ProductName", gamedetail.CommercialProductId);
             if (ModelState.IsValid)
             {
-                var check = db.GameDetails.Where(a => a.CommercialProductId == gamedetail.CommercialProductId && a.GameId == gamedetail.GameId).FirstOrDefault();
+                var check = db.GameDetails.Where(a => a.CommercialProductId == gamedetail.CommercialProductId && a.AdvertId == gamedetail.AdvertId).FirstOrDefault();
                 if (check != null)
                 {
                     var oGame = db.Games.Find(gamedetail.GameDetailId);
-                    oGame.LastUpdate = DateTime.Now;
-                    db.Entry(oGame).State = EntityState.Modified;
-                    gamedetail.LastUpdate = oGame.LastUpdate;
+                    //oGame.LastUpdate = DateTime.Now;
+                    //db.Entry(oGame).State = EntityState.Modified;
+                    gamedetail.LastUpdate = DateTime.Now;
                     db.Entry(gamedetail).State = EntityState.Modified;
                     ViewBag.Game = oGame;
                     try
@@ -147,7 +147,7 @@ namespace OMKT.Controllers
                 {
                     //TODO
                 }
-                return PartialView("GameDetailPartialList", db.GameDetails.Where(cd => cd.GameId == gamedetail.GameId).Include(i => i.CommercialProduct).ToList());
+                return PartialView("GameDetailPartialList", db.GameDetails.Where(cd => cd.AdvertId == gamedetail.AdvertId).Include(i => i.CommercialProduct).ToList());
             }
             return PartialView("Edit", gamedetail);
         }
@@ -179,7 +179,7 @@ namespace OMKT.Controllers
                 {
                     //foreign key conflict with GameDetailinteractions
                 }
-                return PartialView("GameDetailPartialList", db.GameDetails.Where(cd => cd.GameId == gamedetail.GameId).Include(i => i.CommercialProduct));
+                return PartialView("GameDetailPartialList", db.GameDetails.Where(cd => cd.AdvertId == gamedetail.AdvertId).Include(i => i.CommercialProduct));
             }
             return Content("El registro no fue encontrado.");
         }

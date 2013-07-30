@@ -9,7 +9,7 @@ namespace OMKT.Business
     {
         public int GameDetailId { get; set; }
 
-        public int GameId { get; set; }
+        public int AdvertId { get; set; }
 
         public virtual Game Game { get; set; }
 
