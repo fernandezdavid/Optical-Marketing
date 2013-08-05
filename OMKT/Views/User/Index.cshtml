@@ -1,111 +1,148 @@
-﻿@using Paging
-@model IPagedList<OMKT.Business.User>
+﻿@model IEnumerable<OMKT.Business.User>
 
 @{
-    ViewBag.Title = "Usuarios";
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
 
+<h2>Index</h2>
 
-<h1>Listado <small>de Usuarios</small></h1>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            Username
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Password
+        </th>
+        <th>
+            FirstName
+        </th>
+        <th>
+            LastName
+        </th>
+        <th>
+            Comment
+        </th>
+        <th>
+            IsApproved
+        </th>
+        <th>
+            PasswordFailuresSinceLastSuccess
+        </th>
+        <th>
+            LastPasswordFailureDate
+        </th>
+        <th>
+            LastActivityDate
+        </th>
+        <th>
+            LastLockoutDate
+        </th>
+        <th>
+            DateOfBirth
+        </th>
+        <th>
+            LastLoginDate
+        </th>
+        <th>
+            ConfirmationToken
+        </th>
+        <th>
+            CreateDate
+        </th>
+        <th>
+            IsLockedOut
+        </th>
+        <th>
+            LastPasswordChangedDate
+        </th>
+        <th>
+            PasswordVerificationToken
+        </th>
+        <th>
+            PasswordVerificationTokenExpirationDate
+        </th>
+        <th>
+            Customer
+        </th>
+        <th></th>
+    </tr>
 
-<script type="text/javascript">
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsApproved)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PasswordFailuresSinceLastSuccess)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastPasswordFailureDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastActivityDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastLockoutDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfBirth)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastLoginDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConfirmationToken)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsLockedOut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastPasswordChangedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PasswordVerificationToken)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PasswordVerificationTokenExpirationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
+        </td>
+    </tr>
+}
 
-    $(document).ready(function () {
-
-        function clearErrors() {
-            $('#msgErrorNewUser').html('');
-            $('#msgError').html('');
-        }
-
-        function writeError(control, msg) {
-            var err_msg = '<div class="alert-message error"><a class="close" href="#">×</a><p>' + msg + '</p></div>';
-            $('#' + control).html(err_msg);
-        }
-
-        function getRequest(url) {
-            $.ajax({
-                url: url,
-                context: document.body,
-                success: function (data) {
-                    $('.modal-body p.body').html(data);
-                    $(this).addClass("done");
-                    $('#my-modal').modal('show');
-                },
-                error: function (err) {
-                    writeError('msgErrorNewUser', err);
-                }
-            });
-        }
-
-        $('.closeModal').live('click', function () {
-            $('#my-modal').modal('hide');
-        });
-
-        $('#my-modal form').live('submit', function () {
-            clearErrors();
-
-            $.post($(this).attr('action'), $(this).serialize(), function (data, status) {
-                $('#my-modal').modal('hide');
-                $("#userList").html(data);
-
-            }).error(function (error, status) {
-                writeError('msgError', 'Ups! Algo salió mal. Por favor, intenta nuevamente.');
-                $('.modal-body p.body').html(error.responseText);
-
-            });
-            return false;
-        });
-
-
-
-        $('.editUser').live('click', function () {
-            clearErrors();
-
-            var id = $(this).attr("idUser");
-            var url = '@Url.Content("~/User/Edit")/' + id;
-
-            getRequest(url);
-
-            return false;
-        });
-
-
-        $('a.newUser').live('click', function () {
-            clearErrors();
-            var url = '@Url.Content("~/User/Create")';
-
-            getRequest(url);
-
-            return false;
-        });
-    });
-</script>
-    <p>
-        <a href="@Url.Action("Create", "User")" class="btn newUser primary">
-            <i class="icon-plus icon-white "></i>Nuevo</a>
-    </p>
-@{Html.RenderPartial("SearchBoxCompany", "User");}
-
-<div id="msgErrorNewUser"></div>
-     <div id="my-modal" class="modal hide fade" >
-            <div class="modal-header">
-                <a href="#" class="close">&times;</a>
-                <h3>Edición</h3>
-            </div>
-            <div class="modal-body">
-                <div id="msgError"></div>
-                <p class="body">
-                   
-                </p>
-            </div>
-            <div class="modal-footer">
-             
-            </div>
-    </div>
-
-
-    <div id="customerList">
-        @{Html.RenderPartial("UserListPartial", Model);}
-    </div>
-</div>
+</table>

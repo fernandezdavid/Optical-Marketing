@@ -1,64 +1,116 @@
 ﻿@model OMKT.Business.User
 
 @{
-	ViewBag.Title = "Detalle";
-	Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
 
-@section Header{
-<script type="text/javascript">
-	var sorter_options = {
-		headers: {
-			3: { sorter: 'decimal' },
-			4: { sorter: 'datetime' },
-			5: { sorter: 'datetime' }
-		}
-	};
-</script>
-}
+<h2>Details</h2>
 
-<div class="span7">
 <fieldset>
- <legend>Detalle de Usuario</legend>
-	<p>
-		<strong>Nombre de usuario: </strong>
-		@Html.DisplayFor(model => model.Username)
-	</p>
-	<p>
-		<strong>Email: </strong>
-		@Html.DisplayFor(model => model.Email)
-	</p>
-	<p>
-		<strong>Nombre: </strong>
-		@Html.DisplayFor(model => model.FirstName)
-	</p>
-	<p>
-		<strong>Apellido: </strong>
-		@Html.DisplayFor(model => model.LastName)
-  </p>
-	<p>
-		<strong>Aprobado: </strong>
-		@Html.DisplayFor(model => model.IsApproved)
-  </p>
-	<p>
-		<strong>Última visita: </strong>
-		@Html.DisplayFor(model => model.LastLoginDate)
-  </p>
-	<p>
-		<strong>Fecha de creación: </strong>
-		@Html.DisplayFor(model => model.CreateDate)
-  </p>
-	<p>
-		<strong>Bloqueado: </strong>
-		@Html.DisplayFor(model => model.IsLockedOut)
-	</p>
+    <legend>User</legend>
+
+    <div class="display-label">Username</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Username)
+    </div>
+
+    <div class="display-label">Email</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Email)
+    </div>
+
+    <div class="display-label">Password</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Password)
+    </div>
+
+    <div class="display-label">FirstName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FirstName)
+    </div>
+
+    <div class="display-label">LastName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastName)
+    </div>
+
+    <div class="display-label">Comment</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Comment)
+    </div>
+
+    <div class="display-label">IsApproved</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsApproved)
+    </div>
+
+    <div class="display-label">PasswordFailuresSinceLastSuccess</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PasswordFailuresSinceLastSuccess)
+    </div>
+
+    <div class="display-label">LastPasswordFailureDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastPasswordFailureDate)
+    </div>
+
+    <div class="display-label">LastActivityDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastActivityDate)
+    </div>
+
+    <div class="display-label">LastLockoutDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastLockoutDate)
+    </div>
+
+    <div class="display-label">DateOfBirth</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DateOfBirth)
+    </div>
+
+    <div class="display-label">LastLoginDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastLoginDate)
+    </div>
+
+    <div class="display-label">ConfirmationToken</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ConfirmationToken)
+    </div>
+
+    <div class="display-label">CreateDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreateDate)
+    </div>
+
+    <div class="display-label">IsLockedOut</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsLockedOut)
+    </div>
+
+    <div class="display-label">LastPasswordChangedDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastPasswordChangedDate)
+    </div>
+
+    <div class="display-label">PasswordVerificationToken</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PasswordVerificationToken)
+    </div>
+
+    <div class="display-label">PasswordVerificationTokenExpirationDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PasswordVerificationTokenExpirationDate)
+    </div>
+
+    <div class="display-label">Customer</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Customer.Name)
+    </div>
 </fieldset>
 <p>
-	@Html.ActionLink("Volver", "Index", null, new { @class = "btn primary"})
+    @Html.ActionLink("Edit", "Edit", new { id=Model.UserId }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>
-</div>
-<div class="span12">
-	<h2>Últimos Catálogos</h2>
-	@*@{Html.RenderAction("LastCatalogsByUser", "Catalog", new { id = Model.UserId });}*@
-	
-</div>

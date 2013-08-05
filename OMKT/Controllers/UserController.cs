@@ -1,52 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using OMKT.Business;
 using OMKT.Context;
-using Paging;
 
 namespace OMKT.Controllers
-{
-    [Authorize(Roles = "Administrador")]
+{ 
     public class UserController : Controller
     {
-        private readonly OMKTDB _db = new OMKTDB();
-        private readonly int _defaultPageSize = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["DefaultPaginationSize"]);
-        /*CUSTOM*/
-
-        public ViewResultBase Search(string q, int? page)
-        {
-            IQueryable<User> users = _db.Users;
-
-            if (q.Length == 1)//alphabetical search, first letter
-            {
-                ViewBag.LetraAlfabetica = q;
-                users = users.Where(c => c.Username.StartsWith(q));
-            }
-            else if (q.Length > 1)
-            {
-                //normal search
-                users = users.Where(c => c.Username.IndexOf(q, StringComparison.Ordinal) > -1);
-            }
-
-            int currentPageIndex = page.HasValue ? page.Value - 1 : 0;
-            var usersListPaged = users.OrderBy(i => i.Username).ToPagedList(currentPageIndex, _defaultPageSize);
-
-            if (Request.IsAjaxRequest())
-                return PartialView("Index", usersListPaged);
-            return View("Index", usersListPaged);
-        }
-
-        /*END CUSTOM*/
+        private OMKTDB db = new OMKTDB();
 
         //
         // GET: /User/
 
-        public ViewResult Index(int? page)
+        public ViewResult Index()
         {
-            int currentPageIndex = page.HasValue ? page.Value - 1 : 0;
-            return View(_db.Users.OrderBy(c => c.Username).ToPagedList(currentPageIndex, _defaultPageSize));
+            var users = db.Users.Include(u => u.Customer);
+            return View(users.ToList());
         }
 
         //
@@ -54,7 +28,7 @@ namespace OMKT.Controllers
 
         public ViewResult Details(Guid id)
         {
-            var user = _db.Users.Find(id);
+            User user = db.Users.Find(id);
             return View(user);
         }
 
@@ -63,8 +37,9 @@ namespace OMKT.Controllers
 
         public ActionResult Create()
         {
-            return PartialView();
-        }
+            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerID", "Name");
+            return View();
+        } 
 
         //
         // POST: /User/Create
@@ -75,21 +50,23 @@ namespace OMKT.Controllers
             if (ModelState.IsValid)
             {
                 user.UserId = Guid.NewGuid();
-                _db.Users.Add(user);
-                _db.SaveChanges();
-                return PartialView("UserListPartial", _db.Users.OrderBy(c => c.Username).ToPagedList(0, _defaultPageSize));
+                db.Users.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Index");  
             }
-            Response.StatusCode = 400;
-            return PartialView(user);
-        }
 
+            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerID", "Name", user.CustomerId);
+            return View(user);
+        }
+        
         //
         // GET: /User/Edit/5
-
+ 
         public ActionResult Edit(Guid id)
         {
-            User user = _db.Users.Find(id);
-            return PartialView(user);
+            User user = db.Users.Find(id);
+            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerID", "Name", user.CustomerId);
+            return View(user);
         }
 
         //
@@ -100,20 +77,20 @@ namespace OMKT.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(user).State = EntityState.Modified;
-                _db.SaveChanges();
-                return PartialView("UserListPartial", _db.Users.OrderBy(c => c.Username).ToPagedList(0, _defaultPageSize));
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            Response.StatusCode = 400;
-            return PartialView(user);
+            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerID", "Name", user.CustomerId);
+            return View(user);
         }
 
         //
         // GET: /User/Delete/5
-
+ 
         public ActionResult Delete(Guid id)
         {
-            User user = _db.Users.Find(id);
+            User user = db.Users.Find(id);
             return View(user);
         }
 
@@ -122,16 +99,16 @@ namespace OMKT.Controllers
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(Guid id)
-        {
-            User user = _db.Users.Find(id);
-            _db.Users.Remove(user);
-            _db.SaveChanges();
+        {            
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            _db.Dispose();
+            db.Dispose();
             base.Dispose(disposing);
         }
     }
