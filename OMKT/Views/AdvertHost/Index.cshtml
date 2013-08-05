@@ -59,9 +59,12 @@
             @Html.DisplayFor(modelItem => item.Location.Latitude)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AdvertHostId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AdvertHostId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AdvertHostId })
+            <div class="btn-group">
+                    <a href="@Url.Action("Edit", new { id = item.AdvertHostId })" class="btn btn-primary small" >
+                        <i class=" icon-edit icon-white"></i></a><a href="@Url.Action("Details", new { id = item.AdvertHostId })" class="btn small" >
+                            <i class="icon-align-justify"></i></a><a href="@Url.Action("Delete", new { id = item.AdvertHostId })" class="btn small delete-catalog">
+                                <i class=" icon-trash "></i></a>
+                </div>
         </td>
     </tr>
 }
