@@ -1,6 +1,6 @@
 ﻿@model OMKT.Business.CatalogDetail
     @Html.HiddenFor(model => model.CatalogDetailId)
-    @Html.Hidden("CatalogId", Model.CatalogId)
+    @Html.Hidden("AdvertId", Model.AdvertId)
     @Html.HiddenFor(model => model.CreatedDate)
     <div class="control-group">
         <label class="control-label">
@@ -20,6 +20,22 @@
         <div class="controls">
             @Html.EditorFor(model => model.Position)
             @Html.ValidationMessageFor(model => model.Position)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Descuento </label>
+        <div class="controls">
+            @Html.EditorFor(model => model.Discount)
+            @Html.ValidationMessageFor(model => model.Discount)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Codigo QR</label>
+        <div class="controls">
+            @Html.EditorFor(model => model.QRCode)
+            @Html.ValidationMessageFor(model => model.QRCode)
         </div>
     </div>
 <script type="text/javascript">

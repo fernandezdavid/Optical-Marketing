@@ -13,11 +13,13 @@ namespace OMKT.Business
 
         public virtual GameDetail GameDetail { get; set; }
 
-        public DateTime? StartDatetime { get; set; }
+        public DateTime StartDatetime { get; set; }
 
         public DateTime? EndDatetime { get; set; }
 
-        public Boolean Win { get; set; }
+        public int? TimeElapsed { get; set; }
+
+        public Boolean? Win { get; set; }
 
     }
 }

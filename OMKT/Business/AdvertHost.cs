@@ -30,6 +30,10 @@ namespace OMKT.Business
 
         public Boolean isUp { get; set; }
 
+        public int CampaignLocationId { get; set; }
+
+        public virtual CampaignLocation CampaignLocation { get; set; }
+
         //public virtual ICollection<AdvertCampaign> AdvertCampaigns { get; set; }
     }
 }

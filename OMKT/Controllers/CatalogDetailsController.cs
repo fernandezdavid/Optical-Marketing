@@ -135,28 +135,19 @@ namespace OMKT.Controllers
             ViewBag.CommercialProductId = new SelectList(_db.CommercialProducts, "CommercialProductId", "ProductName", catalogdetail.CommercialProductId);
             if (ModelState.IsValid)
             {
-                var check = _db.CatalogDetails.Where(a => a.CommercialProductId == catalogdetail.CommercialProductId && a.AdvertId == catalogdetail.AdvertId).FirstOrDefault();
-                if (check == null)
+                var oCatalog = _db.Catalogs.Find(catalogdetail.AdvertId);
+                catalogdetail.LastUpdate = DateTime.Now;
+                _db.Entry(catalogdetail).State = EntityState.Modified;
+                ViewBag.Catalog = oCatalog;
+                try
                 {
-                    var oCatalog = _db.Catalogs.Find(catalogdetail.AdvertId);
-                    oCatalog.LastUpdate = DateTime.Now;
-                    _db.Entry(oCatalog).State = EntityState.Modified;
-                    catalogdetail.LastUpdate = DateTime.Now;
-                    _db.Entry(catalogdetail).State = EntityState.Modified;
-                    ViewBag.Catalog = oCatalog;
-                    try
-                    {
-                        _db.SaveChanges();
-                    }
-                    catch (Exception)
-                    {
-                        //TODO
-                    }
+                    _db.SaveChanges();
                 }
-                else
+                catch (Exception)
                 {
                     //TODO
                 }
+
                 return PartialView("CatalogDetailsPartialList", _db.CatalogDetails.Where(cd => cd.AdvertId == catalogdetail.AdvertId).Include(i => i.CommercialProduct).ToList());
             }
             return PartialView("Edit", catalogdetail);

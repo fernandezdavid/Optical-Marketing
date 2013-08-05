@@ -9,13 +9,13 @@
             Producto
         </th>
         <th>
-            Valoración
-        </th>
-        <th>
-            Vistas
-        </th>
-        <th>
             Orden 
+        </th>
+        <th>
+            Descuento
+        </th>
+        <th>
+            QR
         </th>
         <th>
             Fecha de agregación
@@ -35,10 +35,10 @@
             @Html.DisplayFor(modelItem => item.CommercialProduct.ProductName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Likes)
+            @Html.DisplayFor(modelItem => item.Discount)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Views)
+            @Html.DisplayFor(modelItem => item.QRCode)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Position)

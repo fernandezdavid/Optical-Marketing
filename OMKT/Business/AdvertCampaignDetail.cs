@@ -20,9 +20,7 @@ namespace OMKT.Business
         public int AdvertID { get; set; }
 
         public virtual Advert Advert { get; set; }
-
-        public int Impressions { get; set; }
-
+       
         public ICollection<Interaction> Interactions { get; set; }
 
         public AdvertCampaignDetail()

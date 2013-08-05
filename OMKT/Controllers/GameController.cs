@@ -56,8 +56,8 @@ namespace OMKT.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.AdvertStateId = new SelectList(db.AdvertStates, "AdvertstateId", "Description");
-            var oGame = new Game { StartDatetime = DateTime.Now, EndDatetime = DateTime.Now.AddDays(30) };
+            ViewBag.AdvertStateId = new SelectList(db.AdvertStates.OrderBy(x => x.Description), "AdvertStateId", "Description");
+            var oGame = new Game { StartDatetime = DateTime.Now, EndDatetime = DateTime.Now.AddDays(30), Oportunities = 3 };
             return View(oGame);
         } 
 
@@ -68,7 +68,7 @@ namespace OMKT.Controllers
         [ValidateInput(false)]
         public ActionResult Create(Game game)
         {
-           ViewBag.AdvertStateId = new SelectList(db.AdvertStates, "AdvertstateId", "Description", game.AdvertStateId);
+            ViewBag.AdvertStateId = new SelectList(db.AdvertStates.OrderBy(x => x.Description), "AdvertStateId", "Description", game.AdvertStateId);
            if (ModelState.IsValid)
             {
                 game.AdvertType = db.AdvertTypes.Find(1);

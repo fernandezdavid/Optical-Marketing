@@ -6,6 +6,8 @@ namespace OMKT.Business
     {
         public ICollection<GameDetail> GameDetails { get; set; }
 
+        public int Oportunities { get; set; }
+
         public Game()
         {
             GameDetails = new List<GameDetail>();

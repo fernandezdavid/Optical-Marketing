@@ -207,7 +207,15 @@ namespace OMKT.Controllers
         {
             CommercialProduct commercialproduct = _db.CommercialProducts.Find(id);
             _db.CommercialProducts.Remove(commercialproduct);
-            _db.SaveChanges();
+            try
+            {
+                _db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                //@TODO
+            }
+            
             return Json(new { });
         }
 

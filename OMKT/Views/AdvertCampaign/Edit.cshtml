@@ -29,6 +29,7 @@
         
         @{Html.RenderAction("IndexByCampaign", "AdvertCampaignDetail", new { id = Model.AdvertCampaignId });}
     </div>
+        @{Html.RenderAction("IndexAsMarkers", "AdvertHost", new { id = Model.CampaignLocationId });}
 </div>
 <div id="campaign-modal" class="modal hide fade">
     <div class="modal-header">

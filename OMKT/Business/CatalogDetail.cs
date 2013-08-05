@@ -16,9 +16,9 @@ namespace OMKT.Business
 
         public virtual CommercialProduct CommercialProduct { get; set; }
 
-        public int Likes { get; set; }
+        public double Discount { get; set; }
 
-        public int Views { get; set; }
+        public string QRCode { get; set; }
 
         public string Link { get; set; }
 

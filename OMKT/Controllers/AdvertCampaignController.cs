@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using OMKT.Business;
 using OMKT.Context;
 using OMKT.Models;
+using System.Data.Objects;
 
 namespace OMKT.Controllers
 {
@@ -270,27 +271,48 @@ namespace OMKT.Controllers
         * @return partial view
         */
 
-        public ActionResult AdvertCampaignsPerformance()
+        public ActionResult AdvertCampaignsPerformance(int? period)
         {
+            int interval = (period.HasValue) ? Convert.ToInt32(period) : 15;
             var oUser = (User)Session["User"];
-            var advertCamp = _db.AdvertCampaigns.Where(c => c.CustomerId == oUser.CustomerId);
+
+            var advertCamp = _db.AdvertCampaigns.Include(c=>c.AdvertCampaignDetails).Where(c => c.CustomerId== oUser.CustomerId);
             var interactions = new List<CampaignPerformance>();
-            var inter = 0;
-            //@TODO Contar las interacciones de cada anuncio para cada campana
-            //@TODO Calcular la valoracion
-            foreach (var camp in advertCamp)
+            for (int i = 3; i < interval; i++)
             {
-                foreach (var campDetail in camp.AdvertCampaignDetails)
+                foreach (var camp in advertCamp)
                 {
-                    inter += _db.AdvertCampaignDetailInteractions.Where(c => c.AdvertID == campDetail.AdvertID).Count();
+                    var inter = 0;
+                    int elapsedTime = 0;
+                    foreach (var campDetail in camp.AdvertCampaignDetails)
+                    {
+                        DateTime check_date = DateTime.Now.AddDays(-i);
+                        inter += _db.AdvertCampaignDetailInteractions
+                                .Where(c => c.AdvertID == campDetail.AdvertID &&  EntityFunctions.TruncateTime(c.StartDatetime) == check_date.Date)
+                                .Count();
+                        //elapsedTime += _db.AdvertCampaignDetailInteractions
+                        //        .Where(c => c.AdvertID == campDetail.AdvertID && EntityFunctions.TruncateTime(c.StartDatetime) == check_date.Date)
+                        //        .Sum(c => c.TimeElapsed);
+                        
+                    }
+                    var oCP = new CampaignPerformance();
+                    oCP.Month = i;
+                    oCP.CampaignName = camp.Name;
+                    oCP.Impressions = inter;
+                    if (inter != 0)
+                    {
+                        oCP.TimeAverage = elapsedTime / inter;
+                    }
+                    else
+                    {
+                        oCP.TimeAverage = 0;
+                    }
+                        
+                    interactions.Add(oCP);
                 }
-                //_db.AdvertInteractions.Where(a=>a.AdvertID == cat.)
-                //views = _db.AdvertInteractions.Where(c => c.AdvertID == cat.AdvertID).Count();
-                var oCP = new CampaignPerformance();
-                //oCO.Views = views;
-                //oCO.CatalogtName = cat.Advert.Name;
-                //interactions.Add(oCO);
+                
             }
+            
             return PartialView("AdvertCampaignsPerformance", interactions.ToList());
         }
 

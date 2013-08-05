@@ -11,9 +11,11 @@ namespace OMKT.Business
 
         public virtual Advert Advert { get; set; }
 
-        public double Height { get; set; }
+        public decimal Height { get; set; }
+        
+        public int? TimeElapsed { get; set; }
 
-        public DateTime? StartDatetime { get; set; }
+        public DateTime StartDatetime { get; set; }
 
         public DateTime? EndDatetime { get; set; }
 

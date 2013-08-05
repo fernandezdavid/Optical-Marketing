@@ -1,13 +1,14 @@
 ﻿@model OMKT.Business.Location
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Ubicación";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalle</h2>
 
 <fieldset>
-    <legend>Location</legend>
+    <legend>Ubicación</legend>
 
     <div class="display-label">Latitude</div>
     <div class="display-field">
@@ -19,9 +20,9 @@
         @Html.DisplayFor(model => model.Longitude)
     </div>
 
-    <div class="display-label">Name</div>
+    <div class="display-label">Descripción</div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
+        @Html.DisplayFor(model => model.Detail)
     </div>
 
     <div class="display-label">Adress</div>

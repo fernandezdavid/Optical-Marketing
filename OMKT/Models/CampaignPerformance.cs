@@ -15,6 +15,8 @@ namespace OMKT.Models
 
         public decimal TimeAverage { get; set; } // tiempo promedio de visita
 
+        public decimal HeightAverage { get; set; }
+
         public decimal Bounce { get; set; } //porcentaje de rebote
         
         public string CampaignName { get; set; } //nombre campanya

@@ -193,6 +193,7 @@ namespace OMKT.Context
             game.Name = "Memory";
             game.CreatedDate = new DateTime(DateTime.Now.Year, 1, new Random().Next(1, 28));
             game.AdvertState = estado;
+            game.Oportunities = 3;
             game.AdvertStateId = game.AdvertState.AdvertstateId;
             game.AdvertType = new AdvertType { Description = "Juego Interactivo" };
             game.AdvertTypeId = game.AdvertType.AdvertTypeId;
@@ -200,7 +201,7 @@ namespace OMKT.Context
             var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             foreach (var prod in products)
             {
-                var random = new Random();
+                var random = new Random(counter);
                 var result = new string(
                     Enumerable.Repeat(chars, 8)
                               .Select(s => s[random.Next(s.Length)])
@@ -234,21 +235,30 @@ namespace OMKT.Context
             catalog.AdvertType = new AdvertType { Description = "Catálogo" };
             catalog.AdvertTypeId = catalog.AdvertType.AdvertTypeId;
             catalog.SortType = methods[new Random().Next(0, 4)];
-            var position = 0;
+            var gchars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            for (int id = 0; id < products.Count; id++)
+            {
+                var discount = new Random(id).Next(10, 21);
+                var random = new Random(id);
+                var result = new string(
+                    Enumerable.Repeat(gchars, 8)
+                              .Select(s => s[random.Next(s.Length)])
+                              .ToArray());
+                catalog.AdvertDetails.Add(new CatalogDetail
+                {
+                    Catalog = catalog,
+                    AdvertId = catalog.AdvertId,
+                    CommercialProduct = products[id],
+                    Position = id,
+                    CreatedDate = catalog.CreatedDate,
+                    LastUpdate = DateTime.Now,
+                    QRCode = result,
+                    Discount = discount
+                });               
+            }
             foreach (var prod in products)
             {
-                catalog.AdvertDetails.Add(new CatalogDetail
-                                               {
-                                                   Catalog = catalog,
-                                                   AdvertId = catalog.AdvertId,
-                                                   CommercialProduct = prod,
-                                                   Position = position,
-                                                   CreatedDate = catalog.CreatedDate,
-                                                   LastUpdate = DateTime.Now,
-                                                   Likes = new Random(position).Next(30, 100),
-                                                   Views = new Random(position).Next(30, 1100),
-                                               });
-                position++;
+                               
             }
             context.Catalogs.Add(catalog);
             #endregion
@@ -360,86 +370,105 @@ namespace OMKT.Context
 			 * Fill the interactions tables
 			 * 
 			 **/
-            for (int z = 0; z < 15; z++) // last 15 days
-            {    
-                #region Campaigns intereactions
-                var ct = new AdvertCampaignInteraction
-                {
-                    AdvertCampaign = campaign,
-                    AdvertCampaignID = campaign.AdvertCampaignId,
-                    StartDatetime = DateTime.Now.AddDays(-z).AddMinutes(-5),
-                    EndDatetime = DateTime.Now.AddDays(-z),
+            //for (int z = 0; z < 30; z++) // last 15 days
+            //{
+            //    var startDate = DateTime.Now.AddDays(-z).AddMinutes(-5);
+            //    var endDate = DateTime.Now.AddDays(-z);
+            //    #region Campaigns intereactions
+            //    var ct = new AdvertCampaignInteraction
+            //    {
+            //        AdvertCampaign = campaign,
+            //        AdvertCampaignID = campaign.AdvertCampaignId,
+            //        StartDatetime = startDate,
+            //        EndDatetime = endDate,
+            //        TimeElapsed = endDate.Subtract(startDate).Seconds
 
-                }; 
-                var count = 0;
-                foreach (var detail in campaign.AdvertCampaignDetails) // only 2 (catalog and game)
-                {
-                    // 30 times a day
-                    count++;
-                    var times = new Random().Next(4, 10);
-                    for (int i = 0; i < times; i++)
-                    {
-                        #region DetailsCampaign interactions
+            //    };
+            //    var count = 0;
+            //    Console.WriteLine(campaign.AdvertCampaignDetails.Count());
+            //    foreach (var detail in campaign.AdvertCampaignDetails) // only 2 (catalog and game)
+            //    {
+            //        Console.WriteLine(detail.Advert.Name);
+            //        // 30 times a day
+            //        count++;
+            //        var times = new Random().Next(15, 25);
+            //        for (int i = 0; i < times; i++)
+            //        {
+            //            #region DetailsCampaign interactions
+            //            var startDa = DateTime.Now.AddDays(-i).AddMinutes(-5);
+            //            var endDa = DateTime.Now.AddDays(-i);
+            //            decimal h = (new Random().Next(5, 9)) / 10;
+            //            var at = new AdvertCampaignDetailInteraction
+            //            {
+            //                Advert = detail.Advert,
+            //                AdvertID = detail.AdvertID,
+            //                StartDatetime = startDa,
+            //                EndDatetime = endDa,
+            //                TimeElapsed = endDa.Subtract(startDa).Seconds,
+            //                Height = (h + 1),
 
-                        float h = (new Random().Next(5, 9)) / 10;
-                        var at = new AdvertCampaignDetailInteraction
-                        {
-                            Advert = detail.Advert,
-                            AdvertID = detail.AdvertID,
-                            StartDatetime = DateTime.Now.AddDays(-i).AddMinutes(-5),
-                            EndDatetime = DateTime.Now.AddDays(-i),
-                            Height = (h + 1.00),
+            //            };
+            //            ct.AdvertCampaignDetailInteractions.Add(at);
 
-                        };
-                        ct.AdvertCampaignDetailInteractions.Add(at);
+            //            #region catalogDetails interactions
+            //            var sDa = DateTime.Now.AddDays(-i).AddMinutes(-5);
+            //            var eDa = DateTime.Now.AddDays(-i);
+            //            if (count > 1)
+            //            {  //rusticidad para cargar fucking details
 
-                        #region catalogDetails interactions
-                        if (count > 1)
-                        {  //rusticidad para cargar fucking details
-                            foreach (var cd in catalog.AdvertDetails)
-                            {
-                                var r = new Random().Next(0, 2);
-                                var li = (r == 1) ? true : false;
-                                var nt = new CatalogDetailInteraction
-                                {
-                                    CatalogDetail = cd,
-                                    CatalogDetailID = cd.CatalogDetailId,
-                                    StartDatetime = at.StartDatetime,
-                                    EndDatetime = at.EndDatetime,
-                                    View = true,
-                                    Like = li,
-                                };
-                                context.CatalogDetailInteractions.Add(nt);
-                            }
-                        }
-                        else
-                        {
-                            foreach (var gd in game.GameDetails)
-                            {
-                                var r = new Random().Next(0, 2);
-                                var li = (r == 1) ? true : false;
-                                var gt = new GameDetailInteraction
-                                {
-                                    GameDetail = gd,
-                                    GameDetailID = gd.GameDetailId,
-                                    StartDatetime = at.StartDatetime,
-                                    EndDatetime = at.EndDatetime,
-                                    Win = li
-                                    
-                                };
-                                context.GameDetailInteractions.Add(gt);
-                            }
-                        }
-                        #endregion
-                        #endregion
-                        
-                    }
+            //                var totimes = new Random().Next(1, catalog.AdvertDetails.Count()+1);
+            //                var detalles = catalog.AdvertDetails.ToArray();
+            //                for (int j = 0; j < totimes; j++)
+            //                {
+            //                    var r = new Random().Next(0, 2);
+            //                    var li = (r == 1) ? true : false;
+            //                    var nt = new CatalogDetailInteraction
+            //                    {
+            //                        CatalogDetail = detalles[j],
+            //                        CatalogDetailID = detalles[j].CatalogDetailId,
+            //                        StartDatetime = sDa,
+            //                        EndDatetime = eDa,
+            //                        TimeElapsed = eDa.Subtract(sDa).Seconds,
+            //                        View = true,
+            //                        Like = li,
+            //                    };
+            //                    context.CatalogDetailInteractions.Add(nt);
+            //                }
 
-                }
-                
-                context.AdvertCampaignInteractions.Add(ct);
-                #endregion
-            }
+
+            //            }
+            //            else
+            //            {
+            //                var totimes = new Random().Next(1, game.Oportunities);
+            //                var randProd = new Random().Next(1, game.GameDetails.Count());
+            //                var detalles = game.GameDetails.ToArray();
+            //                for (int v = 0; v < totimes; v++)
+            //                {
+            //                    var r = new Random().Next(0, 2);
+            //                    var li = (r == 1) ? true : false;
+            //                    var gt = new GameDetailInteraction
+            //                    {
+            //                        GameDetail = detalles[randProd],
+            //                        GameDetailID = detalles[randProd].GameDetailId,
+            //                        StartDatetime = sDa,
+            //                        EndDatetime = eDa,
+            //                        TimeElapsed = eDa.Subtract(sDa).Seconds,
+            //                        Win = li
+
+            //                    };
+            //                    context.GameDetailInteractions.Add(gt);
+            //                }
+            //            }
+            //            #endregion
+            //            #endregion
+
+            //        }
+
+            //    }
+
+            //    context.AdvertCampaignInteractions.Add(ct);
+            //    #endregion
+            //}
 
             #endregion
 

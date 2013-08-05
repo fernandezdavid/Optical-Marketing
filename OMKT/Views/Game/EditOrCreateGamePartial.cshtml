@@ -2,7 +2,6 @@
 @model Game
 <fieldset>
 @Html.HiddenFor(model => model.AdvertId)
-@Html.HiddenFor(model => model.AdvertStateId)
 @Html.HiddenFor(model => model.AdvertTypeId)
 @Html.HiddenFor(model => model.CreatedDate)
      
@@ -24,6 +23,13 @@
             </div>
         </div>
     </div>
+    <div class="control-group">
+        <label class="control-label">Nro. de Oportunidades</label>
+        <div class="controls">
+            @Html.EditorFor(model => model.Oportunities)
+            @Html.ValidationMessageFor(model => model.Oportunities)
+        </div>
+    </div>    
     <div class="control-group">
         <label class="control-label">Fecha de caducidad</label>
         <div class="controls">

@@ -11,9 +11,11 @@ namespace OMKT.Business
 
         public virtual AdvertCampaign AdvertCampaign { get; set; }
 
-        public DateTime? StartDatetime { get; set; }
+        public DateTime StartDatetime { get; set; }
 
         public DateTime? EndDatetime { get; set; }
+
+        public int? TimeElapsed { get; set; }
 
         public ICollection<AdvertCampaignDetailInteraction> AdvertCampaignDetailInteractions { get; set; }
 

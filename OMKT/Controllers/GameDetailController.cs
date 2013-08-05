@@ -9,7 +9,7 @@ using OMKT.Business;
 using OMKT.Context;
 
 namespace OMKT.Controllers
-{ 
+{
     [Authorize]
     public class GameDetailController : Controller
     {
@@ -68,7 +68,7 @@ namespace OMKT.Controllers
                 }
             }
             return PartialView("Create", oGameDetail);
-        } 
+        }
 
         //
         // POST: /GameDetail/Create
@@ -91,7 +91,7 @@ namespace OMKT.Controllers
                     catch (Exception)
                     {
 
-                    //OTOD
+                        //OTOD
                     }
                 }
                 else
@@ -102,13 +102,13 @@ namespace OMKT.Controllers
                 ViewBag.Game = oGame;
 
                 return PartialView("GameDetailPartialList", db.GameDetails.Where(cd => cd.AdvertId == gamedetail.AdvertId).Include(i => i.CommercialProduct));
-            }            
+            }
             return PartialView("Create", gamedetail);
         }
-        
+
         //
         // GET: /GameDetail/Edit/5
- 
+
         public ActionResult Edit(int id)
         {
             GameDetail gamedetail = db.GameDetails.Find(id);
@@ -125,27 +125,17 @@ namespace OMKT.Controllers
             ViewBag.CommercialProductId = new SelectList(db.CommercialProducts, "CommercialProductId", "ProductName", gamedetail.CommercialProductId);
             if (ModelState.IsValid)
             {
-                var check = db.GameDetails.Where(a => a.CommercialProductId == gamedetail.CommercialProductId && a.AdvertId == gamedetail.AdvertId).FirstOrDefault();
-                if (check != null)
+                var oGame = db.Games.Find(gamedetail.GameDetailId);
+                gamedetail.LastUpdate = DateTime.Now;
+                db.Entry(gamedetail).State = EntityState.Modified;
+                ViewBag.Game = oGame;
+                try
                 {
-                    var oGame = db.Games.Find(gamedetail.GameDetailId);
-                    //oGame.LastUpdate = DateTime.Now;
-                    //db.Entry(oGame).State = EntityState.Modified;
-                    gamedetail.LastUpdate = DateTime.Now;
-                    db.Entry(gamedetail).State = EntityState.Modified;
-                    ViewBag.Game = oGame;
-                    try
-                    {
-                        db.SaveChanges();
-                    }
-                    catch (Exception)
-                    {
-                        //TODO                        
-                    }
+                    db.SaveChanges();
                 }
-                else
+                catch (Exception)
                 {
-                    //TODO
+                    //TODO                        
                 }
                 return PartialView("GameDetailPartialList", db.GameDetails.Where(cd => cd.AdvertId == gamedetail.AdvertId).Include(i => i.CommercialProduct).ToList());
             }
@@ -154,7 +144,7 @@ namespace OMKT.Controllers
 
         //
         // GET: /GameDetail/Delete/5
- 
+
         public ActionResult Delete(int id)
         {
             GameDetail gamedetail = db.GameDetails.Find(id);
@@ -166,7 +156,7 @@ namespace OMKT.Controllers
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
-        {            
+        {
             GameDetail gamedetail = db.GameDetails.Find(id);
             if (gamedetail != null)
             {

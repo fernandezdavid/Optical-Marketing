@@ -8,13 +8,13 @@
             Producto
         </th>
         <th>
-            Valoración
-        </th>
-        <th>
-            Vistas
-        </th>
-        <th>
             Orden 
+        </th>
+        <th>
+            Descuento
+        </th>
+        <th>
+            QR
         </th>
         <th>
             Fecha de Agregación
@@ -33,13 +33,13 @@
             <a href="@Url.Action("Edit", "CommercialProduct", new { id = item.CommercialProductId})" target="_blank">@Html.DisplayFor(modelItem => item.CommercialProduct.ProductName)</a>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Likes)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Views)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Position)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Discount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QRCode)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreatedDate)

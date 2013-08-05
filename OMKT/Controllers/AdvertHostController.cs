@@ -87,6 +87,16 @@ namespace OMKT.Controllers
         }
 
         //
+
+        public PartialViewResult IndexAsMarkers(int? campaignLocation)
+        {
+            if (!campaignLocation.HasValue)
+                campaignLocation = 1;
+            var markers = db.AdvertHosts.Include(a => a.Location).Include(a => a.AdvertHostCategory);
+            return PartialView("Map", markers.ToList());
+        }
+
+        //
         // GET: /AdvertHost/Delete/5
 
         public ActionResult Delete(int id)

@@ -6,15 +6,18 @@
     
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Mes', 'Valoraciones', 'Interacciones'],
-
+          ['Mes', 'Tiempo promedio', 'Interacciones'],
+          @foreach(var item in Model) 
+          {
+            @:['@item.Month', @item.TimeAverage , @item.Impressions], 
+          }
          ]);
-
+         
         var options = {
             width: 1300,
             height: 240,
             title: '',
-//            colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
+            //colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));

@@ -163,6 +163,7 @@ namespace OMKT.Controllers
             var advertDetails = _db.AdvertCampaignDetails.Where(c => c.AdvertCampaign.CustomerId == oUser.CustomerId);
             var interactions = new List<AdvertOverview>();
             var views = 0;
+            
             foreach (var cat in advertDetails)
             {
                 views = _db.AdvertCampaignDetailInteractions.Where(c => c.AdvertID == cat.AdvertID && c.Advert.AdvertTypeId == 2).Count();
