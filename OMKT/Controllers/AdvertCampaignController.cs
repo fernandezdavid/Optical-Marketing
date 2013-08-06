@@ -278,7 +278,7 @@ namespace OMKT.Controllers
 
             var advertCamp = _db.AdvertCampaigns.Include(c=>c.AdvertCampaignDetails).Where(c => c.CustomerId== oUser.CustomerId);
             var interactions = new List<CampaignPerformance>();
-            for (int i = 3; i < interval; i++)
+            for (int i = 0; i < interval; i++)
             {
                 foreach (var camp in advertCamp)
                 {
@@ -290,9 +290,9 @@ namespace OMKT.Controllers
                         inter += _db.AdvertCampaignDetailInteractions
                                 .Where(c => c.AdvertID == campDetail.AdvertID &&  EntityFunctions.TruncateTime(c.StartDatetime) == check_date.Date)
                                 .Count();
-                        //elapsedTime += _db.AdvertCampaignDetailInteractions
-                        //        .Where(c => c.AdvertID == campDetail.AdvertID && EntityFunctions.TruncateTime(c.StartDatetime) == check_date.Date)
-                        //        .Sum(c => c.TimeElapsed);
+                        elapsedTime += _db.AdvertCampaignDetailInteractions
+                                .Where(c => c.AdvertID == campDetail.AdvertID && EntityFunctions.TruncateTime(c.StartDatetime) == check_date.Date && c.TimeElapsed!=null)
+                                .Sum(c => c.TimeElapsed.Value);
                         
                     }
                     var oCP = new CampaignPerformance();

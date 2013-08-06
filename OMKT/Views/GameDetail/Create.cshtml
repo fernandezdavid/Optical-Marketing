@@ -1,4 +1,12 @@
 ﻿@model OMKT.Business.GameDetail
+ @if (!string.IsNullOrWhiteSpace(ViewBag.Error))
+ { 
+        <div class="alert alert-error">
+            @ViewBag.Error
+            <button type="button" class="close" data-dismiss="alert">
+                &times;</button>
+        </div>
+ }           
 @using (Html.BeginForm("Create", "GameDetail", FormMethod.Post, new { @class = "form-horizontal", @id = "save-detail" }))
 {
     @Html.ValidationSummary(true)
