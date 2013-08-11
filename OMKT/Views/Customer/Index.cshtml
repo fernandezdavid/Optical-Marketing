@@ -1,116 +1,102 @@
-﻿@using Paging
-@model IPagedList<OMKT.Business.Customer>
-
+﻿@model IEnumerable<OMKT.Business.Customer>
 @{
-    ViewBag.Title = "Clientes";
+    ViewBag.Title = "Administración de Clientes";
     Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
-
-<div id="ajaxResponse">
-
-<h1>Listado <small>de Clientes</small></h1>
-
+<h2>
+    Administración de Clientes</h2>
+<p>
+    <a href="@Url.Action("Create", "Customer")" class="btn btn-primary"><i class="icon-plus icon-white ">
+    </i>Nuevo Cliente</a>
+</p>
+<table id="example" class="table table-striped table-bordered">
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Dirección
+        </th>
+        <th>
+            CP
+        </th>
+        <th>
+            Ciudad
+        </th>
+        <th>
+            Contacto
+        </th>
+        <th>
+            Telefono 1
+        </th>
+        <th>
+            Telefono 2
+        </th>
+        <th>
+            Nro. Empresa
+        </th>
+        <th>
+            Activo
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactPerson)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a href="@Url.Action("Edit", new { id = item.CustomerID })" class="btn btn-primary small" >
+                        <i class=" icon-edit icon-white"></i></a><a href="@Url.Action("Details", new { id = item.CustomerID })" class="btn small" >
+                            <i class="icon-align-justify"></i></a><a href="@Url.Action("Delete", new { id = item.CustomerID })" class="btn small delete-catalog">
+                                <i class=" icon-trash "></i></a>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
 <script type="text/javascript">
-
     $(document).ready(function () {
-
-        function clearErrors() {
-            $('#msgErrorNewCustomer').html('');
-            $('#msgError').html('');
-        }
-
-        function writeError(control, msg) {
-            var err_msg = '<div class="alert-message error"><a class="close" href="#">×</a><p>' + msg + '</p></div>';
-            $('#' + control).html(err_msg);
-        }
-
-        function getRequest(url) {
-            $.ajax({
-                url: url,
-                context: document.body,
-                success: function (data) {
-                    $('.modal-body p.body').html(data);
-                    console.log(data);
-                    $(this).addClass("done");
-                    $('#my-modal').modal('show');
-                },
-                error: function (err) {
-                    writeError('msgErrorNewInvoiceDetails', err);
-                }
-            });
-        }
-
-        $('.closeModal').live('click', function () {
-            $('#my-modal').modal('hide');
-        });
-
-        $('#my-modal form').live('submit', function () {
-            clearErrors();
-
-            $.post($(this).attr('action'), $(this).serialize(), function (data, status) {
-                $('#my-modal').modal('hide');
-                $("#customerList").html(data);
-
-            }).error(function (error, status) {
-                writeError('msgError', 'Debes completar todos los campos');
-                $('.modal-body p.body').html(error.responseText);
-
-            });
-            return false;
-        });
-
-
-
-        $('.editCustomer').live('click', function () {
-            clearErrors();
-
-            var id = $(this).attr("idCustomer");
-            var url = '@Url.Content("~/Customer/Edit")/' + id;
-
-            getRequest(url);
-
-            return false;
-        });
-
-
-        $('a.newCustomer').live('click', function () {
-            clearErrors();
-            var url = '@Url.Content("~/Customer/Create")';
-
-            getRequest(url);
-
-            return false;
+        $('#example').dataTable({
+            "sDom": "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [0, 12] }
+            ]
+            //"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>"
         });
     });
+   
 </script>
-    <p>
-        <a href="@Url.Action("Create", "CommercialProduct")" class="btn newCustomer primary">
-            <i class="icon-plus icon-white "></i>Nuevo</a>
-        
-    </p>
-
-@{Html.RenderPartial("SearchBoxCompany", "Customer");}
-
-
-<div id="msgErrorNewCustomer"></div>
-     <div id="my-modal" class="modal hide fade" style="width:850px;margin:-40% 0 0 -30%;">
-            <div class="modal-header">
-                <a href="#" class="close">&times;</a>
-                <h3>Edición</h3>
-            </div>
-            <div class="modal-body">
-                <div id="msgError"></div>
-                <p class="body">
-                   
-                </p>
-            </div>
-            <div class="modal-footer">
-             
-            </div>
-    </div>
-
-
-    <div id="customerList">
-        @{Html.RenderPartial("CustomerListPartial", Model);}
-    </div>
-</div>

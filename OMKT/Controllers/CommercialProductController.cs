@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Numerics;
+using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
@@ -7,10 +7,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OMKT.Business;
-using Simple.ImageResizer;
 using OMKT.Context;
-using System.Collections.Generic;
 using OMKT.Models;
+using Simple.ImageResizer;
 
 namespace OMKT.Controllers
 {
@@ -34,7 +33,6 @@ namespace OMKT.Controllers
             var oUser = (User)Session["User"];
             var catalogs = _db.CommercialProducts.Where(c => c.CustomerId == oUser.CustomerId).OrderByDescending(i => i.ProductName).Take(top.Value);
             return PartialView("CommercialProductListSlimPartial", catalogs.ToList());
-
         }
 
         // GET: /CommercialProduct/
@@ -209,7 +207,15 @@ namespace OMKT.Controllers
         {
             CommercialProduct commercialproduct = _db.CommercialProducts.Find(id);
             _db.CommercialProducts.Remove(commercialproduct);
-            _db.SaveChanges();
+            try
+            {
+                _db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                //@TODO
+            }
+            
             return Json(new { });
         }
 
@@ -221,11 +227,11 @@ namespace OMKT.Controllers
             var likes = 0;
             foreach (var pro in products)
             {
-                likes = _db.AdvertDetailInteractions.Where(c => c.AdvertDetail.CommercialProductId == pro.CommercialProductId && c.Like == true).Count();   
+                likes = _db.CatalogDetailInteractions.Where(c => c.CatalogDetail.CommercialProductId == pro.CommercialProductId && c.Like == true).Count();
                 var oPO = new ProductOverview();
                 oPO.Likes = likes;
                 oPO.ProductName = pro.ProductName;
-                interactions.Add(oPO);               
+                interactions.Add(oPO);
             }
             return PartialView("CommercialProductsOverview", interactions.ToList());
         }

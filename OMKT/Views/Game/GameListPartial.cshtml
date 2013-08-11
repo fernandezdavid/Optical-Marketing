@@ -1,0 +1,62 @@
+﻿@model IEnumerable<OMKT.Business.Game>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example').dataTable({
+            "sDom": "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [0, 5] },
+            ]
+            //"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>"
+        });
+    });
+   
+</script>
+<table  id="example" class="table table-striped table-bordered dataTable">
+    <thead>
+    <th></th>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Estado
+        </th>
+        <th>
+            Tipo
+        </th>
+        <th>
+            Fecha de creación
+        </th>
+        
+        <th></th>
+    </thead>
+
+@foreach (var item in Model) {
+    <tr>
+        <td><input type="checkbox" name="@Html.DisplayFor(modelItem => item.AdvertId)" /></td>
+        <td>
+            <a href="@Url.Action("Edit", "Game", new { id = item.AdvertId })">@item.Name</a>
+        </td>
+        <td>
+            <span class="label label-@((item.AdvertState.AdvertstateId == 1) ? "success" : "important")">@Html.DisplayFor(modelItem => item.AdvertState.Description)</span>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdvertType.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+         <div class="btn-group">
+                    <a href="@Url.Action("Edit", new { id = item.AdvertId })" class="btn btn-primary small" >
+                        <i class=" icon-edit icon-white"></i></a>
+                    <a href="@Url.Action("Details", new { id = item.AdvertId })" class="btn small" >
+                        <i class="icon-align-justify"></i></a>
+                    <a href="@Url.Action("Delete", new { id = item.AdvertId })" class="btn small delete-game" game-id="@item.AdvertId">
+                        <i class=" icon-trash "></i></a>
+
+                </div>
+        </td>
+    </tr>
+}
+
+</table>

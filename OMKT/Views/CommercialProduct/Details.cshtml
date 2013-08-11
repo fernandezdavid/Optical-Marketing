@@ -26,7 +26,10 @@
             </div>
         </div>
         <div class="span6">
-            <img src="@Url.Content(Model.ProductImage.Path)" class="img-rounded" title="@Model.ProductImage.Title" alt="@Model.ProductImage.Caption" /></div>
+            <img src="@Url.Content(Model.ProductImage.Path)" class="img-rounded" title="@Model.ProductImage.Title" alt="@Model.ProductImage.Caption" />
+            </div>
+        <div class="clear">
+        </div>
         <div class="actions">
             @*@Html.ActionLink("Editar", "Edit", new { id = Model.CommercialProductId }, new { @class = "btn primary" })*@
             @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-primary" })

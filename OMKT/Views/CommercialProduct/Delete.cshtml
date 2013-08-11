@@ -8,7 +8,10 @@
 <ul class="product-list media-list">
     <li class="media">
             <a class="pull-left" href="#">
+              @if (Model.ProductImage.ThumbnailPath != null)
+              { 
                 <img src="@Url.Content(Model.ProductImage.ThumbnailPath)" class="media-object" title="@Model.ProductImage.Title" alt="@Model.ProductImage.Caption" />
+              }
             </a>
             <div class="media-body">
                 <h4 class="media-heading">@Html.DisplayFor(model => model.ProductName)</h4>

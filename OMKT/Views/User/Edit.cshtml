@@ -1,13 +1,186 @@
 ﻿@model OMKT.Business.User
 
 @{
-    ViewBag.Title = "Editar";
-    
+    ViewBag.Title = "Usuarios";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
 
-@using (Html.BeginForm("Edit","User")) {
+<h2>Usuario</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
-   <text>
-    @{Html.RenderPartial("EditOrCreateUserPartial", Model);}
-    </text> 
+    <fieldset>
+        @Html.HiddenFor(model => model.UserId)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Username)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Username)
+            @Html.ValidationMessageFor(model => model.Username)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Password)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FirstName)
+            @Html.ValidationMessageFor(model => model.FirstName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastName)
+            @Html.ValidationMessageFor(model => model.LastName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Comment)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Comment)
+            @Html.ValidationMessageFor(model => model.Comment)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsApproved)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsApproved)
+            @Html.ValidationMessageFor(model => model.IsApproved)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PasswordFailuresSinceLastSuccess)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PasswordFailuresSinceLastSuccess)
+            @Html.ValidationMessageFor(model => model.PasswordFailuresSinceLastSuccess)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastPasswordFailureDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastPasswordFailureDate)
+            @Html.ValidationMessageFor(model => model.LastPasswordFailureDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastActivityDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastActivityDate)
+            @Html.ValidationMessageFor(model => model.LastActivityDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastLockoutDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastLockoutDate)
+            @Html.ValidationMessageFor(model => model.LastLockoutDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DateOfBirth)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DateOfBirth)
+            @Html.ValidationMessageFor(model => model.DateOfBirth)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastLoginDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastLoginDate)
+            @Html.ValidationMessageFor(model => model.LastLoginDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ConfirmationToken)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ConfirmationToken)
+            @Html.ValidationMessageFor(model => model.ConfirmationToken)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreateDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreateDate)
+            @Html.ValidationMessageFor(model => model.CreateDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsLockedOut)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsLockedOut)
+            @Html.ValidationMessageFor(model => model.IsLockedOut)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastPasswordChangedDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastPasswordChangedDate)
+            @Html.ValidationMessageFor(model => model.LastPasswordChangedDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PasswordVerificationToken)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PasswordVerificationToken)
+            @Html.ValidationMessageFor(model => model.PasswordVerificationToken)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PasswordVerificationTokenExpirationDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PasswordVerificationTokenExpirationDate)
+            @Html.ValidationMessageFor(model => model.PasswordVerificationTokenExpirationDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CustomerId, "Customer")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("CustomerId", String.Empty)
+            @Html.ValidationMessageFor(model => model.CustomerId)
+        </div>
+
+        <p>
+           <input type="submit" value="Guardar" class="btn btn-primary" />
+        </p>
+    </fieldset>
 }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

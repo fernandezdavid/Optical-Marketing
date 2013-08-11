@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-
-namespace OMKT.Business
+﻿namespace OMKT.Business
 {
     public class CommercialProduct
     {
@@ -12,9 +9,11 @@ namespace OMKT.Business
         public string ProductName { get; set; }
 
         public virtual ProductImage ProductImage { get; set; }
+
         public int ProductImageId { get; set; }
 
         public virtual CommercialProductType CommercialProductType { get; set; }
+
         public int CommercialProductTypeId { get; set; }
 
         public int Stock { get; set; }
@@ -24,6 +23,7 @@ namespace OMKT.Business
         public string VideoPath { get; set; }
 
         public int CustomerId { get; set; }
+
         public virtual Customer Customer { get; set; }
     }
 }

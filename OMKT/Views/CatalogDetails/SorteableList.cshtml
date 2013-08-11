@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OMKT.Business.AdvertDetail>
+﻿@model IEnumerable<OMKT.Business.CatalogDetail>
 <div class="alert-message block-message warning">
     <p>
         <strong>Arrastra los items para ordenar el catálogo.</strong>
@@ -7,7 +7,7 @@
 <ul id="sortable" class="product-list sortable media-list">
     @foreach (var item in Model)
     {
-        var catalogDetail = "catalogDetail" + item.AdvertDetailId; 
+        var catalogDetail = "catalogDetail" + item.CatalogDetailId; 
         <li class="media" id="@catalogDetail"><a class="pull-left" href="#">
             <img class="media-object" src="@Url.Content(item.CommercialProduct.ProductImage.ThumbnailPath)" width="50" alt="" title="" style="margin-right: 10px"/>
         </a>

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<OMKT.Business.GameDetail>
+<table class="zebra-striped">
+    <thead>
+        <th>
+            
+        </th>
+        <th>
+            Producto
+        </th>
+        <th>
+            Descuento
+        </th>
+        <th>
+            QR
+        </th>
+        <th>
+            Fecha de Agregación
+        </th>
+        <th>
+            
+        </th>
+   </thead>
+
+@foreach (var item in Model) {
+    var gameDetail = "gameDetail" + item.GameDetailId;
+    <tr id="@gameDetail">
+        <td>
+        @if(item.CommercialProduct.ProductImage.ThumbnailPath!=null){
+            <img src="@Url.Content(item.CommercialProduct.ProductImage.ThumbnailPath)" class="img-rounded" title="@item.CommercialProduct.ProductImage.Title" alt="@item.CommercialProduct.ProductImage.Caption" width="50px" height="50px"/>            
+        }            
+        </td>
+        <td>
+            <a href="@Url.Action("Edit", "CommercialProduct", new { id = item.CommercialProductId })" target="_blank">@Html.DisplayFor(modelItem => item.CommercialProduct.ProductName)</a>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Discount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QRCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td nowrap>
+            <div class="btn-group">
+                <a href="@Url.Action("Edit", new { id = item.GameDetailId })" class="btn btn-primary small editGameDetail" idGameDetail="@item.GameDetailId"><i class=" icon-edit icon-white"></i></a>
+        @*        <a href="@Url.Action("Details", new { id = item.GameDetailId })" class="btn small"><i class=" icon-align-justify "></i></a>*@
+                <a href="@Url.Action("Delete", new { id = item.GameDetailId })" idGameDetail = "@item.GameDetailId" class="btn small deleteGameDetail"><i class=" icon-trash "></i></a>
+            </div>
+        </td>
+    </tr>
+}
+
+</table>

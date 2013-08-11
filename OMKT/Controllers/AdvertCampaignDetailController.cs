@@ -49,10 +49,9 @@ namespace OMKT.Controllers
             AdvertCampaignDetail oDetail = null;
             if (id.HasValue)
             {
-                var oCampaign = _db.AdvertCampaigns.Find(id);                    
+                var oCampaign = _db.AdvertCampaigns.Find(id);
                 if (oCampaign != null)
                     oDetail = new AdvertCampaignDetail { AdvertCampaignId = id.Value, AdvertCampaign = oCampaign, EndDate = DateTime.Now.AddDays(30) };
-                
             }
             return PartialView("Create", oDetail);
         }
@@ -85,7 +84,7 @@ namespace OMKT.Controllers
                 else
                 { //TODO
                 }
-                var oCampaign = 
+                var oCampaign =
                     (from cam in _db.AdvertCampaigns
                      where cam.AdvertCampaignId == advertcampaigndetail.AdvertCampaignId
                      select cam).FirstOrDefault();
@@ -122,7 +121,7 @@ namespace OMKT.Controllers
                 try
                 {
                     _db.SaveChanges();
-                    ViewBag.Success = "El anuncio fue agregado satisfactoriamente.";                    
+                    ViewBag.Success = "El anuncio fue agregado satisfactoriamente.";
                 }
                 catch (Exception)
                 {
@@ -131,7 +130,7 @@ namespace OMKT.Controllers
                 }
                 return PartialView("Index", _db.AdvertCampaignDetails.Where(cd => cd.AdvertCampaignId == advertcampaigndetail.AdvertCampaignId).Include(i => i.Advert));
             }
-            
+
             return PartialView("Edit", advertcampaigndetail);
         }
 

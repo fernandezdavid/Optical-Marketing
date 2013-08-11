@@ -1,14 +1,15 @@
 ﻿@model OMKT.Business.AdvertHost
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Puestos";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>Borrar</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<div class="alert alert-info">Estás seguro que deseas borrar este puesto?</div>
 <fieldset>
-    <legend>AdvertHost</legend>
+    <legend>Puesto</legend>
 
     <div class="display-label">AdvertHostName</div>
     <div class="display-field">
@@ -47,7 +48,6 @@
 </fieldset>
 @using (Html.BeginForm()) {
     <p>
-        <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Index")
+         <input type="submit" value="Borrar" class="btn btn-primary" />
     </p>
 }
