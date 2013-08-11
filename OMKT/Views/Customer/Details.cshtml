@@ -1,70 +1,66 @@
 ﻿@model OMKT.Business.Customer
 
 @{
-    ViewBag.Title = "Detalle";
+    ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
 
-@section Header{
-<script type="text/javascript">
-    var sorter_options = {
-        headers: {
-            3: { sorter: 'decimal' },
-            4: { sorter: 'datetime' },
-            5: { sorter: 'datetime' }
-        }
-    };
-</script>
-}
+<h2>Details</h2>
 
-<div class="span7">
 <fieldset>
- <legend>Detalle de Cliente</legend>
-    
-    <p>
-        <strong>Nombre: </strong>
-         @Html.DisplayFor(model => model.Name)
-    </p>
-	<p>
-        <strong>CUIT: </strong>
-         @Html.DisplayFor(model => model.CompanyNumber)
-    </p>
-   
-    <hr />
-     <p>
-        <strong>Email: </strong>
-         @Html.DisplayFor(model => model.Email)
-    </p>
-	<p>
-        <strong>Dirección: </strong>
-         @Html.DisplayFor(model => model.Address)
-    </p>
-	<p>
-        <strong>Código Postal: </strong>
-         @Html.DisplayFor(model => model.CP)
-    </p>
-	<p>
-        <strong>Ciudad: </strong>
-         @Html.DisplayFor(model => model.City)
-    </p>
-	<p>
-        <strong>Teléfono: </strong>
-         @Html.DisplayFor(model => model.Phone1)
-    </p>
-	<p>
-        <strong>Móvil: </strong>
-         @Html.DisplayFor(model => model.Phone2)
-    </p>
-	</fieldset>
-<p>
-    @Html.ActionLink("Volver", "Index", null, new { @class = "btn primary"})
-</p>
-</div>
+    <legend>Customer</legend>
 
-<div class="span12">
-    <h2>Últimos Catálogos</h2>
-    @{Html.RenderAction("LastInvoicesByCustomer", "Invoice", new { id = Model.CustomerID });}
-    
-    <h2>Últimos Pagos</h2>
-    @{Html.RenderAction("LastProposalsByCustomer", "Invoice", new { id = Model.CustomerID });}
-</div>
+    <div class="display-label">Name</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">CompanyNumber</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CompanyNumber)
+    </div>
+
+    <div class="display-label">Address</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Address)
+    </div>
+
+    <div class="display-label">CP</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CP)
+    </div>
+
+    <div class="display-label">City</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.City)
+    </div>
+
+    <div class="display-label">ContactPerson</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ContactPerson)
+    </div>
+
+    <div class="display-label">Phone1</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Phone1)
+    </div>
+
+    <div class="display-label">Phone2</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Phone2)
+    </div>
+
+    <div class="display-label">IsActive</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsActive)
+    </div>
+
+    <div class="display-label">Email</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Email)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.CustomerID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

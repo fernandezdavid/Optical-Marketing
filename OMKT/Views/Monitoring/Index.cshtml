@@ -1,0 +1,46 @@
+﻿@model IEnumerable<OMKT.Business.Monitoring>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            AdvertHost
+        </th>
+        <th>
+            Timestamp
+        </th>
+        <th>
+            Average
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdvertHost.AdvertHostName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Timestamp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Average)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MonitoringID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MonitoringID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MonitoringID })
+        </td>
+    </tr>
+}
+
+</table>

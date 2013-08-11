@@ -1,23 +1,24 @@
-﻿<div class="span3">
+﻿@model OMKT.Models.SummaryBoard
+<div class="span3">
     <a class="btn btn-success btn-large" href="#"><i class="icon-film icon-2x pull-left">
     </i>Impresiones<br>
-        1523</a>
+        @Model.Impressions</a>
 </div>
 <div class="span3 ">
     <a class="btn btn-danger btn-large" href="#"><i class="icon-thumbs-up icon-2x pull-left">
     </i>Valoraciones
         <br>
-        65.5%</a>
+        @Model.LikesPercentage%</a>
 </div>
 <div class="span3">
     <a class="btn btn-primary btn-large" href="#"><i class="icon-group icon-2x pull-left">
     </i>Tiempo promedio de visita
         <br>
-        1:34</a>
+        @Model.TimeAverage s</a>
 </div>
 <div class="span3">
     <a class="btn btn-inverse btn-large" href="#"><i class="icon-external-link icon-2x pull-left">
     </i>Porcentaje de rebote
         <br>
-        14%</a>
+        @Model.Bounce%</a>
 </div>

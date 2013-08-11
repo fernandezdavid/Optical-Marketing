@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace OMKT.Business
 {
@@ -10,6 +9,7 @@ namespace OMKT.Business
         public string Name { get; set; }
 
         public int AdvertTypeId { get; set; }
+
         public virtual AdvertType AdvertType { get; set; }
 
         public DateTime? LastUpdate { get; set; }
@@ -21,6 +21,7 @@ namespace OMKT.Business
         public DateTime? CreatedDate { get; set; }
 
         public int AdvertStateId { get; set; }
+
         public virtual AdvertState AdvertState { get; set; }
     }
 }

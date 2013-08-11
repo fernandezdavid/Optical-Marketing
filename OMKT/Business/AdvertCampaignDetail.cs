@@ -14,13 +14,13 @@ namespace OMKT.Business
         public string AdvertGroup { get; set; }
 
         public int AdvertCampaignId { get; set; }
+
         public virtual AdvertCampaign AdvertCampaign { get; set; }
 
         public int AdvertID { get; set; }
+
         public virtual Advert Advert { get; set; }
-
-        public int Impressions { get; set; }
-
+       
         public ICollection<Interaction> Interactions { get; set; }
 
         public AdvertCampaignDetail()

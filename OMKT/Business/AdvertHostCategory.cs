@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace OMKT.Business
+﻿namespace OMKT.Business
 {
     public class AdvertHostCategory
     {

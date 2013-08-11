@@ -8,7 +8,7 @@
     <div class="span2">
         <a href="@Url.Action("Create", "Catalog")" class="btn btn-primary"><i class="icon-plus icon-white "></i> Nuevo Catálogo</a>
     </div>
-    <div class="span12">@{Html.RenderAction("CatalogsOverview", "Stats");}</div>
+    <div class="span12">@{Html.RenderAction("CatalogsOverview", "Catalog");}</div>
 </div>
 @{Html.RenderAction("LatestCatalogs", "Catalog");}
 <div id="delete-modal" class="modal hide fade">

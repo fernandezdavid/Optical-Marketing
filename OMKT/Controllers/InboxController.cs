@@ -11,14 +11,13 @@ namespace OMKT.Controllers
     {
         private readonly OMKTDB _db = new OMKTDB();
 
-
         public ActionResult Messages()
         {
             var oUser = (User)Session["User"];
             var msj = _db.Inboxes.Where(c => c.ToId == oUser.CustomerId);
-            return Content("You have "+ msj +"  messages!");
-
+            return Content("You have " + msj + "  messages!");
         }
+
         //
         // GET: /Inbox/
 

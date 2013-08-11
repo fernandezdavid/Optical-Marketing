@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using OMKT.Business;
 using OMKT.Context;
+using OMKT.Models;
+using System.Data.Objects;
 
 namespace OMKT.Controllers
 {
@@ -257,6 +260,56 @@ namespace OMKT.Controllers
             {
                 return PartialView(advertcampaign);
             }
+        }
+
+        /**
+        * method AdvertCampaignsPerformance
+        *
+        * Shows the relation interactions/likes for each advertCampaign
+        *
+        * @since 14/07/2013
+        * @return partial view
+        */
+
+        public ActionResult AdvertCampaignsPerformance(int? period)
+        {
+            int interval = (period.HasValue) ? Convert.ToInt32(period) : 15;
+            var oUser = (User)Session["User"];
+
+            var advertCamp = _db.AdvertCampaigns.Include(c=>c.AdvertCampaignDetails).Where(c => c.CustomerId== oUser.CustomerId);
+            var interactions = new List<CampaignPerformance>();
+            for (int i = 0; i < interval; i++)
+            {
+                foreach (var camp in advertCamp)
+                {
+                    var inter = 0;
+                    var elapsedTime = 0;
+                    var height = 0m;
+                    foreach (var campDetail in camp.AdvertCampaignDetails)
+                    {
+                        DateTime check_date = DateTime.Now.AddDays(-i).Date;
+                        inter += _db.AdvertCampaignDetailInteractions
+                                .Where(c => c.AdvertID == campDetail.AdvertID &&  EntityFunctions.TruncateTime(c.StartDatetime) == check_date.Date)
+                                .Count();
+                        //elapsedTime += _db.AdvertCampaignDetailInteractions
+                        //    .Where(c => c.AdvertID == campDetail.AdvertID && (c.StartDatetime > check_date.Date && c.StartDatetime < check_date.Date) && c.TimeElapsed.HasValue)
+                        //    .Sum(c => c.TimeElapsed.Value);
+                        //height += _db.AdvertCampaignDetailInteractions
+                        //        .Where(c => c.AdvertID == campDetail.AdvertID && EntityFunctions.TruncateTime(c.StartDatetime) == check_date.Date)
+                        //        .Sum(c=>c.Height);                        
+                    }
+                    var oCP = new CampaignPerformance();
+                    oCP.Month = i;
+                    oCP.CampaignName = camp.Name;
+                    oCP.Impressions = inter;
+                    oCP.TimeAverage = (inter!=0) ? elapsedTime / inter : 0;
+                    oCP.HeightAverage = (height != 0) ? height / inter : 0;
+                    interactions.Add(oCP);
+                }
+                
+            }
+            
+            return PartialView("AdvertCampaignsPerformance", interactions.ToList());
         }
 
         protected override void Dispose(bool disposing)

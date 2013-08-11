@@ -1,0 +1,49 @@
+﻿@model OMKT.Business.Game
+
+@{
+    ViewBag.Title = "Detalle del Juego";
+    Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
+}
+<div class="span12">
+<h2>Details <small>del Juego</small></h2>
+<div class="row-fluid">
+        <div class="span6">
+            <div class="page-header">
+                <h3>
+                    @Html.DisplayFor(model => model.Name)
+                </h3>
+            </div>
+            <div class="details-view">
+                <p>
+                    <strong>Nombre</strong>
+                    </p><p>
+                    @Html.DisplayFor(model => model.Name)
+                </p>
+                <p>
+                    <strong>Fecha de vigencia</strong>
+                    </p><p>
+                    @Html.DisplayFor(model => model.StartDatetime)
+                </p>
+                <p>
+                    <strong>Fecha de caducidad</strong>
+                    </p><p>
+                    @Html.DisplayFor(model => model.EndDatetime)
+                </p>
+                <p>
+                    <strong>Última modificación</strong>
+                    </p><p>
+                    @Html.DisplayFor(model => model.LastUpdate)
+                </p>
+        </div>
+            
+        </div>
+        <div class="span6">
+            <div id="gameDetailsList">
+                @{Html.RenderAction("IndexByMemoryGame", "GameDetail", new { id = Model.AdvertId });}
+            </div>
+        </div>        
+        <div class="actions">
+            @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+    </div>
