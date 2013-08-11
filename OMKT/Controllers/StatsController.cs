@@ -97,34 +97,6 @@ namespace OMKT.Controllers
         //public ActionResult AdvertsPerformance()
         //{
         //    return PartialView("AdvertsPerformance", GetProductsPerformance());
-        //}
-
-        public ActionResult AdvertCampaignsPerformance(int? period)
-        {
-            var oUser = (User)Session["User"];
-            var detailList = new List<AdvertCampaignDetail>();
-
-            var camp = new List<CampaignPerformance>();
-            if (period.HasValue && period != 0)
-            {
-                detailList = _db.AdvertCampaignDetails.Where(a => a.AdvertCampaignId == period).ToList();
-            }
-            else
-            {
-                detailList = _db.AdvertCampaignDetails.Where(a => a.AdvertCampaign.CustomerId == oUser.CustomerId).ToList();
-            }
-            period = (period.HasValue) ? period : 12;
-
-            for (int j = 0; j <= period; j++)
-            {
-                camp.Add(new CampaignPerformance()
-                {
-                    Impressions = new Random(j).Next(2000, 3000),
-                    Traffic = new Random(j).Next(10000, 15000),
-                    Month = j
-                });
-            }
-            return PartialView("AdvertCampaignsPerformance", camp);
-        }
+        //}        
     }
 }

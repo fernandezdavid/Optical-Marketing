@@ -6,10 +6,10 @@
     
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Mes', 'Tiempo promedio', 'Interacciones'],
+          ['Mes', 'Tiempo promedio', 'Altura Promedio', 'Interacciones'],
           @foreach(var item in Model) 
           {
-            @:['@item.Month', @item.TimeAverage , @item.Impressions], 
+            @:[@item.Month, @item.TimeAverage , @item.HeightAverage, @item.Impressions], 
           }
          ]);
          

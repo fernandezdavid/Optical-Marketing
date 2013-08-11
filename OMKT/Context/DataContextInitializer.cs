@@ -277,41 +277,62 @@ namespace OMKT.Context
             }
             #endregion
 
-            #region campaign locations
-            //Locations
+            #region alerts
+            
+            var alerts= new List<Alert>
+			{
+				new Alert{ Customer = customer, Date = DateTime.Now, Message = "Bienvenido a Optical Marketing! Para comenzar visite la sección de Ayuda. "}
+            };
+            foreach (var a in alerts )
+            {
+                context.Alerts.Add(a);
+            }
+            #endregion
+
+            #region hostsLocations
             var loc1 = new Location { Latitude = "-31.419677", Longitude = "-64.1878", Detail = "Patio Olmos" };
             context.Locations.Add(loc1);
             var loc2 = new Location { Latitude = "-31.413133", Longitude = "-64.204357", Detail = "Nuevo Shopping" };
             context.Locations.Add(loc2);
             var loc3 = new Location { Latitude = "-31.442696", Longitude = "-64.194072", Detail = "Universidad Tecnológica Nacional" };
             context.Locations.Add(loc3);
-            //Advert hosts categories
+            #endregion
+
+            #region hostsCategories
             var cat1 = new AdvertHostCategory { Name = "Premium" };
             context.AdvertHostCategories.Add(cat1);
             var cat2 = new AdvertHostCategory { Name = "Estandar" };
             context.AdvertHostCategories.Add(cat2);
             var cat3 = new AdvertHostCategory { Name = "Gratutita" };
             context.AdvertHostCategories.Add(cat3);
-            //Advert hosts
+            #endregion
+
+            #region hosts
+            var hostsList = new List<AdvertHost>();
             var host1 = new AdvertHost { AdvertHostName = "Patio Olmos" };
             host1.Location = loc1;
             host1.LocationId = host1.Location.LocationId;
             host1.AdvertHostCategory = cat1;
             host1.AdvertHostCategoryId = host1.AdvertHostCategory.AdvertHostCategoryId;
             context.AdvertHosts.Add(host1);
+            hostsList.Add(host1);
             var host2 = new AdvertHost { AdvertHostName = "Nuevo centro" };
             host2.Location = loc2;
             host2.LocationId = host2.Location.LocationId;
             host2.AdvertHostCategory = cat2;
             host2.AdvertHostCategoryId = host2.AdvertHostCategory.AdvertHostCategoryId;
             context.AdvertHosts.Add(host2);
+            hostsList.Add(host2);
             var host3 = new AdvertHost { AdvertHostName = "UTN" };
             host3.Location = loc3;
             host3.LocationId = host3.Location.LocationId;
             host3.AdvertHostCategory = cat3;
             host3.AdvertHostCategoryId = host3.AdvertHostCategory.AdvertHostCategoryId;
             context.AdvertHosts.Add(host3);
+            hostsList.Add(host3);
+            #endregion
 
+            #region campaignLocations
             var campLoc1 = new CampaignLocation { Description = "Todas las ubicaciones" };
             campLoc1.AdvertHosts.Add(host1);
             campLoc1.AdvertHosts.Add(host2);
@@ -444,6 +465,25 @@ namespace OMKT.Context
                 context.AdvertCampaignInteractions.Add(campInteraction);
             }
 
+            #endregion
+
+            #region monitoring
+
+            var now = DateTime.Today;
+            var specific = new DateTime(now.Year, now.Month, now.Day, 20, 0, 0, 0);
+            var open = 6 * 60 * 60;
+            for (int m = 0; m < open; m++)
+            {
+                var persons = new Random(m).Next(1,7);
+                var h = new Random(m).Next(1, 4);
+                var monitoring = new Monitoring
+                {   
+                    Average = persons,
+                    Timestamp = specific.AddSeconds(-m),
+                    AdvertHost = hostsList[h]                    
+                };
+                context.Monitoring.Add(monitoring);
+            }
             #endregion
 
             try

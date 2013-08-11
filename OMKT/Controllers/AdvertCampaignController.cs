@@ -283,31 +283,27 @@ namespace OMKT.Controllers
                 foreach (var camp in advertCamp)
                 {
                     var inter = 0;
-                    int elapsedTime = 0;
+                    var elapsedTime = 0;
+                    var height = 0m;
                     foreach (var campDetail in camp.AdvertCampaignDetails)
                     {
-                        DateTime check_date = DateTime.Now.AddDays(-i);
+                        DateTime check_date = DateTime.Now.AddDays(-i).Date;
                         inter += _db.AdvertCampaignDetailInteractions
                                 .Where(c => c.AdvertID == campDetail.AdvertID &&  EntityFunctions.TruncateTime(c.StartDatetime) == check_date.Date)
                                 .Count();
-                        elapsedTime += _db.AdvertCampaignDetailInteractions
-                                .Where(c => c.AdvertID == campDetail.AdvertID && EntityFunctions.TruncateTime(c.StartDatetime) == check_date.Date && c.TimeElapsed!=null)
-                                .Sum(c => c.TimeElapsed.Value);
-                        
+                        //elapsedTime += _db.AdvertCampaignDetailInteractions
+                        //    .Where(c => c.AdvertID == campDetail.AdvertID && (c.StartDatetime > check_date.Date && c.StartDatetime < check_date.Date) && c.TimeElapsed.HasValue)
+                        //    .Sum(c => c.TimeElapsed.Value);
+                        //height += _db.AdvertCampaignDetailInteractions
+                        //        .Where(c => c.AdvertID == campDetail.AdvertID && EntityFunctions.TruncateTime(c.StartDatetime) == check_date.Date)
+                        //        .Sum(c=>c.Height);                        
                     }
                     var oCP = new CampaignPerformance();
                     oCP.Month = i;
                     oCP.CampaignName = camp.Name;
                     oCP.Impressions = inter;
-                    if (inter != 0)
-                    {
-                        oCP.TimeAverage = elapsedTime / inter;
-                    }
-                    else
-                    {
-                        oCP.TimeAverage = 0;
-                    }
-                        
+                    oCP.TimeAverage = (inter!=0) ? elapsedTime / inter : 0;
+                    oCP.HeightAverage = (height != 0) ? height / inter : 0;
                     interactions.Add(oCP);
                 }
                 

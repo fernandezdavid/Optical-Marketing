@@ -30,7 +30,7 @@
     </div>
     <div class="span12 dashboard-row">
     <div class="row-fluid dash-stats">
-        @{Html.RenderAction("SummaryBoard", "Stats");}
+        @{Html.RenderAction("DashboardStats", "Dashboard");}
     </div>
     </div>
     <div class="span12 dashboard-row">
@@ -38,10 +38,7 @@
             Rendimiento
         </h3>
         <div class="pie_charts">
-            @{Html.RenderAction("AdvertCampaignsPerformance", "Stats");}
-            @* @{Html.RenderAction("CommercialProductsViews", "Stats");}
-                @{Html.RenderAction("CommercialProductsLikes", "Stats");}
-                @{Html.RenderAction("AdvertsPerformance", "Stats");}*@
+            @{Html.RenderAction("AdvertCampaignsPerformance", "Dashboard");}
         </div>
     </div>
     <div class="span12 dashboard-row">
