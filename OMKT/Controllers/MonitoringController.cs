@@ -93,6 +93,14 @@ namespace OMKT.Controllers
             return View(monitoring);
         }
 
+        public PartialViewResult AdvertHostMonitoring(int? hostId)
+        {
+            if (!hostId.HasValue) hostId = 1;
+            //var adverthosts = db.AdvertHosts.OrderByDescending(h => h.AdvertHostName).Include("AdvertHostCategory");
+            var monitoring = db.Monitoring.Where(c => c.AdvertHostID == hostId);
+            return PartialView("AdvertHostMonitoring", monitoring);
+        }
+
         //
         // POST: /Monitoring/Delete/5
 

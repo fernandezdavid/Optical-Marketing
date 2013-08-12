@@ -470,16 +470,16 @@ namespace OMKT.Context
             #region monitoring
 
             var now = DateTime.Today;
-            var specific = new DateTime(now.Year, now.Month, now.Day, 20, 0, 0, 0);
-            var open = 6 * 60 * 60;
+            var specific = new DateTime(now.Year, now.Month, now.Day, 8, 0, 0, 0);
+            var open = 1 * 60 * 60;
             for (int m = 0; m < open; m++)
             {
                 var persons = new Random(m).Next(1,7);
-                var h = new Random(m).Next(1, 4);
+                var h = new Random(m).Next(0, 3);
                 var monitoring = new Monitoring
                 {   
                     Average = persons,
-                    Timestamp = specific.AddSeconds(-m),
+                    Timestamp = specific.AddSeconds(m),
                     AdvertHost = hostsList[h]                    
                 };
                 context.Monitoring.Add(monitoring);
