@@ -252,6 +252,7 @@ namespace OMKT.Context
                     Position = id,
                     CreatedDate = catalog.CreatedDate,
                     LastUpdate = DateTime.Now,
+                    Link = "http://www.adidas.com.ar/catalogue/football/collection-f50/",
                     QRCode = result,
                     Discount = discount
                 });               
