@@ -1,0 +1,50 @@
+﻿@using OMKT.Business
+@model Video
+<fieldset>
+@Html.HiddenFor(model => model.AdvertId)
+@Html.HiddenFor(model => model.AdvertTypeId)
+@Html.HiddenFor(model => model.CreatedDate)
+     
+    <div class="control-group">
+        <label class="control-label">
+            Nombre</label>
+        <div class="controls">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Estado</label>
+        <div class="controls">
+            <div class="input chzn-select">
+                @Html.DropDownList("AdvertStateId", String.Empty)
+                @Html.ValidationMessageFor(model => model.AdvertStateId)
+            </div>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">URL</label>
+        <div class="controls">
+            @Html.EditorFor(model => model.Path)
+            @Html.ValidationMessageFor(model => model.Path)
+        </div>
+    </div>    
+    <div class="control-group">
+        <label class="control-label">Fecha de caducidad</label>
+        <div class="controls">
+            @Html.EditorFor(model => model.EndDatetime, "Calendar")
+            @Html.ValidationMessageFor(model => model.EndDatetime)
+        </div>
+    </div>    
+     <div class="form-actions">
+        <input type="submit" class="btn btn-primary" value="Guardar" />
+        <a href="@Url.Action("Index")" class="btn">Volver</a>
+    </div>
+</fieldset>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("div.chzn-select select").chosen();
+        $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
+    });
+</script>

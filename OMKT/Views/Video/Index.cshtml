@@ -1,70 +1,84 @@
 ﻿@model IEnumerable<OMKT.Business.Video>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Administración de Videos";
     Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Administración <small>de Videos</small></h2>
+<div class="row-fluid">
+    <div class="span2">
+        <a href="@Url.Action("Create", "Video")" class="btn btn-primary"><i class="icon-plus icon-white "></i> Nuevo Video</a>
+    </div>
+    <div class="span12">@{Html.RenderAction("GamesOverview", "Game");}</div>
+</div>
+@{Html.RenderAction("LatestVideos", "Videos");}
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            AdvertType
-        </th>
-        <th>
-            LastUpdate
-        </th>
-        <th>
-            EndDatetime
-        </th>
-        <th>
-            StartDatetime
-        </th>
-        <th>
-            CreatedDate
-        </th>
-        <th>
-            AdvertState
-        </th>
-        <th></th>
-    </tr>
+<div id="delete-modal" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;</button>
+        <h3>
+            Videos</h3>
+    </div>
+    <div class="modal-body">
+        <div id="delete-result" class="">
+        </div>
+        <p class="body">
+        </p>
+    </div>
+    <div class="modal-footer">
+        <form action="" method="post">
+            <input type="submit" class="btn btn-primary" value="Borrar" />
+            <a href="#" target="_blank" class="btn btn-success video-details">Detalle</a>
+            <a href="#" class="btn close-modal">Cerrar</a>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.close-modal').on('click', function () {
+            $('#delete-modal').modal('hide');
+        });
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AdvertType.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastUpdate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDatetime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDatetime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AdvertState.Description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AdvertId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AdvertId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AdvertId })
-        </td>
-    </tr>
-}
+        $('#delete-modal form').on('submit', function () {
+            $('#delete-result').html('');
+            $.post($(this).attr('action'), $(this).serialize(), function (data, status) {
+                $('#delete-info').hide();
+                $('#delete-result').html('<strong>El video fue eliminado con éxito. Redirigiendo...</strong>');
+                $('#delete-result').addClass('alert alert-success');
+                setTimeout(function () {
+                    window.location.href = '@Url.Content("Video")';
+                }, 3000);
 
-</table>
+            }).error(function (error, status, a, b) {
+                $('#delete-error').html('Ups! Algo anduvo mal. Por favor, intenta nuevamente.');
+                $('.modal-body p.body').html(error.responseText);
+
+            });
+            return false;
+        });
+
+        $('.delete-video').on('click', function () {
+            $('#delete-result').html('');
+            var id = $(this).attr('video-id');
+            var url = '@Url.Content("~/Video/Delete")/' + id;
+            $.ajax({
+                url: url,
+                context: document.body,
+                success: function (data) {
+                    $('.modal-body p.body').html(data);
+                    $(this).addClass('done');
+                    $('.modal-footer form').attr('action', url);
+                    $('.modal-footer a.video-details').attr('href', '@Url.Content("~/Video/Details")/' + id);
+                    $('#delete-modal').modal('show');
+                },
+                error: function (err) {
+                    $('#delete-error').html('Ups! Something went wrong. Please try again.');
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
