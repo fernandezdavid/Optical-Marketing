@@ -8,6 +8,8 @@ namespace OMKT.Business
 
         public int Oportunities { get; set; }
 
+        public string VideoURL { get; set; }
+
         public Game()
         {
             GameDetails = new List<GameDetail>();

@@ -1,0 +1,92 @@
+﻿@model OMKT.Business.Video
+<fieldset>
+    @Html.HiddenFor(model => model.AdvertId)
+    @Html.HiddenFor(model => model.AdvertTypeId)
+    @Html.HiddenFor(model => model.CreatedDate)
+    @Html.HiddenFor(model => model.ProductImageId)
+    <div class="control-group">
+        <label class="control-label">
+            Título</label>
+        <div class="controls">
+            @Html.TextBoxFor(model => model.Name, new {  @autofocus = "autofocus" })
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Estado</label>
+        <div class="controls">
+            <div class="input chzn-select">
+                @Html.DropDownList("AdvertStateId", String.Empty)
+                @Html.ValidationMessageFor(model => model.AdvertStateId)
+            </div>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Youtube</label>
+        <div class="controls">
+            @Html.TextBoxFor(model => model.URL, new { @class = "input-xlarge" })
+            @Html.ValidationMessageFor(model => model.URL)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Video</label>
+        <div class="controls">
+            <input type="file" name="fvideo" class="span5" id="fvideo" />
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">
+            Póster</label>
+        <div class="controls">
+            <input type="file" name="image" class="span5" id="image" />
+        </div>
+    </div>
+    @if (Model != null && Model.Path != null)
+    { 
+        <text>
+        <div class="control-group">
+            <div class="controls">
+                <video width="320" height="240" controls>
+                <source src="@Url.Content(Model.Path)" type="video/mp4">                
+                <source src="movie.ogg" type="video/ogg">
+                Lo sentimos, tu navegador no soporta video.
+            </video>
+            </div>
+        </div>
+        </text>   
+    }
+    
+@*@if (Model != null && Model.ProductImage != null)
+    {
+        <text>
+        <div class="control-group">
+            <div class="controls">
+                <div class="span4" style="margin-left:0">
+                    <img src="@Url.Content(Model.ProductImage.ThumbnailPath)" class="img-rounded" title="@Model.ProductImage.Title" alt="@Model.ProductImage.Caption" />
+                </div>
+            </div>
+        </div>
+        </text>
+    }*@
+    <div class="control-group">
+        <label class="control-label">
+            Descripción</label>
+        <div class="controls">
+            @Html.TextAreaFor(model => model.Caption, new { @rows = "3", @class = "input-xxlarge" })
+            @Html.ValidationMessageFor(model => model.Caption)
+        </div>
+    </div>
+    <div class="form-actions">
+        <input type="submit" class="btn btn-primary" value="Guardar" />
+        <a href="@Url.Action("Index")" class="btn">Volver</a>
+    </div>
+</fieldset>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("div.chzn-select select").chosen();
+        $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
+    });
+</script>

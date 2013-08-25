@@ -36,7 +36,7 @@ namespace OMKT.Controllers
         }
 
         // GET: /CommercialProduct/
-        public ViewResult Index(int? page)
+        public ViewResult Index()
         {
             return View();
         }
@@ -127,7 +127,7 @@ namespace OMKT.Controllers
         //
         // GET: /CommercialProduct/Edit/5
 
-        public ActionResult Edit(int id, string result)
+        public ActionResult Edit(int id)
         {
             CommercialProduct commercialproduct = _db.CommercialProducts.Find(id);
             ViewBag.CommercialProductTypeId = new SelectList(_db.CommercialProductTypes, "CommercialProductTypeId", "Description", commercialproduct.CommercialProductTypeId);
