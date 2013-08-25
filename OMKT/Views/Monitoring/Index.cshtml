@@ -1,46 +1,17 @@
 ﻿@model IEnumerable<OMKT.Business.Monitoring>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Monitoreo";
     Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Monitoreo</h2>
+<div class="alert alert-info">
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            AdvertHost
-        </th>
-        <th>
-            Timestamp
-        </th>
-        <th>
-            Average
-        </th>
-        <th></th>
-    </tr>
+<div class="span12">@{Html.RenderAction("AdvertHostMonitoring", "Monitoring", new{ hostId = 1});}</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AdvertHost.AdvertHostName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Timestamp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Average)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MonitoringID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MonitoringID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MonitoringID })
-        </td>
-    </tr>
-}
+@*<div class="span12">@{Html.RenderAction("AdvertHostMonitoring", "Monitoring", new { hostId = 2 });}</div>
 
-</table>
+<div class="span12">@{Html.RenderAction("AdvertHostMonitoring", "Monitoring", new { hostId = 3 });}</div>*@
+

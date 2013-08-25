@@ -10,6 +10,5 @@ OMKT/Global.asax.cs
 *.csproj
 *.sln
 *.suo
-*.config
 *.user
 *.asax

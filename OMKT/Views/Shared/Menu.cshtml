@@ -1,29 +1,34 @@
 ﻿<ul class="nav">
         <li class="@((Request.RawUrl.Contains("/AdvertCampaign")) ? "active" : "")">
-            <a href="@Url.Action("Index", "AdvertCampaign")">@*<i class='icon-calendar icon-white'></i>*@Campañas</a>
+            <a href="@Url.Action("Index", "AdvertCampaign")">Campañas</a>
         </li>
         <li class="@((Request.RawUrl.Contains("/Catalog"))? "active" : "")">
             <ul class="nav">
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@*<i class="icon-hdd icon-white"></i>*@Anuncios <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Anuncios <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href="@Url.Action("Index", "Catalog")">@*<i class='icon-book icon-white'></i>*@Catálogos</a></li>
-                    <li><a href="@Url.Action("Index", "Game")">@*<i class='icon-book icon-white'></i>*@Juegos</a></li>
+                    <li><a href="@Url.Action("Index", "Catalog")">Catálogos</a></li>
+                    <li><a href="@Url.Action("Index", "Game")">Juegos</a></li>
+                    <li><a href="@Url.Action("Index", "Video")">Videos</a></li>
                 </ul>
             </li>
         </ul>
             
         </li>
+        <li class="@((Request.RawUrl.Contains("/Monitoring")) ? "active" : "")">
+            <a href="@Url.Action("Index", "Monitoring")">Monitoreo</a>
+            
+        </li>
         <li class="@((Request.RawUrl.Contains("/CommercialProduct")) ? "active" : "")">
-            <a href="@Url.Action("Index", "CommercialProduct")">@*<i class='icon-barcode icon-white'></i>*@Productos</a>
+            <a href="@Url.Action("Index", "CommercialProduct")">Productos</a>
         </li>
        
         <li class="@((Request.RawUrl.Contains("/Help")) ? "active" : "")">
-            <a href="@Url.Action("Help", "Dashboard")">@*<i class='icon-question-sign icon-white'></i>*@Ayuda</a>
+            <a href="@Url.Action("Help", "Dashboard")">Ayuda</a>
             
         </li>
-         <li class="@((Request.RawUrl.Contains("/Messages")) ? "active" : "")">
-            <a class="inbox" href="@Url.Action("Index", "CommercialProduct")">@*<i class='icon-envelope icon-white'></i>*@Buzón <span id="new" class="badge badge-important"></span></a>
+        <li class="@((Request.RawUrl.Contains("/Messages")) ? "active" : "")">
+            <a class="inbox" href="@Url.Action("Index", "CommercialProduct")">Buzón <span id="new" class="badge badge-important"></span></a>
            
         </li>
     </ul>
@@ -31,7 +36,7 @@
     {
         <ul class="nav" id="adminmenu">
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@*<i class="icon-wrench icon-white"></i>*@Admin <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li><a href="@Url.Action("Index", "User")">Usuarios</a></li>
                     <li><a href="@Url.Action("Index", "AdvertHost")">Puestos</a></li>

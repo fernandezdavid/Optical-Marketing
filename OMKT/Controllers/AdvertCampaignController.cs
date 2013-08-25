@@ -276,7 +276,7 @@ namespace OMKT.Controllers
             int interval = (period.HasValue) ? Convert.ToInt32(period) : 15;
             var oUser = (User)Session["User"];
 
-            var advertCamp = _db.AdvertCampaigns.Include(c=>c.AdvertCampaignDetails).Where(c => c.CustomerId== oUser.CustomerId);
+            var advertCamp = _db.AdvertCampaigns.Include(c => c.AdvertCampaignDetails).Where(c => c.CustomerId == oUser.CustomerId);
             var interactions = new List<CampaignPerformance>();
             for (int i = 0; i < interval; i++)
             {
@@ -287,28 +287,34 @@ namespace OMKT.Controllers
                     var height = 0m;
                     foreach (var campDetail in camp.AdvertCampaignDetails)
                     {
-                        DateTime check_date = DateTime.Now.AddDays(-i).Date;
+                        DateTime check_date = DateTime.Today.Subtract(TimeSpan.FromDays(i));
                         inter += _db.AdvertCampaignDetailInteractions
-                                .Where(c => c.AdvertID == campDetail.AdvertID &&  EntityFunctions.TruncateTime(c.StartDatetime) == check_date.Date)
+                                .Where(c => c.AdvertID == campDetail.AdvertID && c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day)
                                 .Count();
-                        //elapsedTime += _db.AdvertCampaignDetailInteractions
-                        //    .Where(c => c.AdvertID == campDetail.AdvertID && (c.StartDatetime > check_date.Date && c.StartDatetime < check_date.Date) && c.TimeElapsed.HasValue)
-                        //    .Sum(c => c.TimeElapsed.Value);
-                        //height += _db.AdvertCampaignDetailInteractions
-                        //        .Where(c => c.AdvertID == campDetail.AdvertID && EntityFunctions.TruncateTime(c.StartDatetime) == check_date.Date)
-                        //        .Sum(c=>c.Height);                        
+                        elapsedTime += (from c in _db.AdvertCampaignDetailInteractions
+                                     let dt = c.StartDatetime
+                                     where c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day 
+                                     && c.TimeElapsed.HasValue && c.AdvertID == campDetail.AdvertID
+                                     group c by new { y = dt.Year, m = dt.Month, d = dt.Day } into g
+                                     select new { elapsed = g.Sum(c => c.TimeElapsed) }).First().elapsed ?? 0;
+                        height += (from h in _db.AdvertCampaignDetailInteractions
+                                   let ds = h.StartDatetime
+                                   where h.StartDatetime.Year == check_date.Year && h.StartDatetime.Month == check_date.Month && h.StartDatetime.Day == check_date.Day
+                                 && h.AdvertID == campDetail.AdvertID
+                                   group h by new { y = ds.Year, m = ds.Month, d = ds.Day } into a
+                                   select new { totalHeight = a.Sum(x => x.Height) }).First().totalHeight;                                    
                     }
                     var oCP = new CampaignPerformance();
                     oCP.Month = i;
                     oCP.CampaignName = camp.Name;
                     oCP.Impressions = inter;
-                    oCP.TimeAverage = (inter!=0) ? elapsedTime / inter : 0;
-                    oCP.HeightAverage = (height != 0) ? height / inter : 0;
+                    oCP.TimeAverage = ((inter != 0) ? elapsedTime / inter : 0).ToString();
+                    oCP.HeightAverage = ((height != 0) ? height / inter : 0).ToString().Replace(',', '.');
                     interactions.Add(oCP);
                 }
-                
+
             }
-            
+
             return PartialView("AdvertCampaignsPerformance", interactions.ToList());
         }
 

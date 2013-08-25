@@ -1,23 +1,22 @@
-﻿@model IEnumerable<OMKT.Models.CampaignPerformance>
+﻿@model IEnumerable<OMKT.Business.Monitoring>
+           
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
     google.load("visualization", "1", { packages: ["corechart"] });
     google.setOnLoadCallback(drawChart);
-    console.log('Meta');
+    
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Mes', 'Tiempo promedio', 'Altura Promedio', 'Interacciones'],
-          @foreach(var item in Model) 
-          {
-            @:[@item.Month, @item.TimeAverage, @item.HeightAverage, @item.Impressions], 
+          ['Hora', 'Personas'],
+          @foreach (var item in Model){ 
+            @:[@item.Timestamp, @item.Average], 
           }
          ]);
-         
-        var options = {
+                var options = {
             width: 1300,
             height: 240,
             title: '',
-            //colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
+//            colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));

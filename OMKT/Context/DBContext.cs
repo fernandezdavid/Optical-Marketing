@@ -41,16 +41,12 @@ namespace OMKT.Context
         public DbSet<Monitoring> Monitoring { get; set; }
         public DbSet<GameDetail> GameDetails { get; set; }
         public DbSet<GameDetailInteraction> GameDetailInteractions { get; set; }
-
-        //public DbSet<Zone> Zones { get; set; }
-        //public DbSet<Email> Emails { get; set; }
-        //public DbSet<Snapshot> Snapshots { get; set; }
+        public DbSet<Video> Videos{ get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
-
     }
 
 }

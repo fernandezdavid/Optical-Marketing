@@ -13,9 +13,9 @@ namespace OMKT.Models
 
         public decimal Conversions { get; set; } // valoracion en % Conversion?
 
-        public decimal TimeAverage { get; set; } // tiempo promedio de visita
+        public string TimeAverage { get; set; } // tiempo promedio de visita
 
-        public decimal HeightAverage { get; set; }
+        public string HeightAverage { get; set; }
 
         public decimal Bounce { get; set; } //porcentaje de rebote
         

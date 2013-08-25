@@ -29,8 +29,8 @@ namespace OMKT.Controllers
             if (!top.HasValue)
                 top = 10;
             var oUser = (User)Session["User"];
-            var catalogs = db.Games.OrderByDescending(i => i.Name).Take(top.Value);
-            return PartialView("GameListPartial", catalogs.ToList());
+            var games = db.Games.OrderByDescending(i => i.Name).Take(top.Value);
+            return PartialView("GameListPartial", games.ToList());
         }
 
         public PartialViewResult DashboardGames(int? top)

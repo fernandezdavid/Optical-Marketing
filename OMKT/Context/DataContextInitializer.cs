@@ -252,6 +252,7 @@ namespace OMKT.Context
                     Position = id,
                     CreatedDate = catalog.CreatedDate,
                     LastUpdate = DateTime.Now,
+                    Link = "http://www.adidas.com.ar/catalogue/football/collection-f50/",
                     QRCode = result,
                     Discount = discount
                 });               
@@ -261,6 +262,34 @@ namespace OMKT.Context
                                
             }
             context.Catalogs.Add(catalog);
+            #endregion
+
+            #region videos
+
+            var video = new Video();
+            video.Name = "Adidas Is All In";
+            video.Caption = "Adidas Is All In";
+            video.Extension = "mp4";
+            video.Path = "~/Content/videos/adidasAllIn.mp4";
+            video.URL = "https://www.youtube.com/watch?v=0A0jVkFs3C4";
+            video.CreatedDate = new DateTime(DateTime.Now.Year, 1, new Random().Next(1, 28));
+            video.AdvertState = estado;
+            video.AdvertStateId = video.AdvertState.AdvertstateId;
+            video.AdvertType = new AdvertType { Description = "Video" };
+            video.AdvertTypeId = video.AdvertType.AdvertTypeId;
+            video.ProductImage = new ProductImage
+                {
+                    Caption = "Adidas is All In",
+                    CreatedDate = DateTime.Now,
+                    Extension = "jpeg",
+                    ThumbnailPath = "~/Content/videoImages/adidasIsAllIn.jpeg",
+                    Path = "~/Content/videoImages/thumbnails/adidasIsAllIn.jpeg",//"~/Content/productImages/11Nova-Trx.png",
+                    Size = "",
+                    Title = "Adidas All In"
+                };
+
+            context.Videos.Add(video);
+
             #endregion
 
             #region campaign states
@@ -380,6 +409,12 @@ namespace OMKT.Context
                     StartDate = campaign.StartDatetime,
                     EndDate = campaign.EndDatetime
                 });
+            campaign.AdvertCampaignDetails.Add(new AdvertCampaignDetail
+            {
+                Advert = video,
+                StartDate = campaign.StartDatetime,
+                EndDate = campaign.EndDatetime
+            });
 
             context.AdvertCampaigns.Add(campaign);
 
@@ -461,6 +496,16 @@ namespace OMKT.Context
                     };
                     context.GameDetailInteractions.Add(gt);
                 }
+                var vat = new AdvertCampaignDetailInteraction
+                {
+                    Advert = video,
+                    AdvertID = video.AdvertId,
+                    StartDatetime = campInteraction.StartDatetime.AddMinutes(6),
+                    EndDatetime = campInteraction.StartDatetime.AddMinutes(9),
+                    TimeElapsed = 180,
+                    Height = 1.70M
+                };
+                campInteraction.AdvertCampaignDetailInteractions.Add(vat);
 
                 context.AdvertCampaignInteractions.Add(campInteraction);
             }
@@ -470,16 +515,16 @@ namespace OMKT.Context
             #region monitoring
 
             var now = DateTime.Today;
-            var specific = new DateTime(now.Year, now.Month, now.Day, 20, 0, 0, 0);
-            var open = 6 * 60 * 60;
+            var specific = new DateTime(now.Year, now.Month, now.Day, 8, 0, 0, 0);
+            var open = 1 * 60 * 60;
             for (int m = 0; m < open; m++)
             {
                 var persons = new Random(m).Next(1,7);
-                var h = new Random(m).Next(1, 4);
+                var h = new Random(m).Next(0, 3);
                 var monitoring = new Monitoring
                 {   
                     Average = persons,
-                    Timestamp = specific.AddSeconds(-m),
+                    Timestamp = specific.AddSeconds(m),
                     AdvertHost = hostsList[h]                    
                 };
                 context.Monitoring.Add(monitoring);
