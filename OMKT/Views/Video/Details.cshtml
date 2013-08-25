@@ -1,51 +1,70 @@
 ﻿@model OMKT.Business.Video
-
 @{
     ViewBag.Title = "Detalle de Video";
     Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
-
-<h2>Details</h2>
-
-<fieldset>
-    <legend>Video</legend>
-
-    <div class="display-label">Name</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
+<div class="span12">
+    <h2>
+        Detalle <small>de Video</small></h2>
+    <div class="row-fluid">
+        <div class="span6">
+            <div class="page-header">
+                <h3>
+                    @Html.DisplayFor(model => model.Name)
+                </h3>
+            </div>
+            <div class="details-view">
+                <p>
+                    <strong>Descripción </strong>
+                </p>
+                <p>@Html.DisplayFor(model => model.Caption)
+                </p>
+                <p>
+                    <strong>Estado </strong>
+                </p>
+                <p>@Html.DisplayFor(model => model.AdvertState.Description)
+                </p>
+                <p>
+                    <strong>YouTube </strong>
+                </p>
+                <p><a href="@Html.DisplayFor(model => model.URL)" target="_blank">@Html.DisplayFor(model => model.URL)</a>
+                </p>
+                <p>
+                    <strong>Tamaño </strong>
+                </p>
+                <p>@Html.DisplayFor(model => model.Size)
+                </p>
+                <p>
+                    <strong>Formato </strong>
+                </p>
+                <p>@Html.DisplayFor(model => model.Extension)
+                </p>
+                <p>
+                    <strong>Fecha de creación </strong>
+                </p>
+                <p>@Html.DisplayFor(model => model.CreatedDate)
+                </p>
+                <p>
+                    <strong>Última modificación</strong></p>
+                <p>@Html.DisplayFor(model => model.LastUpdate)
+                </p>
+                @*<p>
+                    <img src="@Url.Content(Model.ProductImage.Path)" class="img-rounded" title="@Model.ProductImage.Title" alt="@Model.ProductImage.Caption" />
+                </p>*@
+            </div>
+        </div>
+        <div class="span6">
+            <video width="620" widht="40%" controls>
+                <source src="@Url.Content(Model.Path)" type="video/mp4">                
+                <source src="movie.ogg" type="video/ogg">
+                Lo sentimos, tu navegador no soporta video.
+            </video>        
+        </div>
+        <div class="clear">
+        </div>
+        <div class="actions">
+            @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Editar", "Edit", new { id = Model.AdvertId }, new { @class = "btn primary" })
+        </div>
     </div>
-
-    <div class="display-label">AdvertType</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.AdvertType.Description)
-    </div>
-
-    <div class="display-label">LastUpdate</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.LastUpdate)
-    </div>
-
-    <div class="display-label">EndDatetime</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.EndDatetime)
-    </div>
-
-    <div class="display-label">StartDatetime</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.StartDatetime)
-    </div>
-
-    <div class="display-label">CreatedDate</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.CreatedDate)
-    </div>
-
-    <div class="display-label">AdvertState</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.AdvertState.Description)
-    </div>
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.AdvertId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+</div>

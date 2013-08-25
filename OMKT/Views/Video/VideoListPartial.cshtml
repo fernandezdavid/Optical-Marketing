@@ -1,9 +1,19 @@
-﻿<script type="text/javascript">
+﻿@model IEnumerable<OMKT.Business.Video>
+@helper Truncate(string
+input, int length)
+ {
+    if (input.Length <= length) {
+        @input
+    } else {
+        @input.Substring(0, length)<text>...</text>
+    }
+} 
+<script type="text/javascript">
     $(document).ready(function () {
         $('#example').dataTable({
             "sDom": "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
             "aoColumnDefs": [
-                { "bSortable": false, "aTargets": [0, 5] },
+                { "bSortable": false, "aTargets": [0, 8] },
             ]
             //"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>"
         });
@@ -15,13 +25,22 @@
     <thead>
     <th></th>
         <th>
-            Nombre
+            Título
+        </th>
+        <th>
+            Descripción
+        </th>
+        <th>
+            Estado
         </th>
         <th>
             URL
         </th>
         <th>
-            Estado
+            Tamaño
+        </th>
+        <th>
+            Formato
         </th>
         <th>
             Fecha de creación
@@ -33,16 +52,25 @@
     <tr>
         <td><input type="checkbox" name="@Html.DisplayFor(modelItem => item.AdvertId)" /></td>
         <td>
-            <a href="@Url.Action("Edit", "Game", new { id = item.AdvertId })">@item.Name</a>
+            <a href="@Url.Action("Edit", "Video", new { id = item.AdvertId })">@item.Name</a>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Path)
+            @Html.DisplayFor(modelItem => item.Caption)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AdvertState.Description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AdvertState.CreatedDate)
+            @Html.DisplayFor(modelItem => item.URL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Size)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Extension)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
         </td>
         <td>
             <div class="btn-group">
@@ -50,7 +78,7 @@
                         <i class=" icon-edit icon-white"></i></a>
                     <a href="@Url.Action("Details", new { id = item.AdvertId })" class="btn small" >
                         <i class="icon-align-justify"></i></a>
-                    <a href="@Url.Action("Delete", new { id = item.AdvertId })" class="btn small delete-game" game-id="@item.AdvertId">
+                    <a href="@Url.Action("Delete", new { id = item.AdvertId })" class="btn small delete-video" video-id="@item.AdvertId">
                         <i class=" icon-trash "></i></a>
 
                 </div>

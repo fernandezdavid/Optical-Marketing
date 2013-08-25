@@ -264,6 +264,34 @@ namespace OMKT.Context
             context.Catalogs.Add(catalog);
             #endregion
 
+            #region videos
+
+            var video = new Video();
+            video.Name = "Adidas Is All In";
+            video.Caption = "Adidas Is All In";
+            video.Extension = "mp4";
+            video.Path = "~/Content/videos/adidasAllIn.mp4";
+            video.URL = "https://www.youtube.com/watch?v=0A0jVkFs3C4";
+            video.CreatedDate = new DateTime(DateTime.Now.Year, 1, new Random().Next(1, 28));
+            video.AdvertState = estado;
+            video.AdvertStateId = video.AdvertState.AdvertstateId;
+            video.AdvertType = new AdvertType { Description = "Video" };
+            video.AdvertTypeId = video.AdvertType.AdvertTypeId;
+            video.ProductImage = new ProductImage
+                {
+                    Caption = "Adidas is All In",
+                    CreatedDate = DateTime.Now,
+                    Extension = "jpeg",
+                    ThumbnailPath = "~/Content/videoImages/adidasIsAllIn.jpeg",
+                    Path = "~/Content/videoImages/thumbnails/adidasIsAllIn.jpeg",//"~/Content/productImages/11Nova-Trx.png",
+                    Size = "",
+                    Title = "Adidas All In"
+                };
+
+            context.Videos.Add(video);
+
+            #endregion
+
             #region campaign states
             var campaignState = new List<CampaignState>
 									{
@@ -381,6 +409,12 @@ namespace OMKT.Context
                     StartDate = campaign.StartDatetime,
                     EndDate = campaign.EndDatetime
                 });
+            campaign.AdvertCampaignDetails.Add(new AdvertCampaignDetail
+            {
+                Advert = video,
+                StartDate = campaign.StartDatetime,
+                EndDate = campaign.EndDatetime
+            });
 
             context.AdvertCampaigns.Add(campaign);
 
@@ -462,6 +496,16 @@ namespace OMKT.Context
                     };
                     context.GameDetailInteractions.Add(gt);
                 }
+                var vat = new AdvertCampaignDetailInteraction
+                {
+                    Advert = video,
+                    AdvertID = video.AdvertId,
+                    StartDatetime = campInteraction.StartDatetime.AddMinutes(6),
+                    EndDatetime = campInteraction.StartDatetime.AddMinutes(9),
+                    TimeElapsed = 180,
+                    Height = 1.70M
+                };
+                campInteraction.AdvertCampaignDetailInteractions.Add(vat);
 
                 context.AdvertCampaignInteractions.Add(campInteraction);
             }

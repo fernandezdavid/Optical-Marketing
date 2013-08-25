@@ -1,6 +1,4 @@
-﻿@model IEnumerable<OMKT.Business.Video>
-
-@{
+﻿@{
     ViewBag.Title = "Administración de Videos";
     Layout = "~/Views/Shared/_Dashboard_Layout.cshtml";
 }
@@ -10,9 +8,9 @@
     <div class="span2">
         <a href="@Url.Action("Create", "Video")" class="btn btn-primary"><i class="icon-plus icon-white "></i> Nuevo Video</a>
     </div>
-    <div class="span12">@{Html.RenderAction("GamesOverview", "Game");}</div>
+    <div class="span12">@{Html.RenderAction("VideosOverview", "Video");}</div>
 </div>
-@{Html.RenderAction("LatestVideos", "Videos");}
+@{Html.RenderAction("LatestVideos", "Video");}
 
 <div id="delete-modal" class="modal hide fade">
     <div class="modal-header">
