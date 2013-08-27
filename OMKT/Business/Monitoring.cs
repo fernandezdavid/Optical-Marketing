@@ -10,7 +10,7 @@ namespace OMKT.Business
 
         public virtual AdvertHost AdvertHost { get; set; }
 
-        public DateTime? Timestamp { get; set; }
+        public DateTime Timestamp { get; set; }
 
         public float Average { get; set; }
     }

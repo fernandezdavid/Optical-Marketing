@@ -51,8 +51,8 @@ namespace OMKT.Context
                     Caption = "Predator-Absolado",
                     CreatedDate = DateTime.Now,
                     Extension = "png",
-                    Path = "~/Content/productImages/V21078_F_p3.png",//"~/Content/productImages/Predator-Absolado.png",
-                    ThumbnailPath = "~/Content/productImages/thumbnails/V21078_F_p3.png",
+                    Path = "~/Content/productImages/G64929_F_s4.png",//"~/Content/productImages/Predator-Absolado.png",
+                    ThumbnailPath = "~/Content/productImages/thumbnails/G64929_F_s4.png",
                     Size = "",
                     Title = "Predator-Absolado"
                 },
@@ -71,8 +71,8 @@ namespace OMKT.Context
                     Caption = "F30-Trx",
                     CreatedDate = DateTime.Now,
                     Extension = "png",
-                    ThumbnailPath = "~/Content/productImages/thumbnails/V21078_F_p3.png",
-                    Path = "~/Content/productImages/V21350_F_p3.png",//"~/Content/productImages/F30-Trx.png",
+                    ThumbnailPath = "~/Content/productImages/thumbnails/G65351_F_s4.png",
+                    Path = "~/Content/productImages/G65351_F_s4.png",//"~/Content/productImages/F30-Trx.png",
                     Size = "",
                     Title = "F10-Trx"
                 },
@@ -91,8 +91,8 @@ namespace OMKT.Context
                     Caption = "11Nova-Trx",
                     CreatedDate = DateTime.Now,
                     Extension = "png",
-                    ThumbnailPath = "~/Content/productImages/V21078_F_p3.png",
-                    Path = "~/Content/productImages/thumbnails/G63818_F_p3.png",//"~/Content/productImages/11Nova-Trx.png",
+                    ThumbnailPath = "~/Content/productImages/G65424_F_s4.png",
+                    Path = "~/Content/productImages/thumbnails/G65424_F_s4.png",//"~/Content/productImages/11Nova-Trx.png",
                     Size = "",
                     Title = "11Nova-Trx"
                 },
@@ -111,8 +111,8 @@ namespace OMKT.Context
                     Caption = "11Core-Trx",
                     CreatedDate = DateTime.Now,
                     Extension = "png",
-                    ThumbnailPath = "~/Content/productImages/V21078_F_p3.png",
-                    Path = "~/Content/productImages/thumbnails/G60009_F_p3.png",//"~/Content/productImages/11Core-Trx.png",
+                    ThumbnailPath = "~/Content/productImages/Q23863_F_s4.png",
+                    Path = "~/Content/productImages/thumbnails/Q23863_F_s4.png",//"~/Content/productImages/11Core-Trx.png",
                     Size = "",
                     Title = "11Core-Trx"
                 },
@@ -131,8 +131,8 @@ namespace OMKT.Context
                     Caption = "F10-Trx",
                     CreatedDate = DateTime.Now,
                     Extension = "png",
-                    ThumbnailPath = "~/Content/productImages/V21078_F_p3.png",
-                    Path = "~/Content/productImages/thumbnails/V21334_F_p3.png",//"~/Content/productImages/F10-Trx.png",
+                    ThumbnailPath = "~/Content/productImages/Q23870_F_s4.png",
+                    Path = "~/Content/productImages/thumbnails/Q23870_F_s4.png",//"~/Content/productImages/F10-Trx.png",
                     Size = "",
                     Title = "F10-Trx"
                 },
@@ -255,11 +255,11 @@ namespace OMKT.Context
                     Link = "http://www.adidas.com.ar/catalogue/football/collection-f50/",
                     QRCode = result,
                     Discount = discount
-                });               
+                });
             }
             foreach (var prod in products)
             {
-                               
+
             }
             context.Catalogs.Add(catalog);
             #endregion
@@ -307,12 +307,12 @@ namespace OMKT.Context
             #endregion
 
             #region alerts
-            
-            var alerts= new List<Alert>
+
+            var alerts = new List<Alert>
 			{
 				new Alert{ Customer = customer, Date = DateTime.Now, Message = "Bienvenido a Optical Marketing! Para comenzar visite la sección de Ayuda. "}
             };
-            foreach (var a in alerts )
+            foreach (var a in alerts)
             {
                 context.Alerts.Add(a);
             }
@@ -459,13 +459,13 @@ namespace OMKT.Context
                         CatalogDetail = catalogDetails[cd],
                         CatalogDetailID = catalogDetails[cd].CatalogDetailId,
                         StartDatetime = cat.StartDatetime.AddSeconds(cd * timeavg),
-                        EndDatetime = cat.StartDatetime.AddSeconds((cd * timeavg)+timeavg),
+                        EndDatetime = cat.StartDatetime.AddSeconds((cd * timeavg) + timeavg),
                         TimeElapsed = timeavg,
                         View = true,
                         Like = new Random(cd).Next(0, 2) == 1,
                     };
                     context.CatalogDetailInteractions.Add(nt);
-                    
+
                 }
 
                 var gat = new AdvertCampaignDetailInteraction
@@ -516,18 +516,23 @@ namespace OMKT.Context
 
             var now = DateTime.Today;
             var specific = new DateTime(now.Year, now.Month, now.Day, 8, 0, 0, 0);
-            var open = 1 * 60 * 60;
-            for (int m = 0; m < open; m++)
+            var open = 8;
+            for (int d = 0; d < days; d++)
             {
-                var persons = new Random(m).Next(1,7);
-                var h = new Random(m).Next(0, 3);
-                var monitoring = new Monitoring
-                {   
-                    Average = persons,
-                    Timestamp = specific.AddSeconds(m),
-                    AdvertHost = hostsList[h]                    
-                };
-                context.Monitoring.Add(monitoring);
+                foreach (var host in hostsList)
+                {
+                    for (int m = 0; m < open; m++)
+                    {
+                        var persons = new Random(m).Next(3600, 7200);
+                        var monitoring = new Monitoring
+                        {
+                            Average = persons,
+                            Timestamp = specific.AddHours(m),
+                            AdvertHost = host
+                        };
+                        context.Monitoring.Add(monitoring);
+                    }
+                }
             }
             #endregion
 

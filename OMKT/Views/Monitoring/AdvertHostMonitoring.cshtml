@@ -8,7 +8,7 @@
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Hora', 'Personas'],
-          @foreach (var item in Model){ 
+          @foreach (var item in Model){
             @:[@item.Timestamp, @item.Average], 
           }
          ]);

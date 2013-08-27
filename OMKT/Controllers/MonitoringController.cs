@@ -93,11 +93,15 @@ namespace OMKT.Controllers
             return View(monitoring);
         }
 
-        public PartialViewResult AdvertHostMonitoring(int? hostId)
+        public PartialViewResult AdvertHostMonitoring(bool day = true, bool hours = true)
         {
-            if (!hostId.HasValue) hostId = 1;
             //var adverthosts = db.AdvertHosts.OrderByDescending(h => h.AdvertHostName).Include("AdvertHostCategory");
-            var monitoring = db.Monitoring.Where(c => c.AdvertHostID == hostId);
+            
+            var monitoring = (from m in db.Monitoring
+                              let dt = m.Timestamp
+                              // where dt.Year 
+                              group m by new { y = dt, m = dt.Month, d = dt.Day, h = dt.Hour } into g
+                              select new { total = g.Sum(c => c.Average) });
             return PartialView("AdvertHostMonitoring", monitoring);
         }
 
