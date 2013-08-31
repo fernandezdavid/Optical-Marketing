@@ -6,11 +6,12 @@
 }
 
 <h2>Monitoreo</h2>
-<div class="alert">
-A continuación te mostramos el flujo de personas obtenido por todos los puestos de difusión.
-</div>
+<p>
+A continuación te mostramos el flujo de personas arrojado por nuestra <a href="#">Red de Puntos de Difusión</a>.
+</p>
 <h4>Hoy</h4>
 <div class="span12">@{Html.RenderAction("AdvertHostMonitoring", "Monitoring");}</div>
+<div class="clear"></div>
 <h4>Última semana</h4>
-<div class="span12">@{Html.RenderAction("AdvertHostMonitoring", "Monitoring");}</div>
+<div class="span12">@{Html.RenderAction("AdvertHostMonitoringDaily", "Monitoring", new { top = 7 });}</div>
 

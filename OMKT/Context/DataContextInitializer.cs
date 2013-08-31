@@ -515,10 +515,11 @@ namespace OMKT.Context
             #region monitoring
 
             var now = DateTime.Today;
-            var specific = new DateTime(now.Year, now.Month, now.Day, 8, 0, 0, 0);
+            //var specific = new DateTime(now.Year, now.Month, now.Day, 8, 0, 0, 0);
             var open = 8;
             for (int d = 0; d < days; d++)
             {
+                var specific = new DateTime(now.Year, now.Month, now.Day, 8, 0, 0, 0).AddDays(-d);
                 foreach (var host in hostsList)
                 {
                     for (int m = 0; m < open; m++)
@@ -532,7 +533,7 @@ namespace OMKT.Context
                         };
                         context.Monitoring.Add(monitoring);
                     }
-                }
+                }                
             }
             #endregion
 
