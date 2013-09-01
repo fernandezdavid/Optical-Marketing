@@ -88,12 +88,14 @@ namespace OMKT.Controllers
 
         //
 
-        public PartialViewResult IndexAsMarkers(int? campaignLocation)
+        public ActionResult MapNetwork(int? campaignLocation)
         {
-            if (!campaignLocation.HasValue)
-                campaignLocation = 1;
+            return View();
+        }
+        public ActionResult Markers()
+        {
             var markers = db.AdvertHosts.Include(a => a.Location).Include(a => a.AdvertHostCategory);
-            return PartialView("Map", markers.ToList());
+            return View("Markers", markers);
         }
 
         //
