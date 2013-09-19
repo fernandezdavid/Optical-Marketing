@@ -9,10 +9,10 @@ namespace OMKT.Models
     {
         public int Impressions { get; set; }
 
-        public decimal LikesPercentage { get; set; }
+        public string LikesPercentage { get; set; }
 
-        public decimal TimeAverage { get; set; }
+        public string TimeAverage { get; set; }
 
-        public decimal Bounce { get; set; }
+        public string Bounce { get; set; }
     }
 }
