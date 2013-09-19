@@ -34,7 +34,7 @@ namespace OMKT.Controllers
             var advertCamp = _db.AdvertCampaigns.Include(c => c.AdvertCampaignDetails).Where(c => c.CustomerId == oUser.CustomerId);
             var interactions = new List<CampaignPerformance>();
             var inter = 0;
-            var likes = 0;
+            var likes = 0m;
             var bounce = 0;
             var elapsedTime = 0;
             var height = 0m;
@@ -48,11 +48,11 @@ namespace OMKT.Controllers
                         inter += _db.AdvertCampaignDetailInteractions
                                 .Where(c => c.AdvertID == campDetail.AdvertID && c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day)
                                 .Count();
-                        if (campDetail.Advert.AdvertTypeId == 1)
+                        if (campDetail.Advert.AdvertTypeId == 2)
                         {
                             likes += _db.CatalogDetailInteractions
                                     .Where(c => c.CatalogDetail.AdvertId == campDetail.AdvertID && c.Like == true && c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day)
-                                    .Count();                            
+                                    .Count();                                                        
                         }
                         
                         elapsedTime += (from c in _db.AdvertCampaignDetailInteractions
@@ -69,9 +69,9 @@ namespace OMKT.Controllers
 
             var oSummary = new SummaryBoard();
             oSummary.Impressions = inter;
-            oSummary.LikesPercentage = ((likes/inter)*100).ToString();
+            oSummary.LikesPercentage = decimal.Truncate(((likes / inter) * 100)).ToString();
             oSummary.TimeAverage = ((inter != 0) ? elapsedTime / inter : 0).ToString();
-            oSummary.Bounce = "13.9";
+            oSummary.Bounce = ;
             return PartialView("SummaryBoard", oSummary);
         }
 
