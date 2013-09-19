@@ -91,8 +91,8 @@ namespace OMKT.Context
                     Caption = "11Nova-Trx",
                     CreatedDate = DateTime.Now,
                     Extension = "png",
-                    ThumbnailPath = "~/Content/productImages/G65424_F_s4.png",
-                    Path = "~/Content/productImages/thumbnails/G65424_F_s4.png",//"~/Content/productImages/11Nova-Trx.png",
+                    Path = "~/Content/productImages/G65424_F_s4.png",
+                    ThumbnailPath = "~/Content/productImages/thumbnails/G65424_F_s4.png",//"~/Content/productImages/11Nova-Trx.png",
                     Size = "",
                     Title = "11Nova-Trx"
                 },
@@ -111,8 +111,8 @@ namespace OMKT.Context
                     Caption = "11Core-Trx",
                     CreatedDate = DateTime.Now,
                     Extension = "png",
-                    ThumbnailPath = "~/Content/productImages/Q23863_F_s4.png",
-                    Path = "~/Content/productImages/thumbnails/Q23863_F_s4.png",//"~/Content/productImages/11Core-Trx.png",
+                    Path = "~/Content/productImages/Q23863_F_s4.png",
+                    ThumbnailPath = "~/Content/productImages/thumbnails/Q23863_F_s4.png",//"~/Content/productImages/11Core-Trx.png",
                     Size = "",
                     Title = "11Core-Trx"
                 },
@@ -131,8 +131,8 @@ namespace OMKT.Context
                     Caption = "F10-Trx",
                     CreatedDate = DateTime.Now,
                     Extension = "png",
-                    ThumbnailPath = "~/Content/productImages/Q23870_F_s4.png",
-                    Path = "~/Content/productImages/thumbnails/Q23870_F_s4.png",//"~/Content/productImages/F10-Trx.png",
+                    Path = "~/Content/productImages/Q23870_F_s4.png",
+                    ThumbnailPath = "~/Content/productImages/thumbnails/Q23870_F_s4.png",//"~/Content/productImages/F10-Trx.png",
                     Size = "",
                     Title = "F10-Trx"
                 },
