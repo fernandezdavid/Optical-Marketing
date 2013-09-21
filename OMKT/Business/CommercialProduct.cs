@@ -24,6 +24,8 @@
 
         public int CustomerId { get; set; }
 
+        public string Status { get; set; }
+
         public virtual Customer Customer { get; set; }
     }
 }
