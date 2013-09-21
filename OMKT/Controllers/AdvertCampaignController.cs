@@ -291,18 +291,27 @@ namespace OMKT.Controllers
                         inter += _db.AdvertCampaignDetailInteractions
                                 .Where(c => c.AdvertID == campDetail.AdvertID && c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day)
                                 .Count();
-                        elapsedTime += (from c in _db.AdvertCampaignDetailInteractions
+                        var cresult = (from c in _db.AdvertCampaignDetailInteractions
                                      let dt = c.StartDatetime
                                      where c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day 
                                      && c.TimeElapsed.HasValue && c.AdvertID == campDetail.AdvertID
                                      group c by new { y = dt.Year, m = dt.Month, d = dt.Day } into g
-                                     select new { elapsed = g.Sum(c => c.TimeElapsed) }).First().elapsed ?? 0;
-                        height += (from h in _db.AdvertCampaignDetailInteractions
-                                   let ds = h.StartDatetime
-                                   where h.StartDatetime.Year == check_date.Year && h.StartDatetime.Month == check_date.Month && h.StartDatetime.Day == check_date.Day
-                                 && h.AdvertID == campDetail.AdvertID
-                                   group h by new { y = ds.Year, m = ds.Month, d = ds.Day } into a
-                                   select new { totalHeight = a.Sum(x => x.Height) }).First().totalHeight;                                    
+                                     select new { elapsed = g.Sum(c => c.TimeElapsed) }).FirstOrDefault();
+                        if (cresult != null)
+                        {
+                            elapsedTime += cresult.elapsed ?? 0;
+                        }
+
+                        var hresult = (from h in _db.AdvertCampaignDetailInteractions
+                                       let ds = h.StartDatetime
+                                       where h.StartDatetime.Year == check_date.Year && h.StartDatetime.Month == check_date.Month && h.StartDatetime.Day == check_date.Day
+                                     && h.AdvertID == campDetail.AdvertID
+                                       group h by new { y = ds.Year, m = ds.Month, d = ds.Day } into a
+                                       select new { totalHeight = a.Sum(x => x.Height) }).FirstOrDefault();
+                        if (hresult != null)
+                        {
+                            height += hresult.totalHeight;
+                        }
                     }
                     var oCP = new CampaignPerformance();
                     oCP.Month = i;
