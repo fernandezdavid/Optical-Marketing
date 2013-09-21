@@ -20,8 +20,9 @@ namespace OMKT.Business
 
         public DateTime? CreatedDate { get; set; }
 
-        public int AdvertStateId { get; set; }
+        public string Status { get; set; }
 
+        public int AdvertStateId { get; set; }
         public virtual AdvertState AdvertState { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace OMKT.Controllers
             ViewBag.AdvertId = id;
             var oGame = db.Games.Find(id);
             ViewBag.Game = oGame;
-            var oGameDetails = db.GameDetails.Include(i => i.Game).Where(i => i.AdvertId == id);
+            var oGameDetails = db.GameDetails.Include(i => i.Game).Where(i => i.AdvertId == id && i.Status == "OK");
             return PartialView("GameDetailPartialList", oGameDetails.ToList());
         }
 
@@ -30,7 +30,7 @@ namespace OMKT.Controllers
             var oGame = db.Games.FirstOrDefault(i => i.AdvertId == id);
             ViewBag.Game = oGame;
 
-            var oGameDetails = db.GameDetails.Include(i => i.Game).Where(i => i.AdvertId == id);
+            var oGameDetails = db.GameDetails.Include(i => i.Game).Where(i => i.AdvertId == id && i.Status == "OK");
             return PartialView("MemoryGamePartialList", oGameDetails.ToList());
 
         }
@@ -48,7 +48,8 @@ namespace OMKT.Controllers
 
         public ViewResult Details(int id)
         {
-            GameDetail gamedetail = db.GameDetails.Find(id);
+            var gamedetail = db.GameDetails.Where(g=>g.GameDetailId == id && g.Status == "OK").FirstOrDefault();
+            if (gamedetail == null) throw new HttpException(404, "The resource cannot be found");
             return View(gamedetail);
         }
 
@@ -87,21 +88,36 @@ namespace OMKT.Controllers
                     try
                     {
                         db.SaveChanges();
+                        ViewBag.Success = "El producto fue agregado exitosamente";   
                     }
                     catch (Exception)
                     {
-
-                        //OTOD
+                        ViewBag.Error = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud";                        
                     }
+                }else if(check.Status == "DELETED"){
+                    check.LastUpdate = DateTime.Now;
+                    check.Status = "OK";
+                    check.Discount = gamedetail.Discount;
+                    check.QRCode = gamedetail.QRCode;
+                    db.Entry(check).State = EntityState.Modified;
+                    try
+                    {
+                        db.SaveChanges();
+                        ViewBag.Success = "El producto fue restaurado exitosamente";
+                    }
+                    catch (Exception)
+                    {
+                        ViewBag.Error = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud";
+                    }  
                 }
                 else
                 {
-                    //TODO
+                    ViewBag.Error = "Parece que este producto ya fue agregado!";   
                 }
                 var oGame = db.Games.Find(gamedetail.AdvertId);
                 ViewBag.Game = oGame;
 
-                return PartialView("GameDetailPartialList", db.GameDetails.Where(cd => cd.AdvertId == gamedetail.AdvertId).Include(i => i.CommercialProduct));
+                return PartialView("GameDetailPartialList", db.GameDetails.Where(cd => cd.AdvertId == gamedetail.AdvertId && cd.Status == "OK").Include(i => i.CommercialProduct));
             }
             return PartialView("Create", gamedetail);
         }
@@ -111,8 +127,9 @@ namespace OMKT.Controllers
 
         public ActionResult Edit(int id)
         {
-            GameDetail gamedetail = db.GameDetails.Find(id);
-            ViewBag.CommercialProductId = new SelectList(db.CommercialProducts, "CommercialProductId", "ProductName", gamedetail.CommercialProductId);
+            var gamedetail = db.GameDetails.FirstOrDefault(g=>g.GameDetailId == id && g.Status == "OK");
+            if (gamedetail == null) throw new HttpException(404, "The resource cannot be found");
+            ViewBag.CommercialProductId = new SelectList(db.CommercialProducts.Where(c=>c.Status == "OK"), "CommercialProductId", "ProductName", gamedetail.CommercialProductId);
             return PartialView(gamedetail);
         }
 
@@ -132,12 +149,13 @@ namespace OMKT.Controllers
                 try
                 {
                     db.SaveChanges();
+                    ViewBag.Success = "El producto fue editado exitosamente"; 
                 }
                 catch (Exception)
                 {
-                    //TODO                        
+                    ViewBag.Error = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud";                      
                 }
-                return PartialView("GameDetailPartialList", db.GameDetails.Where(cd => cd.AdvertId == gamedetail.AdvertId).Include(i => i.CommercialProduct).ToList());
+                return PartialView("GameDetailPartialList", db.GameDetails.Where(cd => cd.AdvertId == gamedetail.AdvertId && cd.Status =="OK").Include(i => i.CommercialProduct).ToList());
             }
             return PartialView("Edit", gamedetail);
         }
@@ -147,7 +165,8 @@ namespace OMKT.Controllers
 
         public ActionResult Delete(int id)
         {
-            GameDetail gamedetail = db.GameDetails.Find(id);
+            var gamedetail = db.GameDetails.FirstOrDefault(g=>g.GameDetailId == id && g.Status == "OK");
+            if (gamedetail == null) throw new HttpException(404, "The resource cannot be found");
             return PartialView(gamedetail);
         }
 
@@ -160,18 +179,21 @@ namespace OMKT.Controllers
             GameDetail gamedetail = db.GameDetails.Find(id);
             if (gamedetail != null)
             {
-                db.GameDetails.Remove(gamedetail);
+                gamedetail.Status = "DELETED";
+                gamedetail.LastUpdate = DateTime.Now;
+                db.Entry(gamedetail).State = EntityState.Modified;
                 try
                 {
+                    ViewBag.Success = "El producto fue quitado exitosamente!";
                     db.SaveChanges();
                 }
                 catch (Exception)
                 {
-                    //foreign key conflict with GameDetailinteractions
-                }
-                return PartialView("GameDetailPartialList", db.GameDetails.Where(cd => cd.AdvertId == gamedetail.AdvertId).Include(i => i.CommercialProduct));
+                    ViewBag.Error = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud.";                    
+                }                
             }
-            return Content("El registro no fue encontrado.");
+            else { ViewBag.Error = "Lo sentimos, no pudimos encontrar el detalle."; }
+            return PartialView("GameDetailPartialList", db.GameDetails.Where(cd => cd.AdvertId == gamedetail.AdvertId && cd.Status == "OK").Include(i => i.CommercialProduct));
         }
 
         protected override void Dispose(bool disposing)
