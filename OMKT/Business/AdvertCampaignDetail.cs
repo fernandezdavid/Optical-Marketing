@@ -20,6 +20,10 @@ namespace OMKT.Business
         public int AdvertID { get; set; }
 
         public virtual Advert Advert { get; set; }
+
+        public string Status { get; set; }
+
+        public DateTime? LastUpdate { get; set; }
        
         public ICollection<Interaction> Interactions { get; set; }
 

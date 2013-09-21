@@ -1,9 +1,6 @@
 ﻿@model IEnumerable<OMKT.Business.AdvertCampaignDetail>
 
-@{
-    ViewBag.Title = "Index";
-}
-
+@{Html.RenderPartial("DisplayMessages");}
 <table id="example" class="table table-striped table-bordered">
     <thead>
         <th>
@@ -18,6 +15,7 @@
         </th>
        <th></th>
     </thead>
+    <tbody>
 
 @foreach (var item in Model)
 {
@@ -44,5 +42,5 @@
         </td>
     </tr>
 }
-
+</tbody>
 </table>
