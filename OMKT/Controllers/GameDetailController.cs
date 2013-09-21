@@ -84,6 +84,7 @@ namespace OMKT.Controllers
                 if (check == null)
                 {
                     gamedetail.CreatedDate = DateTime.Now;
+                    gamedetail.Status = "OK";
                     db.GameDetails.Add(gamedetail);
                     try
                     {

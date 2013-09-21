@@ -1,4 +1,5 @@
-﻿namespace OMKT.Business
+﻿using System;
+namespace OMKT.Business
 {
     public class CommercialProduct
     {
@@ -27,5 +28,7 @@
         public string Status { get; set; }
 
         public virtual Customer Customer { get; set; }
+
+        public DateTime? LastUpdate { get; set; }
     }
 }

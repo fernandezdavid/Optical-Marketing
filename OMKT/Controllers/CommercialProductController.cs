@@ -23,7 +23,7 @@ namespace OMKT.Controllers
         {
             if (!top.HasValue) top = 10;
             var oUser = (User)Session["User"];
-            var catalogs = _db.CommercialProducts.Where(c => c.CustomerId == oUser.CustomerId).OrderByDescending(i => i.ProductName).Take(top.Value);
+            var catalogs = _db.CommercialProducts.Where(c => c.CustomerId == oUser.CustomerId && c.Status == "OK").OrderByDescending(i => i.ProductName).Take(top.Value);
             return PartialView("CommercialProductListPartial", catalogs.ToList());
         }
 
@@ -31,7 +31,7 @@ namespace OMKT.Controllers
         {
             if (!top.HasValue) top = 10;
             var oUser = (User)Session["User"];
-            var catalogs = _db.CommercialProducts.Where(c => c.CustomerId == oUser.CustomerId).OrderByDescending(i => i.ProductName).Take(top.Value);
+            var catalogs = _db.CommercialProducts.Where(c => c.CustomerId == oUser.CustomerId && c.Status == "OK").OrderByDescending(i => i.ProductName).Take(top.Value);
             return PartialView("CommercialProductListSlimPartial", catalogs.ToList());
         }
 
@@ -46,7 +46,8 @@ namespace OMKT.Controllers
 
         public ViewResult Details(int id)
         {
-            CommercialProduct commercialproduct = _db.CommercialProducts.Find(id);
+            var commercialproduct = _db.CommercialProducts.FirstOrDefault(c => c.CommercialProductId == id && c.Status == "OK");
+            if (commercialproduct == null) throw new HttpException(404, "The resource cannot be found");
             return View(commercialproduct);
         }
 
@@ -105,10 +106,12 @@ namespace OMKT.Controllers
                         commercialProduct.CustomerId = oUser.CustomerId;
                         commercialProduct.CommercialProductType = prodType;
                         commercialProduct.ProductImage = img;
+                        commercialProduct.Status = "OK";
                         _db.CommercialProducts.Add(commercialProduct);
                         try
                         {
                             _db.SaveChanges();
+                            ViewBag.Success = "El product fue agregado exitosamente!";
                             return RedirectToAction("Edit", new { id = commercialProduct.CommercialProductId });
                         }
                         catch (Exception)
@@ -117,8 +120,7 @@ namespace OMKT.Controllers
                             return View(commercialProduct);
                         }
                     }
-                    else
-                        return RedirectToAction("LogOff", "Account");
+                    else return RedirectToAction("LogOff", "Account");
                 }
             }
             return View(commercialProduct);
@@ -129,7 +131,8 @@ namespace OMKT.Controllers
 
         public ActionResult Edit(int id)
         {
-            CommercialProduct commercialproduct = _db.CommercialProducts.Find(id);
+            var commercialproduct = _db.CommercialProducts.FirstOrDefault(c => c.CommercialProductId == id && c.Status == "OK");
+            if (commercialproduct == null) throw new HttpException(404, "The resource cannot be found");
             ViewBag.CommercialProductTypeId = new SelectList(_db.CommercialProductTypes, "CommercialProductTypeId", "Description", commercialproduct.CommercialProductTypeId);
             commercialproduct.Price = Convert.ToInt16(commercialproduct.Price);
             return View(commercialproduct);
@@ -179,7 +182,7 @@ namespace OMKT.Controllers
                 try
                 {
                     _db.SaveChanges();
-                    ViewBag.Success = "El producto fue editado satisfactoriamente.";
+                    ViewBag.Success = "El producto fue editado exitosamente!";
                 }
                 catch (Exception)
                 {
@@ -195,7 +198,8 @@ namespace OMKT.Controllers
 
         public ActionResult Delete(int id)
         {
-            CommercialProduct commercialproduct = _db.CommercialProducts.Find(id);
+            var commercialproduct = _db.CommercialProducts.FirstOrDefault(c => c.CommercialProductId == id && c.Status == "OK");
+            if (commercialproduct == null) throw new HttpException(404, "The resource cannot be found");
             return PartialView(commercialproduct);
         }
 
@@ -205,18 +209,24 @@ namespace OMKT.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            CommercialProduct commercialproduct = _db.CommercialProducts.Find(id);
-            _db.CommercialProducts.Remove(commercialproduct);
-            try
+            var commercialproduct = _db.CommercialProducts.FirstOrDefault(c => c.CommercialProductId == id && c.Status == "OK");
+            if (commercialproduct != null)
             {
-                _db.SaveChanges();
+                commercialproduct.Status = "DELETED";
+                commercialproduct.LastUpdate = DateTime.Now;
+                _db.Entry(commercialproduct).State = EntityState.Modified;
+                try
+                {
+                    ViewBag.Success = "El producto fue quitado exitosamente!";
+                    _db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    ViewBag.Error = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud.";
+                }
             }
-            catch (Exception)
-            {
-                //@TODO
-            }
-            
-            return Json(new { });
+            else { ViewBag.Error = "Lo sentimos, no pudimos encontrar el producto"; }
+            return RedirectToAction("ActiveProducts");
         }
 
         public ActionResult CommercialProductsOverview()
