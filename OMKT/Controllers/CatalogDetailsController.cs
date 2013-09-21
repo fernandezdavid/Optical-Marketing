@@ -97,6 +97,7 @@ namespace OMKT.Controllers
                 if (check == null)
                 {
                     catalogdetail.CreatedDate = DateTime.Now;
+                    catalogdetail.Status = "OK";
                     _db.CatalogDetails.Add(catalogdetail);
                     try
                     {
