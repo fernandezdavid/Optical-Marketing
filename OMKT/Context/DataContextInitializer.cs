@@ -46,6 +46,7 @@ namespace OMKT.Context
                 Description = "Los depredadores han nacido para ser letales, y estos adidas Predator Absolado TRX LZ FG tienen cinco zonas letales para la maestría técnica en campos de tierra firme. También tienen una ligera amortiguación superior y EVA.",
                 Price = 300,
                 Stock = 500,
+                Status = "OK",
                 ProductImage = new ProductImage
                 {
                     Caption = "Predator-Absolado",
@@ -66,6 +67,7 @@ namespace OMKT.Context
                 Description = "Éstos F30 Trx cuentan con una alta densidad de tres capas superiores de excelente tacto al balón, SprintWeb para cortes rápidos y suela exterior TRAXION ® 2.0 FG para un mejor agarre.",
                 Price = 300,
                 Stock = 500,
+                Status = "OK",
                 ProductImage = new ProductImage
                 {
                     Caption = "F30-Trx",
@@ -86,6 +88,7 @@ namespace OMKT.Context
                 Description = "Éstos adidas 11Nova TRX TF cuentan con una correa de cuero con recubrimiento superior, para un ajuste glovelike, tacto del balón superior y suela TRAXION ® TF para agarre en canchas de césped.",
                 Price = 300,
                 Stock = 500,
+                Status = "OK",
                 ProductImage = new ProductImage
                 {
                     Caption = "11Nova-Trx",
@@ -106,6 +109,7 @@ namespace OMKT.Context
                 Description = "Si eres una presencia explosiva en el campo de fútbol, éstos adidas 11Core Trx llevan tus habilidades al centro de atención. Poseen un cuero superior con una buena flexibilidad y suela TRAXION ® FG para la velocidad en campos de tierra firme.",
                 Price = 300,
                 Stock = 500,
+                Status = "OK",
                 ProductImage = new ProductImage
                 {
                     Caption = "11Core-Trx",
@@ -126,6 +130,7 @@ namespace OMKT.Context
                 Description = "Elaborados con un cuero sintético ligero superior, éstos adidas F10 Trx Tf cuentan con amortiguación EVA, adiPRENE ® apoyo del talón y una suela TRAXION ™ TF para un mejor agarre y velocidad en el campo.",
                 Price = 300,
                 Stock = 500,
+                Status = "OK",
                 ProductImage = new ProductImage
                 {
                     Caption = "F10-Trx",
@@ -185,6 +190,8 @@ namespace OMKT.Context
             #region states
             var estado = new AdvertState { Description = "Activo" };
             context.AdvertStates.Add(estado);
+            var estado2 = new AdvertState { Description = "Eliminado" };
+            context.AdvertStates.Add(estado2);
             #endregion
 
             #region game
@@ -197,6 +204,7 @@ namespace OMKT.Context
             game.AdvertStateId = game.AdvertState.AdvertstateId;
             game.AdvertType = new AdvertType { Description = "Juego Interactivo" };
             game.AdvertTypeId = game.AdvertType.AdvertTypeId;
+            game.Status = "OK";
             var counter = 0;
             var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             foreach (var prod in products)
@@ -215,6 +223,7 @@ namespace OMKT.Context
                     LastUpdate = DateTime.Now,
                     Discount = new Random(counter).Next(10, 20),
                     QRCode = result,
+                    Status = "OK"
                 });
                 counter++;
             }
@@ -235,6 +244,7 @@ namespace OMKT.Context
             catalog.AdvertType = new AdvertType { Description = "Catálogo" };
             catalog.AdvertTypeId = catalog.AdvertType.AdvertTypeId;
             catalog.SortType = methods[new Random().Next(0, 4)];
+            catalog.Status = "OK";
             var gchars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             for (int id = 0; id < products.Count; id++)
             {
@@ -249,12 +259,13 @@ namespace OMKT.Context
                     Catalog = catalog,
                     AdvertId = catalog.AdvertId,
                     CommercialProduct = products[id],
-                    Position = id,
+                    Position = id+1,
                     CreatedDate = catalog.CreatedDate,
                     LastUpdate = DateTime.Now,
                     Link = "http://www.adidas.com.ar/catalogue/football/collection-f50/",
                     QRCode = result,
-                    Discount = discount
+                    Discount = discount,
+                    Status = "OK"
                 });
             }
             foreach (var prod in products)
@@ -277,6 +288,7 @@ namespace OMKT.Context
             video.AdvertStateId = video.AdvertState.AdvertstateId;
             video.AdvertType = new AdvertType { Description = "Video" };
             video.AdvertTypeId = video.AdvertType.AdvertTypeId;
+            video.Status = "OK";
             video.ProductImage = new ProductImage
                 {
                     Caption = "Adidas is All In",
