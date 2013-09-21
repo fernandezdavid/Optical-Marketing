@@ -98,11 +98,12 @@
                 error: function (err) {
                     writeError('msgErrorNewAdvertCampaignDetail', err);
                 }
-            }); 
+            });
             return false;
         });
 
-        $('#advertCampaignDetailList').on('click', '.deleteAdvertCampaignDetail', function () {
+        $('#advertCampaignDetailList').on('click', '.deleteAdvertCampaignDetail', function (event) {
+            event.preventDefault();
             clearErrors();
             var id = $(this).attr("idAdvertCampaignDetail");
             var url = '@Url.Content("~/AdvertCampaignDetail/Delete")/' + id;
@@ -111,16 +112,16 @@
                 context: document.body,
                 success: function (data) {
                     $('.modal-body p.body').html(data);
-                    $(this).addClass("done");
                     $('.modal-footer input.action-modal').attr('value', 'Borrar');
                     $('.modal-footer input.action-modal').attr('form', 'del-detail');
                     $('.modal-header h3').text('Quitar Detalle');
+                    $(this).addClass("done");
                     $('#campaign-modal').modal('show');
                 },
                 error: function (err) {
                     writeError('msgErrorNewAdvertCampaignDetail', err);
                 }
-            }); 
+            });
             return false;
         });
 
@@ -142,7 +143,7 @@
                 error: function (err) {
                     writeError('msgErrorNewAdvertCampaignDetail', err);
                 }
-            }); 
+            });
             return false;
         });
     }); 

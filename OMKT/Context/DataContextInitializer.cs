@@ -259,7 +259,7 @@ namespace OMKT.Context
                     Catalog = catalog,
                     AdvertId = catalog.AdvertId,
                     CommercialProduct = products[id],
-                    Position = id+1,
+                    Position = id + 1,
                     CreatedDate = catalog.CreatedDate,
                     LastUpdate = DateTime.Now,
                     Link = "http://www.adidas.com.ar/catalogue/football/collection-f50/",
@@ -413,20 +413,23 @@ namespace OMKT.Context
                 {
                     Advert = catalog,
                     StartDate = campaign.StartDatetime,
-                    EndDate = campaign.EndDatetime
+                    EndDate = campaign.EndDatetime,
+                    Status = "OK"
                 });
             campaign.AdvertCampaignDetails.Add(new AdvertCampaignDetail
                 {
                     Advert = game,
                     StartDate = campaign.StartDatetime,
-                    EndDate = campaign.EndDatetime
+                    EndDate = campaign.EndDatetime,
+                    Status = "OK"
                 });
             campaign.AdvertCampaignDetails.Add(new AdvertCampaignDetail
-            {
-                Advert = video,
-                StartDate = campaign.StartDatetime,
-                EndDate = campaign.EndDatetime
-            });
+                {
+                    Advert = video,
+                    StartDate = campaign.StartDatetime,
+                    EndDate = campaign.EndDatetime,
+                    Status = "OK"
+                });
 
             context.AdvertCampaigns.Add(campaign);
 
@@ -545,7 +548,7 @@ namespace OMKT.Context
                         };
                         context.Monitoring.Add(monitoring);
                     }
-                }                
+                }
             }
             #endregion
 

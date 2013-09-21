@@ -58,7 +58,7 @@ namespace OMKT.Controllers
 
         public ViewResult Details(int id)
         {
-            var catalogdetail = _db.CatalogDetails.Where(i=>i.CatalogDetailId == id && i.Status == "OK").FirstOrDefault();
+            var catalogdetail = _db.CatalogDetails.Where(i => i.CatalogDetailId == id && i.Status == "OK").FirstOrDefault();
             if (catalogdetail == null) throw new HttpException(404, "The resource cannot be found");
             return View(catalogdetail);
         }
@@ -79,7 +79,7 @@ namespace OMKT.Controllers
                 if (oCatalog != null)
                 {
                     oDetail = new CatalogDetail { AdvertId = id.Value, Catalog = oCatalog, Position = pos };
-                }                
+                }
             }
             return PartialView("Create", oDetail);
         }
@@ -102,13 +102,14 @@ namespace OMKT.Controllers
                     try
                     {
                         _db.SaveChanges();
-                        ViewBag.Success = "El producto fue agregado exitosamente";   
+                        ViewBag.Success = "El producto fue agregado exitosamente";
                     }
                     catch (Exception)
                     {
-                        ViewBag.Error = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud";                        
+                        ViewBag.Error = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud";
                     }
-                }else if(check.Status == "DELETED")
+                }
+                else if (check.Status == "DELETED")
                 {
                     check.LastUpdate = DateTime.Now;
                     check.Status = "OK";
@@ -119,16 +120,16 @@ namespace OMKT.Controllers
                     try
                     {
                         _db.SaveChanges();
-                        ViewBag.Success = "El producto fue restaurado exitosamente";   
+                        ViewBag.Success = "El producto fue restaurado exitosamente";
                     }
                     catch (Exception)
                     {
                         ViewBag.Error = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud";
-                    }                
+                    }
                 }
                 else
                 {
-                    ViewBag.Error = "Parece que este producto ya fue agregado!";   
+                    ViewBag.Error = "Parece que este producto ya fue agregado!";
                 }
                 var oCatalog = _db.Catalogs.Find(catalogdetail.AdvertId);
                 ViewBag.Catalog = oCatalog;
@@ -142,9 +143,9 @@ namespace OMKT.Controllers
 
         public ActionResult Edit(int id)
         {
-            var catalogdetail = _db.CatalogDetails.Where(i=>i.CatalogDetailId == id && i.Status == "OK").FirstOrDefault();
+            var catalogdetail = _db.CatalogDetails.Where(i => i.CatalogDetailId == id && i.Status == "OK").FirstOrDefault();
             if (catalogdetail == null) throw new HttpException(404, "The resource cannot be found");
-            ViewBag.CommercialProductId = new SelectList(_db.CommercialProducts.Where(c=>c.Status == "OK"), "CommercialProductId", "ProductName", catalogdetail.CommercialProductId);
+            ViewBag.CommercialProductId = new SelectList(_db.CommercialProducts.Where(c => c.Status == "OK"), "CommercialProductId", "ProductName", catalogdetail.CommercialProductId);
             return PartialView(catalogdetail);
         }
 
@@ -158,13 +159,13 @@ namespace OMKT.Controllers
             if (ModelState.IsValid)
             {
                 var oCatalog = _db.Catalogs.Find(catalogdetail.AdvertId);
-                catalogdetail.LastUpdate = DateTime.Now;
-                _db.Entry(catalogdetail).State = EntityState.Modified;
                 ViewBag.Catalog = oCatalog;
+                catalogdetail.LastUpdate = DateTime.Now;
+                _db.Entry(catalogdetail).State = EntityState.Modified;                
                 try
                 {
                     _db.SaveChanges();
-                    ViewBag.Success = "El producto fue editado exitosamente"; 
+                    ViewBag.Success = "El producto fue editado exitosamente";
                 }
                 catch (Exception)
                 {
@@ -181,8 +182,8 @@ namespace OMKT.Controllers
 
         public ActionResult Delete(int id)
         {
-            var catalogdetail = _db.CatalogDetails.FirstOrDefault(c=>c.CatalogDetailId == id && c.Status == "OK");
-            if (catalogdetail== null) throw new HttpException(404, "The resource cannot be found");
+            var catalogdetail = _db.CatalogDetails.FirstOrDefault(c => c.CatalogDetailId == id && c.Status == "OK");
+            if (catalogdetail == null) throw new HttpException(404, "The resource cannot be found");
             return PartialView(catalogdetail);
         }
 
@@ -192,7 +193,7 @@ namespace OMKT.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            var catalogdetail = _db.CatalogDetails.FirstOrDefault(c=>c.CatalogDetailId == id && c.Status=="OK");
+            var catalogdetail = _db.CatalogDetails.FirstOrDefault(c => c.CatalogDetailId == id && c.Status == "OK");
             if (catalogdetail != null)
             {
                 catalogdetail.Status = "DELETED";
@@ -205,12 +206,12 @@ namespace OMKT.Controllers
                 }
                 catch (Exception)
                 {
-                    ViewBag.Error = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud.";                    
+                    ViewBag.Error = "Lo sentimos, ocurrió un error mientras se procesaba la solicitud.";
                 }
 
             }
             else { ViewBag.Error = "Lo sentimos, no pudimos encontrar el detalle."; }
-            return PartialView("CatalogDetailsPartialList", _db.CatalogDetails.Where(cd => cd.AdvertId == catalogdetail.AdvertId && cd.Status == "OK").Include(i => i.CommercialProduct));
+            return PartialView("CatalogDetailsPartialList", _db.CatalogDetails.Include(i => i.Catalog).Where(i => i.AdvertId == catalogdetail.AdvertId && i.Status == "OK"));            
         }
 
         protected override void Dispose(bool disposing)
