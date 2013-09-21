@@ -34,8 +34,8 @@ namespace OMKT.Controllers
             var advertCamp = _db.AdvertCampaigns.Include(c => c.AdvertCampaignDetails).Where(c => c.CustomerId == oUser.CustomerId);
             var interactions = new List<CampaignPerformance>();
             var inter = 0;
-            var likes = 0;
-            var bounce = 0;
+            var likes = 0m;
+            var bounce = 0m;
             var elapsedTime = 0;
             var height = 0m;
             for (int i = 0; i < interval; i++)
@@ -48,19 +48,31 @@ namespace OMKT.Controllers
                         inter += _db.AdvertCampaignDetailInteractions
                                 .Where(c => c.AdvertID == campDetail.AdvertID && c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day)
                                 .Count();
-                        if (campDetail.Advert.AdvertTypeId == 1)
+                        
+                        if (campDetail.Advert.AdvertTypeId == 2)
                         {
                             likes += _db.CatalogDetailInteractions
                                     .Where(c => c.CatalogDetail.AdvertId == campDetail.AdvertID && c.Like == true && c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day)
-                                    .Count();                            
+                                    .Count();
+                            var views = _db.CatalogDetailInteractions
+                                    .Where(c => c.CatalogDetail.AdvertId == campDetail.AdvertID && c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day)
+                                    .Count();
+                            var countDetails = _db.CatalogDetails.Where(ca => ca.AdvertId == campDetail.AdvertID).Count();
+                            bounce += views / countDetails;
+
                         }
                         
-                        elapsedTime += (from c in _db.AdvertCampaignDetailInteractions
+                        var result = (from c in _db.AdvertCampaignDetailInteractions
                                         let dt = c.StartDatetime
                                         where c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day
                                         && c.TimeElapsed.HasValue && c.AdvertID == campDetail.AdvertID
                                         group c by new { y = dt.Year, m = dt.Month, d = dt.Day } into g
-                                        select new { elapsed = g.Sum(c => c.TimeElapsed) }).First().elapsed ?? 0;
+                                        select new { elapsed = g.Sum(c => c.TimeElapsed) }).FirstOrDefault();
+                        if (result != null)
+                        {
+                            elapsedTime += result.elapsed ?? 0;
+                        }
+                            
                     }
 
                 }
@@ -69,9 +81,9 @@ namespace OMKT.Controllers
 
             var oSummary = new SummaryBoard();
             oSummary.Impressions = inter;
-            oSummary.LikesPercentage = ((likes/inter)*100).ToString();
+            oSummary.LikesPercentage = decimal.Truncate(((likes / inter) * 100)).ToString();
             oSummary.TimeAverage = ((inter != 0) ? elapsedTime / inter : 0).ToString();
-            oSummary.Bounce = "13.9";
+            oSummary.Bounce = ((1 - bounce) * 100).ToString();
             return PartialView("SummaryBoard", oSummary);
         }
 
