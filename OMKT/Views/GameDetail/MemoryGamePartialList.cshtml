@@ -1,18 +1,13 @@
 ﻿@model IEnumerable<OMKT.Business.GameDetail>
-<ul class="thumbnails">
 @foreach (var item in Model)
 {
-   <li class="span3">
-    <a href="@Url.Action("Edit", "CommercialProduct", new { id = item.CommercialProductId})" target="_blank" class="thumbnail">
-      <img data-src="holder.js/300x200" alt="" src="@item.CommercialProduct.ProductImage.Path">
-    </a>
-   </li>
-    <li class="span3">
-    <a href="@Url.Action("Edit", "CommercialProduct", new { id = item.CommercialProductId })" class="thumbnail">
-      <img data-src="holder.js/300x200" alt="" src="@item.CommercialProduct.ProductImage.Path">
-    </a>
-   </li>
-    
-}         
+    <ul class="thumbnails">
+        <li class="span3"><a href="@Url.Action("Edit", "CommercialProduct", new { id = item.CommercialProductId })" target="_blank" class="thumbnail">
+            <img data-src="holder.js/300x200" alt="" src="@Url.Content(item.CommercialProduct.ProductImage.Path)">
+        </a></li>
+        <li class="span3"><a href="@Url.Action("Edit", "CommercialProduct", new { id = item.CommercialProductId })" class="thumbnail">
+            <img data-src="holder.js/300x200" alt="" src="@Url.Content(item.CommercialProduct.ProductImage.Path)">
+        </a></li>
+    </ul>
 
-</ul>
+}
