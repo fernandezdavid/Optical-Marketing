@@ -52,7 +52,7 @@ namespace OMKT.Context
                     Caption = "Predator-Absolado",
                     CreatedDate = DateTime.Now,
                     Extension = "png",
-                    Path = "~/Content/productImages/G64929_F_s4.png",//"~/Content/productImages/Predator-Absolado.png",
+                    Path = "~/Content/productImages/G64929_F_s4.png",
                     ThumbnailPath = "~/Content/productImages/thumbnails/G64929_F_s4.png",
                     Size = "",
                     Title = "Predator-Absolado"

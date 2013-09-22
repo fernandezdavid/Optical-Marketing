@@ -11,7 +11,7 @@
        foreach (var item in Model)
         {
             <div class="item @((count==0) ? "active" : "")">
-                <img src="@item.CommercialProduct.ProductImage.Path" alt="">
+                <img src="@Url.Content(item.CommercialProduct.ProductImage.Path)" alt="@item.CommercialProduct.ProductImage.Title">
                 <div class="carousel-caption">
                     <h4>@item.CommercialProduct.ProductName</h4>
                     <p>@item.CommercialProduct.Description</p>
