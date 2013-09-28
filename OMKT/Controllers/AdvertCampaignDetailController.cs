@@ -9,12 +9,24 @@ using System.Web;
 
 namespace OMKT.Controllers
 {
+    /**
+     * Manejador de las vistas del detalle de una Campaña
+     */
+
     [Authorize]
     public class AdvertCampaignDetailController : Controller
     {
         private OMKTDB _db = new OMKTDB();
 
-        //
+        /**
+         * Lista el detalle de una campaña en base al identificador de la misma
+         * ordenado por fecha
+         * 
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de detalle de campaña
+         */
+
         public PartialViewResult IndexByCampaign(int id)
         {
             ViewBag.AdvertCampaignId = id;
@@ -24,7 +36,13 @@ namespace OMKT.Controllers
             return PartialView("Index", oAdvertCampaignDetails.ToList());
         }
 
-        // GET: /AdvertCampaignDetail/
+        /**
+         * Vista de detalle de una campaña
+         *
+         * @since 04/04/2013
+         * @param int top
+         * @return Vista de detalles de campaña
+         */
 
         public ViewResult Index()
         {
@@ -33,8 +51,13 @@ namespace OMKT.Controllers
             return View(advertcampaigndetails.ToList());
         }
 
-        //
-        // GET: /AdvertCampaignDetail/Details/5
+        /**
+         * Vista de detalle de detalle de una campaña
+         *
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de detalle de detalle de campaña
+         */
 
         public ViewResult Details(int id)
         {
@@ -43,8 +66,13 @@ namespace OMKT.Controllers
             return View(advertcampaigndetail);
         }
 
-        //
-        // GET: /AdvertCampaignDetail/Create
+        /**
+         * Vista de creación de detalle de campaña
+         *
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de creación de detalle de campaña
+         */
 
         public ActionResult Create(int? id)
         {
@@ -59,8 +87,13 @@ namespace OMKT.Controllers
             return PartialView("Create", oDetail);
         }
 
-        //
-        // POST: /AdvertCampaignDetail/Create
+        /**
+        * Crea un detalle de campaña
+        *
+        * @since 04/04/2013
+        * @param Modelo Detalle de Campaña
+        * @return Vista de edición de detalle de campaña
+        */
 
         [HttpPost]
         public ActionResult Create(AdvertCampaignDetail advertcampaigndetail)
@@ -112,8 +145,13 @@ namespace OMKT.Controllers
             return PartialView("Create", advertcampaigndetail);
         }
 
-        //
-        // GET: /AdvertCampaignDetail/Edit/5
+        /**
+         * Vista de edición de detalle de campaña
+         *
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de edición de campaña
+         */
 
         public ActionResult Edit(int id)
         {
@@ -123,8 +161,13 @@ namespace OMKT.Controllers
             return PartialView(advertcampaigndetail);
         }
 
-        //
-        // POST: /AdvertCampaignDetail/Edit/5
+        /**
+        * Edita un detalle de campaña
+        *
+        * @since 04/04/2013
+        * @param Modelo Detalle de Campaña
+        * @return Vista de edición de detalle de campaña
+        */
 
         [HttpPost]
         public ActionResult Edit(AdvertCampaignDetail advertcampaigndetail)
@@ -151,8 +194,13 @@ namespace OMKT.Controllers
             return PartialView("Edit", advertcampaigndetail);
         }
 
-        //
-        // GET: /AdvertCampaignDetail/Delete/5
+        /**
+        * Vista de borrado lógico de detalle de campaña
+        *
+        * @since 04/04/2013
+        * @param int id
+        * @return Vista de borrado de detalle de campaña
+        */
 
         public ActionResult Delete(int id)
         {
@@ -161,8 +209,13 @@ namespace OMKT.Controllers
             return PartialView(advertcampaigndetail);
         }
 
-        //
-        // POST: /AdvertCampaignDetail/Delete/5
+        /**
+       * Borra lógicamente un detalle de campaña
+       *
+       * @since 04/04/2013
+       * @param int id
+       * @return Mensaje de confirmación
+       */
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
@@ -184,7 +237,7 @@ namespace OMKT.Controllers
                 }
             }
             else { ViewBag.Error = "Lo sentimos, no pudimos encontrar el detalle."; }
-            return PartialView("Index", _db.AdvertCampaignDetails.Where(cd => cd.AdvertCampaignId == advertcampaigndetail.AdvertCampaignId && cd.Status == "OK").Include(i => i.AdvertCampaign));            
+            return PartialView("Index", _db.AdvertCampaignDetails.Where(cd => cd.AdvertCampaignId == advertcampaigndetail.AdvertCampaignId && cd.Status == "OK").Include(i => i.AdvertCampaign));
         }
 
         protected override void Dispose(bool disposing)
