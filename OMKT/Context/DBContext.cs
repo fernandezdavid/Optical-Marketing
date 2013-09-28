@@ -9,8 +9,6 @@ namespace OMKT.Context
     {
         //Initilize the database context   
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<Invoice> Invoices { get; set; }
-        public DbSet<InvoiceDetails> InvoiceDetails { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<AdvertCampaign> AdvertCampaigns { get; set; }
         public DbSet<AdvertCampaignDetail> AdvertCampaignDetails { get; set; }
