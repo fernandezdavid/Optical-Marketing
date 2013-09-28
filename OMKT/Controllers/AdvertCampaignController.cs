@@ -11,6 +11,10 @@ using System.Data.Objects;
 
 namespace OMKT.Controllers
 {
+    /**
+     * Manejador de las vistas de la Campaña
+     */
+
     [Authorize]
     public class AdvertCampaignController : Controller
     {
