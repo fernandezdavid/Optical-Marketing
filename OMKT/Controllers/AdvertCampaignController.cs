@@ -26,7 +26,7 @@ namespace OMKT.Controllers
          * @since 04/04/2013
          * @param int state
          * @param int period
-         * @return Collección de objetos
+         * @return Vista parcial de listado de campañas
          */
 
         public PartialViewResult LatestCampaigns(int? state, int? period)
@@ -54,7 +54,7 @@ namespace OMKT.Controllers
          *
          * @since 04/04/2013
          * @param int top
-         * @return Collección de objetos
+         * @return Vista parcial de listado de campañas
          */
 
         public PartialViewResult DashboardCampaigns(int? top)
@@ -70,7 +70,7 @@ namespace OMKT.Controllers
          *
          * @since 04/04/2013
          * @param int top
-         * @return Collección de objetos
+         * @return Vista parcial de listado de campañas
          */
 
         public PartialViewResult ActiveCampaigns(int? top)
@@ -95,11 +95,11 @@ namespace OMKT.Controllers
         }
 
         /**
-         * Muestra el detalle de una campaña
+         * Muestra el detalle de campaña
          *
          * @since 04/04/2013
          * @param int id
-         * @return Objeto campaña
+         * @return Vista de detalle de campaña
          */
 
         public ViewResult Details(int id)
@@ -111,7 +111,7 @@ namespace OMKT.Controllers
         }
 
         /**
-         * Vista del formulario de creación de una campaña
+         * Vista de creación de campaña
          *
          * @since 04/04/2013
          * @return Vista de creación de una campaña
@@ -169,7 +169,7 @@ namespace OMKT.Controllers
         }
 
         /**
-        * Vista de edición de una campaña
+        * Vista de edición de campaña
         *
         * @since 04/04/2013
         * @param int id
