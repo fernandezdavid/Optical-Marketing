@@ -9,9 +9,19 @@ using OMKT.Models;
 
 namespace OMKT.Controllers
 {
+    /**
+     * Manejador de Cuentas de usuario
+     */
     public class AccountController : Controller
     {
         private readonly OMKTDB _db = new OMKTDB();
+
+        /**
+         * Vista del perfil de usuario
+         * 
+         * @since 04/04/2013
+         * @return Vista de perfil de usuario
+         */
 
         public PartialViewResult Profile()
         {
@@ -30,18 +40,24 @@ namespace OMKT.Controllers
             return PartialView();
         }
 
-        //GET
-
-        //
-        // GET: /Account/LogOn
+        /**
+         * Vista de inicio de sesión
+         * 
+         * @since 04/04/2013
+         * @return Vista de inicio de sesión
+         */
 
         public ActionResult LogOn()
         {
             return View();
         }
 
-        //
-        // POST: /Account/LogOn
+        /**
+         * Inicia sesión
+         * 
+         * @since 04/04/2013
+         * @return Vista panel de control
+         */
 
         [HttpPost]
         public ActionResult LogOn(LogOnModel model, string returnUrl)
@@ -61,13 +77,16 @@ namespace OMKT.Controllers
                 }
                 ModelState.AddModelError("", "");
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        //
-        // GET: /Account/LogOff
+        /**
+         * Cierra sesión
+         * 
+         * @since 04/04/2013
+         * @return Vista principal
+         */
 
         public ActionResult LogOff()
         {
@@ -76,16 +95,24 @@ namespace OMKT.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //
-        // GET: /Account/Register
+        /**
+          * Vista de registro de usuario
+          * 
+          * @since 04/04/2013
+          * @return Vista de registro de usuario
+          */
 
         public ActionResult Register()
         {
             return View();
         }
 
-        //
-        // POST: /Account/Register
+        /**
+         * Registra un usuario
+         * 
+         * @since 04/04/2013
+         * @return Sección desactivada
+         */
 
         [HttpPost]
         public ActionResult Register(RegisterModel model)
@@ -93,8 +120,12 @@ namespace OMKT.Controllers
             return Content("La registración ha sido desactivada de esta aplicación");
         }
 
-        //
-        // GET: /Account/ChangePassword
+        /**
+         * Vista de actualizar contraseña
+         * 
+         * @since 04/04/2013
+         * @return Vista de actualizar de contraseña
+         */
 
         [Authorize]
         public ActionResult ChangePassword()
@@ -102,8 +133,12 @@ namespace OMKT.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/ChangePassword
+        /**
+         * Actualiza la contraseña del usuario
+         * 
+         * @since 04/04/2013
+         * @return Mensaje de confirmación
+         */
 
         [Authorize]
         [HttpPost]
@@ -137,6 +172,13 @@ namespace OMKT.Controllers
             return View(model);
         }
 
+        /**
+         * Vista de edición de perfil de usuario
+         * 
+         * @since 04/04/2013
+         * @return Vista de edición de perfil
+         */
+
         [Authorize]
         public ActionResult EditProfile()
         {
@@ -158,6 +200,13 @@ namespace OMKT.Controllers
                          };
             return View(pr);
         }
+
+        /**
+         * Actualiza los datos del perfil
+         * 
+         * @since 04/04/2013
+         * @return Mensaje de confirmación
+         */
 
         [Authorize]
         [HttpPost]
@@ -204,54 +253,17 @@ namespace OMKT.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Account/ChangePasswordSuccess
+        /**
+         * Mensaje de confirmación
+         * 
+         * @since 04/04/2013
+         * @return Mensaje de confirmación
+         */
 
         public ActionResult ChangePasswordSuccess()
         {
             return View();
         }
 
-        #region Status Codes
-
-        //private static string ErrorCodeToString(MembershipCreateStatus createStatus)
-        //{
-        //    // See http://go.microsoft.com/fwlink/?LinkID=177550 for
-        //    // a full list of status codes.
-        //    switch (createStatus)
-        //    {
-        //        case MembershipCreateStatus.DuplicateUserName:
-        //            return "User name already exists. Please enter a different user name.";
-
-        //        case MembershipCreateStatus.DuplicateEmail:
-        //            return "A user name for that e-mail address already exists. Please enter a different e-mail address.";
-
-        //        case MembershipCreateStatus.InvalidPassword:
-        //            return "The password provided is invalid. Please enter a valid password value.";
-
-        //        case MembershipCreateStatus.InvalidEmail:
-        //            return "The e-mail address provided is invalid. Please check the value and try again.";
-
-        //        case MembershipCreateStatus.InvalidAnswer:
-        //            return "The password retrieval answer provided is invalid. Please check the value and try again.";
-
-        //        case MembershipCreateStatus.InvalidQuestion:
-        //            return "The password retrieval question provided is invalid. Please check the value and try again.";
-
-        //        case MembershipCreateStatus.InvalidUserName:
-        //            return "The user name provided is invalid. Please check the value and try again.";
-
-        //        case MembershipCreateStatus.ProviderError:
-        //            return "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
-
-        //        case MembershipCreateStatus.UserRejected:
-        //            return "The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
-
-        //        default:
-        //            return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
-        //    }
-        //}
-
-        #endregion Status Codes
     }
 }

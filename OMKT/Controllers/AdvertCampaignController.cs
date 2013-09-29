@@ -11,24 +11,28 @@ using System.Data.Objects;
 
 namespace OMKT.Controllers
 {
+    /**
+     * Manejador de las vistas de la Campaña
+     */
+
     [Authorize]
     public class AdvertCampaignController : Controller
     {
         private readonly OMKTDB _db = new OMKTDB();
 
         /**
-         * method LatestCampaings
-         *
-         * List a number of campaigns order by created date descending
+         * Lista las últimas campañas activas ordernadas por fecha
          *
          * @since 04/04/2013
-         * @return advertCampaign collection
+         * @param int state
+         * @param int period
+         * @return Vista parcial de listado de campañas
          */
 
         public PartialViewResult LatestCampaigns(int? state, int? period)
         {
             var oUser = (User)Session["User"];
-            var campaigns = _db.AdvertCampaigns;
+            var campaigns = _db.AdvertCampaigns.Include(i => i.AdvertCampaignDetails);
 
             campaigns.Where(i => i.CustomerId == oUser.CustomerId);
 
@@ -46,29 +50,27 @@ namespace OMKT.Controllers
         }
 
         /**
-         * method DashboardCampaings
-         *
-         * List a number of campaigns order by created date descending
+         * Lista las campañas activas ordenadas por fecha
          *
          * @since 04/04/2013
-         * @return advertCampaign collection
+         * @param int top
+         * @return Vista parcial de listado de campañas
          */
 
         public PartialViewResult DashboardCampaigns(int? top)
         {
             if (!top.HasValue) top = 10;
             var oUser = (User)Session["User"];
-            var campaigns = _db.AdvertCampaigns.Where(i => i.CustomerId == oUser.CustomerId).Take(top.Value);
+            var campaigns = _db.AdvertCampaigns.Include(i => i.AdvertCampaignDetails).Where(i => i.CustomerId == oUser.CustomerId).Take(top.Value);
             return PartialView("AdvertCampaignListSlimPartial", campaigns.ToList());
         }
 
         /**
-         * method ActiveCampaigns
-         *
-         * List a number of active campaigns order by name descending
+         * Lista campañas activas ordenadas por nombre
          *
          * @since 04/04/2013
-         * @return advertCampaign collection
+         * @param int top
+         * @return Vista parcial de listado de campañas
          */
 
         public PartialViewResult ActiveCampaigns(int? top)
@@ -76,17 +78,15 @@ namespace OMKT.Controllers
             if (!top.HasValue)
                 top = 5;
             var oUser = (User)Session["User"];
-            var campaigns = _db.AdvertCampaigns.Where(c => c.CustomerId == oUser.CustomerId).OrderByDescending(i => i.Name).Include(a => a.AdvertCampaignDetails).Take(top.Value);
+            var campaigns = _db.AdvertCampaigns.Include(i => i.AdvertCampaignDetails).Where(c => c.CustomerId == oUser.CustomerId).OrderByDescending(i => i.Name).Include(a => a.AdvertCampaignDetails).Take(top.Value);
             return (campaigns.Any()) ? PartialView("AdvertCampaignListSlimPartial", campaigns.ToList()) : PartialView("AdvertCampaignListSlimPartial");
         }
 
         /**
-         * method Index
-         *
-         * Show main page of advertCampaigns
+         * Muestra el índice de la sección Campañas
          *
          * @since 04/04/2013
-         * @return view
+         * @return Vista principal de campañas
          */
 
         public ActionResult Index()
@@ -95,12 +95,11 @@ namespace OMKT.Controllers
         }
 
         /**
-         * method Details
-         *
-         * Show advertCampaign details
+         * Muestra el detalle de campaña
          *
          * @since 04/04/2013
-         * @return viewmodel
+         * @param int id
+         * @return Vista de detalle de campaña
          */
 
         public ViewResult Details(int id)
@@ -112,12 +111,10 @@ namespace OMKT.Controllers
         }
 
         /**
-         * method Create
-         *
-         * Show advertCampaign create form
+         * Vista de creación de campaña
          *
          * @since 04/04/2013
-         * @return view form
+         * @return Vista de creación de una campaña
          */
 
         public ActionResult Create()
@@ -133,12 +130,11 @@ namespace OMKT.Controllers
         }
 
         /**
-        * method Create (post)
-        *
-        * Manage advertCampaign create form
+        * Crea una campaña
         *
         * @since 04/04/2013
-        * @return view form
+        * @param Modelo Campaña
+        * @return Vista de edición de campaña
         */
 
         [HttpPost]
@@ -173,12 +169,11 @@ namespace OMKT.Controllers
         }
 
         /**
-        * method Edit
-        *
-        * Manage advertCampaign edit form
+        * Vista de edición de campaña
         *
         * @since 04/04/2013
-        * @return view form
+        * @param int id
+        * @return Vista de edición de campaña
         */
 
         public ActionResult Edit(int id)
@@ -191,12 +186,11 @@ namespace OMKT.Controllers
         }
 
         /**
-        * method Edit (post)
-        *
-        * Manage advertCampaign edit form
+        * Edita una campaña
         *
         * @since 04/04/2013
-        * @return view form
+        * @param Modelo Campaña
+        * @return Vista de edición de campaña
         */
 
         [HttpPost]
@@ -223,27 +217,25 @@ namespace OMKT.Controllers
         }
 
         /**
-       * method Delete
-       *
-       * Manage advertCampaign delete form
-       *
-       * @since 04/04/2013
-       * @return view form
-       */
+         * Vista de borrado lógico de campaña
+         *
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de borrado de campaña
+         */
 
         public ActionResult Delete(int id)
         {
-            AdvertCampaign advertcampaign = _db.AdvertCampaigns.Find(id); //@TODO customer check
+            AdvertCampaign advertcampaign = _db.AdvertCampaigns.Find(id);
             return PartialView(advertcampaign);
         }
 
         /**
-        * method Delete (post)
-        *
-        * Manage advertCampaign delete confirm form
+        * Borra lógicamente una campaña
         *
         * @since 04/04/2013
-        * @return view form
+        * @param int id
+        * @return Mensaje de confirmación
         */
 
         [HttpPost, ActionName("Delete")]
@@ -263,12 +255,12 @@ namespace OMKT.Controllers
         }
 
         /**
-        * method AdvertCampaignsPerformance
-        *
-        * Shows the relation interactions/likes for each advertCampaign
-        *
+        * Muestra el rendimiento de una campaña a través de la relación
+        * interacciones-valoraciones
+        * 
         * @since 14/07/2013
-        * @return partial view
+        * @param int period 
+        * @return Vista de rendimiento de una campaña
         */
 
         public ActionResult AdvertCampaignsPerformance(int? period)
@@ -292,11 +284,11 @@ namespace OMKT.Controllers
                                 .Where(c => c.AdvertID == campDetail.AdvertID && c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day)
                                 .Count();
                         var cresult = (from c in _db.AdvertCampaignDetailInteractions
-                                     let dt = c.StartDatetime
-                                     where c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day 
-                                     && c.TimeElapsed.HasValue && c.AdvertID == campDetail.AdvertID
-                                     group c by new { y = dt.Year, m = dt.Month, d = dt.Day } into g
-                                     select new { elapsed = g.Sum(c => c.TimeElapsed) }).FirstOrDefault();
+                                       let dt = c.StartDatetime
+                                       where c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day
+                                       && c.TimeElapsed.HasValue && c.AdvertID == campDetail.AdvertID
+                                       group c by new { y = dt.Year, m = dt.Month, d = dt.Day } into g
+                                       select new { elapsed = g.Sum(c => c.TimeElapsed) }).FirstOrDefault();
                         if (cresult != null)
                         {
                             elapsedTime += cresult.elapsed ?? 0;
