@@ -7,12 +7,19 @@ using OMKT.Context;
 
 namespace OMKT.Controllers
 {
+    /**
+     * Manejador de las vistas de anuncios
+     */
     public class AdvertController : Controller
     {
         private OMKTDB db = new OMKTDB();
 
-        //
-        // GET: /Advert/
+        /**
+         * Vista listado de anuncios
+         * 
+         * @since 04/04/2013
+         * @return Vista listado de anuncios
+         */
 
         public ViewResult Index()
         {
@@ -20,8 +27,14 @@ namespace OMKT.Controllers
             return View(adverts.ToList());
         }
 
-        //
-        // GET: /Advert/Details/5
+        /**
+         * Vista de detalle de anuncio
+         * ordenado por fecha
+         * 
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de detalle de anuncio
+         */
 
         public ViewResult Details(int id)
         {
@@ -29,8 +42,12 @@ namespace OMKT.Controllers
             return View(advert);
         }
 
-        //
-        // GET: /Advert/Create
+        /**
+          * Vista de creación de anuncio
+          * 
+          * @since 04/04/2013
+          * @return Vista de creación de anuncio
+          */
 
         public ActionResult Create()
         {
@@ -39,8 +56,13 @@ namespace OMKT.Controllers
             return View();
         }
 
-        //
-        // POST: /Advert/Create
+        /**
+         * Crea un anuncio
+         * 
+         * @since 04/04/2013
+         * @param Modelo Anuncio
+         * @return Vista edición de anuncio
+         */
 
         [HttpPost]
         public ActionResult Create(Advert advert)
@@ -57,8 +79,13 @@ namespace OMKT.Controllers
             return View(advert);
         }
 
-        //
-        // GET: /Advert/Edit/5
+        /**
+         * Vista de edición de anuncio
+         * 
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista edición de anuncio
+         */
 
         public ActionResult Edit(int id)
         {
@@ -68,8 +95,13 @@ namespace OMKT.Controllers
             return View(advert);
         }
 
-        //
-        // POST: /Advert/Edit/5
+        /**
+         * Edita un anuncio
+         * 
+         * @since 04/04/2013
+         * @param Modeo anuncio
+         * @return Vista edición de anuncio
+         */
 
         [HttpPost]
         public ActionResult Edit(Advert advert)
@@ -85,8 +117,13 @@ namespace OMKT.Controllers
             return View(advert);
         }
 
-        //
-        // GET: /Advert/Delete/5
+        /**
+          * Vista borrado lógico de anuncio
+          * 
+          * @since 04/04/2013
+          * @param int id
+          * @return Vista borrado lógico de anuncio
+          */
 
         public ActionResult Delete(int id)
         {
@@ -94,8 +131,13 @@ namespace OMKT.Controllers
             return View(advert);
         }
 
-        //
-        // POST: /Advert/Delete/5
+        /**
+         * Borra lógicamente un anuncio
+         * 
+         * @since 04/04/2013
+         * @param int id
+         * @return Mensaje de confirmación
+         */
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
