@@ -4,7 +4,7 @@
         $('#example').dataTable({
             "sDom": "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
             "aoColumnDefs": [
-                { "bSortable": false, "aTargets": [0, 12] }                
+                { "bSortable": false, "aTargets": [0, 10] }                
             ] 
             //"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>"
         });
@@ -31,26 +31,14 @@
             Red
         </th>
         <th>
-            Presupuesto
-        </th>
-        <th>
             Fecha de inicio
         </th>
         <th>
             Fecha de finalización
         </th>
         <th>
-            Impresiones
-        </th>
-        <th>
-            Costo
-        </th>
-        <th>
            Nro. Anuncios
         </th>
-        @*<th>
-            Fecha de modificación
-        </th>*@
         <th>
         </th>
     </thead>
@@ -76,24 +64,15 @@
                 @Html.DisplayFor(modelItem=>item.Network.Description)
             </td>
             <td>
-                $@Html.DisplayFor(modelItem => item.Estimate) al día
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.StartDatetime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EndDatetime)
             </td>
             <td>
-            </td>
-            <td>
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.AdvertCampaignDetails.Count)
             </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.LastUpdate)
-            </td>*@
+            
             <td class="noprint">
                 <div class="btn-group">
                     <a href="@Url.Action("Edit", new { id = item.AdvertCampaignId })" class="btn btn-primary small" >
