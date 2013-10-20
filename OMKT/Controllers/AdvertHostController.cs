@@ -7,6 +7,9 @@ using OMKT.Context;
 
 namespace OMKT.Controllers
 {
+    /**
+     * Manejador de las vistas de Puntos de difusion
+     */
     [Authorize(Roles = "Administrador")]
     public class AdvertHostController : Controller
     {
