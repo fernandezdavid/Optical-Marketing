@@ -9,11 +9,23 @@ using OMKT.Business;
 using OMKT.Context;
 
 namespace OMKT.Controllers
-{
+{   
+    /**
+     * Manejador de vistas de Detalle de Juego
+     */
+
     [Authorize]
     public class GameDetailController : Controller
     {
         private OMKTDB db = new OMKTDB();
+
+        /**
+         * Vista de detalle de juego activo
+         *
+         * @since 04/04/2013
+         * @param int GameID
+         * @return Vista de detalle de juego
+         */
 
         public PartialViewResult IndexByGame(int id)
         {
@@ -23,6 +35,14 @@ namespace OMKT.Controllers
             var oGameDetails = db.GameDetails.Include(i => i.Game).Where(i => i.AdvertId == id && i.Status == "OK");
             return PartialView("GameDetailPartialList", oGameDetails.ToList());
         }
+
+        /**
+         * Vista de detalle de juego activo
+         *
+         * @since 04/04/2013
+         * @param int GameID
+         * @return Vista de detalle de juego
+         */
 
         public PartialViewResult IndexByMemoryGame(int id)
         {
@@ -34,17 +54,28 @@ namespace OMKT.Controllers
             return PartialView("MemoryGamePartialList", oGameDetails.ToList());
 
         }
-        //
-        // GET: /GameDetail/
 
+        /**
+         * Vista sección detalle de juegos
+         *
+         * @since 04/04/2013
+         * @return Vista principal de detalle de juegos
+         * @deprecated
+         */
+        
         public ViewResult Index()
         {
             var gamedetails = db.GameDetails.Include(g => g.Game);
             return View(gamedetails.ToList());
         }
 
-        //
-        // GET: /GameDetail/Details/5
+        /**
+         * Vista del detalle de un detalle de juego
+         *
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de detalle de un detalle de juego
+         */
 
         public ViewResult Details(int id)
         {
@@ -53,8 +84,12 @@ namespace OMKT.Controllers
             return View(gamedetail);
         }
 
-        //
-        // GET: /GameDetail/Create
+         /**
+         * Vista de creación de detalle de juego
+         *
+         * @since 04/04/2013
+         * @return Vista de creación de detalle de juego
+         */
 
         public ActionResult Create(int? id)
         {
@@ -71,8 +106,13 @@ namespace OMKT.Controllers
             return PartialView("Create", oGameDetail);
         }
 
-        //
-        // POST: /GameDetail/Create
+        /**
+         * Crea una detalle de juego
+         *
+         * @since 04/04/2013
+         * @param Modelo Detalle de Juego
+         * @return Vista de detalle de juego
+         */
 
         [HttpPost]
         public ActionResult Create(GameDetail gamedetail)
@@ -123,8 +163,13 @@ namespace OMKT.Controllers
             return PartialView("Create", gamedetail);
         }
 
-        //
-        // GET: /GameDetail/Edit/5
+        /**
+        * Vista de edición de detalle de juego
+        *
+        * @since 04/04/2013
+        * @param int id
+        * @return Vista de edición de detalle de juego
+        */
 
         public ActionResult Edit(int id)
         {
@@ -134,8 +179,13 @@ namespace OMKT.Controllers
             return PartialView(gamedetail);
         }
 
-        //
-        // POST: /GameDetail/Edit/5
+        /**
+        * Edita un detalle de juego
+        *
+        * @since 04/04/2013
+        * @param Modelo Detalle de Juego
+        * @return Vista de edición de detalle de juego
+        */
 
         [HttpPost]
         public ActionResult Edit(GameDetail gamedetail)
@@ -161,8 +211,13 @@ namespace OMKT.Controllers
             return PartialView("Edit", gamedetail);
         }
 
-        //
-        // GET: /GameDetail/Delete/5
+         /**
+         * Vista de borrado lógico de detalle de juego
+         *
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de borrado de detalle de juego
+         */
 
         public ActionResult Delete(int id)
         {
@@ -171,8 +226,13 @@ namespace OMKT.Controllers
             return PartialView(gamedetail);
         }
 
-        //
-        // POST: /GameDetail/Delete/5
+        /**
+        * Borra lógicamente un detalle de juego
+        *
+        * @since 04/04/2013
+        * @param int id
+        * @return Mensaje de confirmación
+        */
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
