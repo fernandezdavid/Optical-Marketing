@@ -12,7 +12,7 @@ using System.Data.Objects;
 namespace OMKT.Controllers
 {
     /**
-     * Manejador de las vistas de la Campaña
+     * Manejador de vistas de Campaña
      */
 
     [Authorize]
