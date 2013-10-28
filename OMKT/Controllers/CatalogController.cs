@@ -217,7 +217,7 @@ namespace OMKT.Controllers
         }
 
         /**
-        * Vista del rendimiento de catálogos a través de vistas
+        * Vista del rendimiento de catálogos a través de interacciones
         * 
         * @since 14/07/2013 
         * @return Vista de rendimiento de catálogos
