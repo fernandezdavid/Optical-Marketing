@@ -12,7 +12,7 @@ using System.Data.Objects;
 namespace OMKT.Controllers
 {
     /**
-     * Manejador de las vistas de la Campaña
+     * Manejador de vistas de Campaña
      */
 
     [Authorize]
@@ -21,7 +21,7 @@ namespace OMKT.Controllers
         private readonly OMKTDB _db = new OMKTDB();
 
         /**
-         * Lista las últimas campañas activas ordernadas por fecha
+         * Vista de últimas campañas activas ordernadas por fecha
          *
          * @since 04/04/2013
          * @param int state
@@ -50,7 +50,7 @@ namespace OMKT.Controllers
         }
 
         /**
-         * Lista las campañas activas ordenadas por fecha
+         * Vista de campañas activas ordenadas por fecha
          *
          * @since 04/04/2013
          * @param int top
@@ -66,7 +66,7 @@ namespace OMKT.Controllers
         }
 
         /**
-         * Lista campañas activas ordenadas por nombre
+         * Vista de campañas activas ordenadas por nombre
          *
          * @since 04/04/2013
          * @param int top
@@ -83,7 +83,7 @@ namespace OMKT.Controllers
         }
 
         /**
-         * Muestra el índice de la sección Campañas
+         * Vista del índice de la sección Campañas
          *
          * @since 04/04/2013
          * @return Vista principal de campañas
@@ -95,7 +95,7 @@ namespace OMKT.Controllers
         }
 
         /**
-         * Muestra el detalle de campaña
+         * Vista del detalle de campaña
          *
          * @since 04/04/2013
          * @param int id
@@ -255,7 +255,7 @@ namespace OMKT.Controllers
         }
 
         /**
-        * Muestra el rendimiento de una campaña a través de la relación
+        * Vista del rendimiento de una campaña a través de la relación
         * interacciones-valoraciones
         * 
         * @since 14/07/2013

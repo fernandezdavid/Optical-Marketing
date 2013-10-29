@@ -7,13 +7,20 @@ using OMKT.Context;
 
 namespace OMKT.Controllers
 {
+    /**
+     * Manejador de las vistas de Puntos de difusion
+     */
     [Authorize(Roles = "Administrador")]
     public class AdvertHostController : Controller
     {
         private OMKTDB db = new OMKTDB();
 
-        //
-        // GET: /AdvertHost/
+       /**
+         * Vista listado de puntos de difusion
+         * 
+         * @since 04/04/2013
+         * @return Vista listado de puntos de difusion
+         */
 
         public ViewResult Index()
         {
@@ -21,8 +28,13 @@ namespace OMKT.Controllers
             return View(adverthosts.ToList());
         }
 
-        //
-        // GET: /AdvertHost/Details/5
+        /**
+         * Vista de detalle de punto de difusion
+         * 
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de detalle de punto de difusion
+         */
 
         public ViewResult Details(int id)
         {
@@ -30,8 +42,12 @@ namespace OMKT.Controllers
             return View(adverthost);
         }
 
-        //
-        // GET: /AdvertHost/Create
+        /**
+          * Vista de creación de punto de difusion
+          * 
+          * @since 04/04/2013
+          * @return Vista de creación de punto de difusion
+          */
 
         public ActionResult Create()
         {
@@ -40,8 +56,13 @@ namespace OMKT.Controllers
             return View();
         }
 
-        //
-        // POST: /AdvertHost/Create
+        /**
+         * Crea un punto de difusion
+         * 
+         * @since 04/04/2013
+         * @param Modelo Punto de difusion
+         * @return Vista edición de punto de difusion
+         */
 
         [HttpPost]
         public ActionResult Create(AdvertHost adverthost)
@@ -58,8 +79,13 @@ namespace OMKT.Controllers
             return View(adverthost);
         }
 
-        //
-        // GET: /AdvertHost/Edit/5
+        /**
+         * Vista de edición de punto de difusion
+         * 
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista edición de punto de difusion
+         */
 
         public ActionResult Edit(int id)
         {
@@ -69,8 +95,13 @@ namespace OMKT.Controllers
             return View(adverthost);
         }
 
-        //
-        // POST: /AdvertHost/Edit/5
+        /**
+         * Edita un punto de difusion
+         * 
+         * @since 04/04/2013
+         * @param Modeo punto de difusion
+         * @return Vista edición de punto de difusion
+         */
 
         [HttpPost]
         public ActionResult Edit(AdvertHost adverthost)
@@ -86,20 +117,40 @@ namespace OMKT.Controllers
             return View(adverthost);
         }
 
-        //
+        /**
+         * Vista de puntos de difusion en mapa
+         * 
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de puntos de difusion en mapa
+         */
 
         public ActionResult MapNetwork(int? campaignLocation)
         {
             return View();
         }
+
+        /**
+         * Vista de marcadores en mapa correspondiente a puntos de difusion
+         * 
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de mapa de puntos de difusion
+         */
+
         public ActionResult Markers()
         {
             var markers = db.AdvertHosts.Include(a => a.Location).Include(a => a.AdvertHostCategory);
             return View("Markers", markers);
         }
 
-        //
-        // GET: /AdvertHost/Delete/5
+        /**
+          * Vista borrado lógico de punto de difusion
+          * 
+          * @since 04/04/2013
+          * @param int id
+          * @return Vista borrado lógico de punto de difusion
+          */
 
         public ActionResult Delete(int id)
         {
@@ -107,8 +158,13 @@ namespace OMKT.Controllers
             return View(adverthost);
         }
 
-        //
-        // POST: /AdvertHost/Delete/5
+        /**
+         * Borra lógicamente un punto de difusion
+         * 
+         * @since 04/04/2013
+         * @param int id
+         * @return Mensaje de confirmación
+         */
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)

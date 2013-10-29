@@ -10,20 +10,33 @@ using OMKT.Context;
 
 namespace OMKT.Controllers
 { 
+    /**
+     * Manejador de vistas de Cliente
+     */
+
     public class CustomerController : Controller
     {
         private OMKTDB db = new OMKTDB();
 
-        //
-        // GET: /Customer/
+        /**
+         * Vista del índice de la sección Clientes
+         *
+         * @since 04/04/2013
+         * @return Vista principal de clientes
+         */
 
         public ViewResult Index()
         {
             return View(db.Customers.ToList());
         }
 
-        //
-        // GET: /Customer/Details/5
+        /**
+         * Vista del detalle de cliente
+         *
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de detalle de cliente
+         */
 
         public ViewResult Details(int id)
         {
@@ -31,16 +44,25 @@ namespace OMKT.Controllers
             return View(customer);
         }
 
-        //
-        // GET: /Customer/Create
+        /**
+         * Vista de creación de cliente
+         *
+         * @since 04/04/2013
+         * @return Vista de creación de cliente
+         */
 
         public ActionResult Create()
         {
             return View();
         } 
 
-        //
-        // POST: /Customer/Create
+        /**
+        * Crea una cliente
+        *
+        * @since 04/04/2013
+        * @param Modelo Cliente
+        * @return Vista de edición de cliente
+        */
 
         [HttpPost]
         public ActionResult Create(Customer customer)
@@ -55,8 +77,13 @@ namespace OMKT.Controllers
             return View(customer);
         }
         
-        //
-        // GET: /Customer/Edit/5
+        /**
+        * Vista de edición de Cliente
+        *
+        * @since 04/04/2013
+        * @param int id
+        * @return Vista de edición de cliente
+        */
  
         public ActionResult Edit(int id)
         {
@@ -64,8 +91,13 @@ namespace OMKT.Controllers
             return View(customer);
         }
 
-        //
-        // POST: /Customer/Edit/5
+        /**
+        * Edita un cliente
+        *
+        * @since 04/04/2013
+        * @param Modelo Cliente
+        * @return Vista de edición de cliente
+        */
 
         [HttpPost]
         public ActionResult Edit(Customer customer)
@@ -79,8 +111,13 @@ namespace OMKT.Controllers
             return View(customer);
         }
 
-        //
-        // GET: /Customer/Delete/5
+        /**
+         * Vista de borrado lógico de cliente
+         *
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de borrado de cliente
+         */
  
         public ActionResult Delete(int id)
         {
@@ -88,8 +125,13 @@ namespace OMKT.Controllers
             return View(customer);
         }
 
-        //
-        // POST: /Customer/Delete/5
+        /**
+        * Borra lógicamente una cliente
+        *
+        * @since 04/04/2013
+        * @param int id
+        * @return Mensaje de confirmación
+        */
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)

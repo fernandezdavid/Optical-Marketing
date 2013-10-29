@@ -8,13 +8,24 @@ using OMKT.Context;
 using System.Web;
 
 namespace OMKT.Controllers
-{
+{   
+    /**
+     * Manejador de vistas de Detalles de Catálogo
+     */
+
     [Authorize]
     public class CatalogDetailsController : Controller
     {
         private readonly OMKTDB _db = new OMKTDB();
 
-        //Custom
+        /**
+         * Vista de detalle de catálogo activo
+         *
+         * @since 04/04/2013
+         * @param int CatalogId
+         * @return Vista de detalle de catálogo
+         */
+
         public PartialViewResult IndexByCatalog(int id)
         {
             ViewBag.AdvertId = id;
@@ -24,6 +35,14 @@ namespace OMKT.Controllers
             var oCatalogDetails = _db.CatalogDetails.Include(i => i.Catalog).Where(i => i.AdvertId == id && i.Status == "OK");
             return PartialView("CatalogDetailsPartialList", oCatalogDetails.ToList());
         }
+
+         /**
+         * Vista carousel de detalle de catálogo activo
+         *
+         * @since 04/04/2013
+         * @param int CatalogId
+         * @return Vista carousel de detalle de catálogo
+         */
 
         public PartialViewResult IndexByCatalogCarousel(int id)
         {
@@ -35,6 +54,14 @@ namespace OMKT.Controllers
             return PartialView("CarouselPartialList", oCatalogDetails.ToList());
         }
 
+         /**
+         * Vista ordenable de detalle de catálogo activo
+         *
+         * @since 04/04/2013
+         * @param int CatalogId
+         * @return Vista ordenable de detalle de catálogo
+         */
+
         public PartialViewResult IndexByCatalogSortable(int id)
         {
             ViewBag.AdvertId = id;
@@ -45,7 +72,13 @@ namespace OMKT.Controllers
             return PartialView("SorteableList", oCatalogDetails.ToList());
         }
 
-        // GET: /AdvertDetails/
+        /**
+         * Vista sección detalle de catálogos
+         *
+         * @since 04/04/2013
+         * @return Vista principal de detalle de catálogos
+         * @deprecated
+         */
 
         public ViewResult Index()
         {
@@ -53,8 +86,13 @@ namespace OMKT.Controllers
             return View(oDetails.ToList());
         }
 
-        //
-        // GET: /AdvertDetails/Details/5
+        /**
+         * Vista del detalle de un detalle de catálogo
+         *
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de detalle de un detalle de catálogo
+         */
 
         public ViewResult Details(int id)
         {
@@ -63,9 +101,12 @@ namespace OMKT.Controllers
             return View(catalogdetail);
         }
 
-        //
-        // GET: /AdvertDetails/Create
-        //Optional
+        /**
+         * Vista de creación de detalle de catálogo
+         *
+         * @since 04/04/2013
+         * @return Vista de creación de detalle de catálogo
+         */
 
         public ActionResult Create(int? id)
         {
@@ -84,8 +125,13 @@ namespace OMKT.Controllers
             return PartialView("Create", oDetail);
         }
 
-        //
-        // POST: /AdvertDetails/Create
+        /**
+         * Crea una detalle de catálogo
+         *
+         * @since 04/04/2013
+         * @param Modelo Detalle de Catálogo
+         * @return Vista de detalle de catálogo
+         */
 
         [HttpPost]
         public ActionResult Create(CatalogDetail catalogdetail)
@@ -138,8 +184,13 @@ namespace OMKT.Controllers
             return PartialView("Create", catalogdetail);
         }
 
-        //
-        // GET: /AdvertDetails/Edit/5
+        /**
+        * Vista de edición de detalle de catálogo
+        *
+        * @since 04/04/2013
+        * @param int id
+        * @return Vista de edición de detalle de catálogo
+        */
 
         public ActionResult Edit(int id)
         {
@@ -149,8 +200,13 @@ namespace OMKT.Controllers
             return PartialView(catalogdetail);
         }
 
-        //
-        // POST: /AdvertDetails/Edit/5
+        /**
+        * Edita un detalle de catálogo
+        *
+        * @since 04/04/2013
+        * @param Modelo Detalle de Catálogo
+        * @return Vista de edición de detalle de catálogo
+        */
 
         [HttpPost]
         public ActionResult Edit(CatalogDetail catalogdetail)
@@ -177,8 +233,13 @@ namespace OMKT.Controllers
             return PartialView("Edit", catalogdetail);
         }
 
-        //
-        // GET: /AdvertDetails/Delete/5
+        /**
+         * Vista de borrado lógico de detalle de catálogo
+         *
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de borrado de detalle de catálogo
+         */
 
         public ActionResult Delete(int id)
         {
@@ -187,8 +248,13 @@ namespace OMKT.Controllers
             return PartialView(catalogdetail);
         }
 
-        //
-        // POST: /AdvertDetails/Delete/5
+        /**
+        * Borra lógicamente un detalle de catálogo
+        *
+        * @since 04/04/2013
+        * @param int id
+        * @return Mensaje de confirmación
+        */
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)

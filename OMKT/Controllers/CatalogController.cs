@@ -11,12 +11,24 @@ using OMKT.Models;
 using Paging;
 
 namespace OMKT.Controllers
-{
+{   
+    /**
+     * Manejador de vistas de Catalogos
+     */
+
     [Authorize]
     public class CatalogController : Controller
     {
         private readonly OMKTDB _db = new OMKTDB();
         private readonly int _defaultPageSize = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["DefaultPaginationSize"]);
+
+        /**
+         * Vista de últimos catálogos ordernadas por nombre
+         *
+         * @since 04/04/2013
+         * @param int top
+         * @return Vista parcial de listado de catálogos
+         */
 
         public PartialViewResult LatestCatalogs(int? top)
         {
@@ -27,6 +39,14 @@ namespace OMKT.Controllers
             return PartialView("CatalogListPartial", catalogs.ToList());
         }
 
+        /**
+         * Vista de últimos catálogos ordernadas por nombre
+         *
+         * @since 04/04/2013
+         * @param int top
+         * @return Vista parcial de listado de catálogos
+         */
+
         public PartialViewResult DashboardCatalogs(int? top)
         {
             if (!top.HasValue)
@@ -36,15 +56,25 @@ namespace OMKT.Controllers
             return PartialView("CatalogListSlimPartial", catalogs.ToList());
         }
 
-        //
-        // GET: /Catalog/
+        /**
+         * Vista del índice de la sección Catálogos
+         *
+         * @since 04/04/2013
+         * @return Vista principal de catálogos
+         */
 
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: /Catalog/Details/5
+        /**
+         * Vista del detalle de catálogo
+         *
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de detalle de catálogo
+         */
 
         public ViewResult Details(int id)
         {
@@ -52,8 +82,12 @@ namespace OMKT.Controllers
             return View(catalog);
         }
 
-        //
-        // GET: /Catalog/Create
+        /**
+         * Vista de creación de catálogo
+         *
+         * @since 04/04/2013
+         * @return Vista de creación de catalogo
+         */
 
         public ActionResult Create()
         {
@@ -64,8 +98,13 @@ namespace OMKT.Controllers
             return View(oCatalog);
         }
 
-        //
-        // POST: /Catalog/Create
+        /**
+        * Crea una catálogo
+        *
+        * @since 04/04/2013
+        * @param Modelo Catálogo
+        * @return Vista de edición de catálogo
+        */
 
         [HttpPost]
         [ValidateInput(false)]
@@ -94,8 +133,13 @@ namespace OMKT.Controllers
             return View(catalog);
         }
 
-        //
-        // GET: /Catalog/Edit/5
+        /**
+        * Vista de edición de catálogo
+        *
+        * @since 04/04/2013
+        * @param int id
+        * @return Vista de edición de catálogo
+        */
 
         public ActionResult Edit(int id)
         {
@@ -106,8 +150,13 @@ namespace OMKT.Controllers
             return View(catalog);
         }
 
-        //
-        // POST: /Catalog/Edit/5
+        /**
+        * Edita un catálogo
+        *
+        * @since 04/04/2013
+        * @param Modelo Catálogo
+        * @return Vista de edición de catálogo
+        */
 
         [HttpPost]
         [ValidateInput(false)]
@@ -136,8 +185,13 @@ namespace OMKT.Controllers
             return View(catalog);
         }
 
-        //
-        // GET: /Catalog/Delete/5
+        /**
+         * Vista de borrado lógico de catálogo
+         *
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de borrado de catálogo
+         */
 
         public ActionResult Delete(int id)
         {
@@ -145,8 +199,13 @@ namespace OMKT.Controllers
             return PartialView(catalog);
         }
 
-        //
-        // POST: /Catalog/Delete/5
+        /**
+        * Borra lógicamente una catálogo
+        *
+        * @since 04/04/2013
+        * @param int id
+        * @return Mensaje de confirmación
+        */
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
@@ -156,6 +215,13 @@ namespace OMKT.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        /**
+        * Vista del rendimiento de catálogos a través de interacciones
+        * 
+        * @since 14/07/2013 
+        * @return Vista de rendimiento de catálogos
+        */
 
         public ActionResult CatalogsOverview()
         {

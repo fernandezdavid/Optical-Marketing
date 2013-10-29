@@ -13,11 +13,23 @@ using Simple.ImageResizer;
 
 namespace OMKT.Controllers
 {
+    /**
+     * Manejador de vistas de Productos
+     */
+
     [Authorize]
     public class CommercialProductController : Controller
     {
         private readonly int _defaultPageSize = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["DefaultPaginationSize"]);
         private readonly OMKTDB _db = new OMKTDB();
+
+        /**
+         * Vista de últimos productos activos ordernadas por nombre
+         *
+         * @since 04/04/2013
+         * @param int top
+         * @return Vista parcial de listado de productos
+         */
 
         public PartialViewResult ActiveProducts(int? top)
         {
@@ -27,6 +39,14 @@ namespace OMKT.Controllers
             return PartialView("CommercialProductListPartial", catalogs.ToList());
         }
 
+        /**
+         * Vista de últimos productos activos ordernadas por nombre
+         *
+         * @since 04/04/2013
+         * @param int top
+         * @return Vista parcial de listado de productos
+         */
+
         public PartialViewResult DashboardProducts(int? top)
         {
             if (!top.HasValue) top = 10;
@@ -35,14 +55,25 @@ namespace OMKT.Controllers
             return PartialView("CommercialProductListSlimPartial", catalogs.ToList());
         }
 
-        // GET: /CommercialProduct/
+        /**
+         * Vista del índice de la sección Productos
+         *
+         * @since 04/04/2013
+         * @return Vista principal de productos
+         */
+
         public ViewResult Index()
         {
             return View();
         }
 
-        //
-        // GET: /CommercialProduct/Details/5
+         /**
+         * Vista del detalle de producto
+         *
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de detalle de producto
+         */
 
         public ViewResult Details(int id)
         {
@@ -51,8 +82,12 @@ namespace OMKT.Controllers
             return View(commercialproduct);
         }
 
-        //
-        // GET: /CommercialProduct/Create
+         /**
+         * Vista de creación de producto
+         *
+         * @since 04/04/2013
+         * @return Vista de creación de producto
+         */
 
         public ActionResult Create()
         {
@@ -60,8 +95,13 @@ namespace OMKT.Controllers
             return View();
         }
 
-        //
-        // POST: /CommercialProduct/Create
+        /**
+        * Crea una producto
+        *
+        * @since 04/04/2013
+        * @param Modelo Producto
+        * @return Vista de edición de producto
+        */
 
         [HttpPost]
         public ActionResult Create(CommercialProduct commercialProduct, HttpPostedFileBase image)
@@ -126,8 +166,13 @@ namespace OMKT.Controllers
             return View(commercialProduct);
         }
 
-        //
-        // GET: /CommercialProduct/Edit/5
+        /**
+        * Vista de edición de producto
+        *
+        * @since 04/04/2013
+        * @param int id
+        * @return Vista de edición de producto
+        */
 
         public ActionResult Edit(int id)
         {
@@ -138,8 +183,13 @@ namespace OMKT.Controllers
             return View(commercialproduct);
         }
 
-        //
-        // POST: /CommercialProduct/Edit/5
+        /**
+        * Edita un producto
+        *
+        * @since 04/04/2013
+        * @param Modelo Producto
+        * @return Vista de edición de producto
+        */
 
         [HttpPost]
         public ActionResult Edit(CommercialProduct commercialProduct, HttpPostedFileBase image)
@@ -193,8 +243,13 @@ namespace OMKT.Controllers
             return View(commercialProduct);
         }
 
-        //
-        // GET: /CommercialProduct/Delete/5
+        /**
+         * Vista de borrado lógico de producto
+         *
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de borrado de producto
+         */
 
         public ActionResult Delete(int id)
         {
@@ -203,8 +258,13 @@ namespace OMKT.Controllers
             return PartialView(commercialproduct);
         }
 
-        //
-        // POST: /CommercialProduct/Delete/5
+        /**
+        * Borra lógicamente una producto
+        *
+        * @since 04/04/2013
+        * @param int id
+        * @return Mensaje de confirmación
+        */
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)

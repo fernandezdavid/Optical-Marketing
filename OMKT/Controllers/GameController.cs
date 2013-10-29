@@ -11,18 +11,34 @@ using OMKT.Models;
 
 namespace OMKT.Controllers
 {
+    /**
+     * Manejador de vistas de Juegos
+     */
+
     [Authorize]
     public class GameController : Controller
     {
         private readonly OMKTDB db = new OMKTDB();
 
-        //
-        // GET: /Game/
+        /**
+         * Vista del índice de la sección Juegos
+         *
+         * @since 04/04/2013
+         * @return Vista principal de juegos
+         */
 
         public ViewResult Index()
         {
             return View();
         }
+
+        /**
+         * Vista de últimos juegos ordernadas por nombre
+         *
+         * @since 04/04/2013
+         * @param int top
+         * @return Vista parcial de listado de catálogos
+         */
 
         public PartialViewResult LatestGames(int? top)
         {
@@ -33,6 +49,14 @@ namespace OMKT.Controllers
             return PartialView("GameListPartial", games.ToList());
         }
 
+        /**
+         * Vista de últimos juegos ordernadas por nombre
+         *
+         * @since 04/04/2013
+         * @param int top
+         * @return Vista parcial de listado de juegos
+         */
+
         public PartialViewResult DashboardGames(int? top)
         {
             if (!top.HasValue)
@@ -42,8 +66,13 @@ namespace OMKT.Controllers
             return PartialView("GameListSlimPartial", games.ToList());
         }
 
-        //
-        // GET: /Game/Details/5
+        /**
+         * Vista del detalle de juego
+         *
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de detalle de juego
+         */
 
         public ViewResult Details(int id)
         {
@@ -51,8 +80,12 @@ namespace OMKT.Controllers
             return View(game);
         }
 
-        //
-        // GET: /Game/Create
+        /**
+         * Vista de creación de juegos
+         *
+         * @since 04/04/2013
+         * @return Vista de creación de juegos
+         */
 
         public ActionResult Create()
         {
@@ -61,8 +94,13 @@ namespace OMKT.Controllers
             return View(oGame);
         } 
 
-        //
-        // POST: /Game/Create
+        /**
+        * Crea una juego
+        *
+        * @since 04/04/2013
+        * @param Modelo Juego
+        * @return Vista de edición de Juego
+        */
 
         [HttpPost]
         [ValidateInput(false)]
@@ -90,8 +128,13 @@ namespace OMKT.Controllers
             return View(game);
         }
         
-        //
-        // GET: /Game/Edit/5
+        /**
+        * Vista de edición de juego
+        *
+        * @since 04/04/2013
+        * @param int id
+        * @return Vista de edición de juego
+        */
  
         public ActionResult Edit(int id)
         {
@@ -100,8 +143,13 @@ namespace OMKT.Controllers
             return View(game);
         }
 
-        //
-        // POST: /Game/Edit/5
+        /**
+        * Edita un juego
+        *
+        * @since 04/04/2013
+        * @param Modelo Juego
+        * @return Vista de edición de juego
+        */
 
         [HttpPost]
         [ValidateInput(false)]
@@ -128,14 +176,26 @@ namespace OMKT.Controllers
             return View(game);
         }
 
-        //
-        // GET: /Game/Delete/5
+        /**
+         * Vista de borrado lógico de juego
+         *
+         * @since 04/04/2013
+         * @param int id
+         * @return Vista de borrado de juego
+         */
  
         public ActionResult Delete(int id)
         {
             Game game = db.Games.Find(id);
             return PartialView(game);
         }
+
+        /**
+        * Vista del rendimiento de juegos a través de interacciones
+        * 
+        * @since 14/07/2013 
+        * @return Vista de rendimiento de catálogos
+        */
 
         public ActionResult GamesOverview()
         {
@@ -154,8 +214,13 @@ namespace OMKT.Controllers
             return PartialView("GamesOverview", interactions.ToList());
         }
 
-        //
-        // POST: /Game/Delete/5
+        /**
+        * Borra lógicamente una juego
+        *
+        * @since 04/04/2013
+        * @param int id
+        * @return Mensaje de confirmación
+        */
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
