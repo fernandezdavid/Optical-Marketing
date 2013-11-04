@@ -107,9 +107,10 @@ namespace OMKT.Controllers
                     var oUser = (User)Session["User"];
                     if (oUser != null)
                     {
-                        video.AdvertType = db.AdvertTypes.Find(1);
+                        video.AdvertType = db.AdvertTypes.Find(3);
                         video.CreatedDate = DateTime.Now;
                         video.ProductImage = img;
+                        video.Status = "OK";
                         video.StartDatetime = DateTime.Now;
                         db.Videos.Add(video);
                         try

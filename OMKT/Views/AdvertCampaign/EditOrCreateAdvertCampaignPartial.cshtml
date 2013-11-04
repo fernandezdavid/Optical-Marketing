@@ -72,12 +72,12 @@
             <input type="radio" name="offerControl[]" value="1" checked="checked" />
             Dejar que Optical Marketing establezca las ofertas para maximizar las interacciones
             dentro del presupuesto objetivo</label>
-        <label class="radio">
+       @* <label class="radio">
             <input type="radio" name="offerControl[]" value="0" disabled="disabled" />
-            Establecer mis ofertas para las interacciones de forma manual</label>
+            Establecer mis ofertas para las interacciones de forma manual</label>*@
         </div>
     </div>
-    <div class="control-group">
+    @*<div class="control-group">
         <label class="control-label" for="Estimate">Presupuesto</label>
         <div class="controls">
             <div class="input-prepend input-append">
@@ -87,8 +87,8 @@
             </div>
             @Html.ValidationMessageFor(model => model.Estimate)
         </div>
-    </div>
-    <div class="control-group">
+    </div>*@
+  @*  <div class="control-group">
         <label class="control-label">Oferta por defecto</label>
         <div class="controls">
             <div class="input-prepend input-append">
@@ -98,7 +98,7 @@
             </div>
             @Html.ValidationMessageFor(model => model.Estimate)
         </div>
-    </div>
+    </div>*@
     <div class="form-actions">
         <input type="submit" value="Guardar" class="btn btn-primary" />
         @if (Model != null && Model.AdvertCampaignId > 0)

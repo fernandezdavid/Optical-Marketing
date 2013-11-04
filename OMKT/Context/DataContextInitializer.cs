@@ -373,6 +373,18 @@ namespace OMKT.Context
             hostsList.Add(host3);
             #endregion
 
+            #region CampaignTypes
+            var campaignTypes = new List<CampaignType>
+							  {
+								  new CampaignType { Name = "Estándar", Description = "Emisión de anuncios en los puestos publicos de difusión de la red Optical Marketing"},
+                                  new CampaignType { Name = "Premium", Description = "Emisión de anuncios en todos los puestos de difusión de la red Optical Marketing" }
+							  };
+            foreach (var ctypes in campaignTypes)
+            {
+                context.CampaignTypes.Add(ctypes);
+            }
+	        #endregion
+
             #region campaignLocations
             var campLoc1 = new CampaignLocation { Description = "Todas las ubicaciones" };
             campLoc1.AdvertHosts.Add(host1);
@@ -396,7 +408,7 @@ namespace OMKT.Context
             campaign.Customer = context.Customers.Find(1);
             campaign.CustomerId = campaign.Customer.CustomerID;
             campaign.Name = "Campaña #1";
-            campaign.CampaignType = new CampaignType { Name = "Estándar", Description = "Emisión de anuncios en todos los puestos de difusión de la red Optical Marketing" };
+            campaign.CampaignType = context.CampaignTypes.Find(1);
             campaign.CampaignTypeId = campaign.CampaignType.CampaignTypeId;
             campaign.CampaignState = new CampaignState { Description = "Vigente" };
             campaign.CampaignStateId = campaign.CampaignState.CampaignStateId;

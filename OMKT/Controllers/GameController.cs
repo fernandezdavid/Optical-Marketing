@@ -112,6 +112,7 @@ namespace OMKT.Controllers
                 game.AdvertType = db.AdvertTypes.Find(1);
                 game.CreatedDate = DateTime.Now;
                 game.StartDatetime = DateTime.Now;
+                game.Status = "OK";
                 db.Games.Add(game);
                 try
                 {

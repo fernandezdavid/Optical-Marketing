@@ -117,6 +117,7 @@ namespace OMKT.Controllers
                 catalog.AdvertType = _db.AdvertTypes.Find(2);
                 catalog.CreatedDate = DateTime.Now;
                 catalog.StartDatetime = DateTime.Now;
+                catalog.Status = "OK";
                 _db.Catalogs.Add(catalog);
                 try
                 {
