@@ -114,8 +114,11 @@ namespace OMKT.Controllers
             CatalogDetail oDetail = null;
             if (id.HasValue)
             {
-                var pos = _db.CatalogDetails.Where(c => c.AdvertId == id && c.Status == "OK").Max(m => m.Position);
-                pos++;
+               // var pos = _db.CatalogDetails.Where(c => c.AdvertId == id && c.Status == "OK").Max(m => m.Position) ?? 0;
+                //if (pos == null)
+                var pos = 0;
+                //else
+                //    pos++;
                 Catalog oCatalog = _db.Catalogs.Find(id);
                 if (oCatalog != null)
                 {

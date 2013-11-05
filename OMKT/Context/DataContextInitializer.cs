@@ -373,6 +373,18 @@ namespace OMKT.Context
             hostsList.Add(host3);
             #endregion
 
+            #region CampaignTypes
+            //var campaignTypes = new List<CampaignType>
+            //                  {
+            //                      new CampaignType { Name = "Estándar", Description = "Emisión de anuncios en los puestos publicos de difusión de la red Optical Marketing"},
+            //                      new CampaignType { Name = "Premium", Description = "Emisión de anuncios en todos los puestos de difusión de la red Optical Marketing" }
+            //                  };
+            //foreach (var ctypes in campaignTypes)
+            //{
+            //    context.CampaignTypes.Add(ctypes);
+            //}
+	        #endregion
+
             #region campaignLocations
             var campLoc1 = new CampaignLocation { Description = "Todas las ubicaciones" };
             campLoc1.AdvertHosts.Add(host1);
