@@ -35,6 +35,7 @@ namespace OMKT.Controllers
             var interactions = new List<CampaignPerformance>();
             var inter = 0;
             var likes = 0m;
+            var wins = 0m;
             var bounce = 0m;
             var elapsedTime = 0;
             var height = 0m;
@@ -61,6 +62,19 @@ namespace OMKT.Controllers
                             bounce += views / countDetails;
 
                         }
+                        if (campDetail.Advert.AdvertTypeId == 1)
+                        {
+                            wins += _db.GameDetailInteractions
+                                    .Where(c => c.GameDetail.AdvertId == campDetail.AdvertID && c.Win == true && c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day)
+                                    .Count();
+                            //var views = _db.GameDetailInteractions
+                            //        .Where(c => c.GameDetail.AdvertId == campDetail.AdvertID && c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day)
+                            //        .Count();
+                            //var countDetails = _db.CatalogDetails.Where(ca => ca.AdvertId == campDetail.AdvertID).Count();
+                            //bounce += views / countDetails;
+
+                        }
+
                         
                         var result = (from c in _db.AdvertCampaignDetailInteractions
                                         let dt = c.StartDatetime
@@ -83,7 +97,7 @@ namespace OMKT.Controllers
             oSummary.Impressions = inter;
             oSummary.LikesPercentage = decimal.Truncate(((likes / inter) * 100)).ToString();
             oSummary.TimeAverage = ((inter != 0) ? elapsedTime / inter : 0).ToString();
-            oSummary.Bounce = ((1 - bounce) * 100).ToString();
+            oSummary.Bounce = wins.ToString();
             return PartialView("SummaryBoard", oSummary);
         }
 
