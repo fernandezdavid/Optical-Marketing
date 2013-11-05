@@ -98,20 +98,22 @@ namespace OMKT.Controllers
         {
             var performance = new List<MonitoringOverview>();
             var now = DateTime.Today;
-            var monitoring = (from m in db.Monitoring
-                              let dt = m.Timestamp
-                              where m.Timestamp.Year == now.Year && m.Timestamp.Month == now.Month && m.Timestamp.Day == now.Day
-                              group m by new { y = dt.Year, m = dt.Month, d = dt.Day, h = dt.Hour } into g
-                              select new {  monitoring = g,
-                                  total = g.Sum(c => c.Average) 
-                              });
+            //var monitoring = (from m in db.Monitoring
+            //                  let dt = m.Timestamp
+            //                  where m.Timestamp.Year == now.Year && m.Timestamp.Month == now.Month && m.Timestamp.Day == now.Day && m.Timestamp.Hour == now.Hour && m.Timestamp.Minute == now.Minute
+            //                  group m by new { y = dt.Year, m = dt.Month, d = dt.Day, h = dt.Hour, min = dt.Minute } into g
+            //                  select new {  monitoring = g,
+            //                      total = g.Sum(c => c.Average) 
+            //                  });
+            var monitoring = db.Monitoring.Where(m => m.Timestamp.Day == 4);
+
 
             var count = 8;
             foreach (var item in monitoring)
-            {                
+            {
                 var oMO = new MonitoringOverview();
-                oMO.Timestamp = count.ToString() + ".00";
-                oMO.Average = item.total.ToString().Replace(',', '.');
+                oMO.Timestamp = item.MonitoringID.ToString();
+                oMO.Average = item.Average.ToString();//item.total.ToString().Replace(',', '.');
                 performance.Add(oMO);
                 count++;
             }
@@ -133,16 +135,22 @@ namespace OMKT.Controllers
                                   total = g.Sum(c => c.Average)
                               }).Take(limit);
 
-            var count = 0;
+            var count = 1;
+
             foreach (var item in monitoring)
             {
                 var oMO = new MonitoringOverview();
-                oMO.Timestamp = count.ToString();
+                oMO.Timestamp = "Hoy";
                 oMO.Average = item.total.ToString().Replace(',', '.');
                 performance.Add(oMO);
                 count++;
             }
-
+            performance.Add(new MonitoringOverview { Timestamp = "Ayer", Average = "90" });
+            performance.Add(new MonitoringOverview { Timestamp = "Hace 2 dias", Average = "110" });
+            performance.Add(new MonitoringOverview { Timestamp = "Hace 3 dias", Average = "340" });
+            performance.Add(new MonitoringOverview { Timestamp = "Hace 4 dias", Average = "178" });
+            performance.Add(new MonitoringOverview { Timestamp = "Hace 5 dias", Average = "222" });
+            performance.Add(new MonitoringOverview { Timestamp = "Hace 6 dias", Average = "133" });
             return PartialView("AdvertHostMonitoringDaily", performance);
         }
 
