@@ -76,7 +76,7 @@ namespace OMKT.Controllers
 
         public ActionResult Create(int? id)
         {
-            ViewBag.AdvertID = new SelectList(_db.Adverts, "AdvertId", "Name");
+            ViewBag.AdvertID = new SelectList(_db.Adverts.Where( a => a.Status == "OK"), "AdvertId", "Name");
             AdvertCampaignDetail oDetail = null;
             if (id.HasValue)
             {
@@ -101,7 +101,7 @@ namespace OMKT.Controllers
             ViewBag.AdvertID = new SelectList(_db.Adverts, "AdvertId", "Name", advertcampaigndetail.AdvertID);
             if (ModelState.IsValid)
             {
-                var check = _db.AdvertCampaignDetails.Where(a => a.AdvertID == advertcampaigndetail.AdvertID).FirstOrDefault();
+                var check = _db.AdvertCampaignDetails.Where(a => a.AdvertID == advertcampaigndetail.AdvertID && a.AdvertCampaignId == advertcampaigndetail.AdvertCampaignId).FirstOrDefault();
                 if (check == null)
                 {
                     advertcampaigndetail.StartDate = DateTime.Now;
@@ -121,7 +121,7 @@ namespace OMKT.Controllers
                 {
                     check.LastUpdate = DateTime.Now;
                     check.Status = "OK";
-                    check.StartDate = advertcampaigndetail.StartDate;
+                    check.StartDate = DateTime.Now;
                     check.EndDate = advertcampaigndetail.EndDate;
                     _db.Entry(check).State = EntityState.Modified;
                     try
@@ -155,7 +155,7 @@ namespace OMKT.Controllers
 
         public ActionResult Edit(int id)
         {
-            var advertcampaigndetail = _db.AdvertCampaignDetails.FirstOrDefault(a => a.AdvertCampaignId == id && a.Status == "OK");
+            var advertcampaigndetail = _db.AdvertCampaignDetails.FirstOrDefault(a => a.AdvertCampaignDetailId == id && a.Status == "OK");
             if (advertcampaigndetail == null) throw new HttpException(404, "The resource cannot be found");
             ViewBag.AdvertID = new SelectList(_db.Adverts.Where(a => a.Status == "OK"), "AdvertId", "Name", advertcampaigndetail.AdvertID);
             return PartialView(advertcampaigndetail);

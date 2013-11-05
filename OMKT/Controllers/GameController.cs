@@ -89,7 +89,7 @@ namespace OMKT.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.AdvertStateId = new SelectList(db.AdvertStates.OrderBy(x => x.Description), "AdvertStateId", "Description");
+            ViewBag.AdvertStateId = new SelectList(db.AdvertStates.OrderBy(x => x.Description), "AdvertStateId", "Description", 1);
             var oGame = new Game { StartDatetime = DateTime.Now, EndDatetime = DateTime.Now.AddDays(30), Oportunities = 3 };
             return View(oGame);
         } 

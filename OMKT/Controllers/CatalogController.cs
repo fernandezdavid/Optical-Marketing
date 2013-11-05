@@ -91,8 +91,8 @@ namespace OMKT.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.SortTypeId = new SelectList(_db.SortTypes.OrderBy(x => x.Name), "SortTypeId", "Name");
-            ViewBag.AdvertStateId = new SelectList(_db.AdvertStates.OrderBy(x => x.Description), "AdvertStateId", "Description");
+            ViewBag.SortTypeId = new SelectList(_db.SortTypes.OrderBy(x => x.Name), "SortTypeId", "Name", 3);
+            ViewBag.AdvertStateId = new SelectList(_db.AdvertStates.OrderBy(x => x.Description), "AdvertStateId", "Description", 1);
             var oCatalog = new Catalog { StartDatetime = DateTime.Now, EndDatetime = DateTime.Now.AddDays(30) };
 
             return View(oCatalog);
