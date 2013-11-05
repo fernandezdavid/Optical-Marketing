@@ -105,7 +105,7 @@ namespace OMKT.Controllers
             //                  select new {  monitoring = g,
             //                      total = g.Sum(c => c.Average) 
             //                  });
-            var monitoring = db.Monitoring.Where(m => m.Timestamp.Day == 4);
+            var monitoring = db.Monitoring.Where(m => m.Timestamp.Day == now.Day);
 
 
             var count = 8;
