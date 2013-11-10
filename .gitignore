@@ -2,8 +2,4 @@
 OMKT/bin/
 OMKT/obj/
 OMKT/Properties/
-*.csproj
-*.sln
-*.suo
-*.user
-*.asax
+

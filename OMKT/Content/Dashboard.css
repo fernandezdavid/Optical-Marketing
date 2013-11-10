@@ -1,0 +1,37 @@
+﻿
+
+h4
+{
+	line-height: 20px !important;
+}
+
+td.total
+{
+	font-weight: bold;
+	background-color: #f5f5f5 !important;
+}
+
+.expense
+{
+	color: red;
+}
+.income
+{
+	color: green;
+}
+
+.noborder
+{
+	border: 0;
+}
+.trimed
+{
+	/* essential */
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	-webkit-text-overflow: ellipsis;
+	width: 200px;
+	white-space: nowrap;
+	overflow: hidden; /* for good looks */
+	padding: 10px;
+}
