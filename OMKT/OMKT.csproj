@@ -202,6 +202,7 @@
     <Compile Include="Models\Helper\Helpers.cs" />
     <Compile Include="Models\Helper\TAXDateHelper.cs" />
     <Compile Include="Models\Helper\TextHelper.cs" />
+    <Compile Include="Models\LineChartOverview.cs" />
     <Compile Include="Models\MonitoringOverview.cs" />
     <Compile Include="Models\Paging\IPagedList.cs" />
     <Compile Include="Models\Paging\PagedList.cs" />

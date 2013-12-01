@@ -36,7 +36,7 @@ namespace OMKT.Controllers
             var inter = 0;
             var likes = 0m;
             var wins = 0m;
-            var bounce = 0m;
+            var retries = 0m;
             var elapsedTime = 0;
             var height = 0m;
             for (int i = 0; i < interval; i++)
@@ -55,11 +55,11 @@ namespace OMKT.Controllers
                             likes += _db.CatalogDetailInteractions
                                     .Where(c => c.CatalogDetail.AdvertId == campDetail.AdvertID && c.Like == true && c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day)
                                     .Count();
-                            var views = _db.CatalogDetailInteractions
-                                    .Where(c => c.CatalogDetail.AdvertId == campDetail.AdvertID && c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day)
-                                    .Count();
-                            var countDetails = _db.CatalogDetails.Where(ca => ca.AdvertId == campDetail.AdvertID).Count();
-                            bounce += views / countDetails;
+                            //var views = _db.CatalogDetailInteractions
+                            //        .Where(c => c.CatalogDetail.AdvertId == campDetail.AdvertID && c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day)
+                            //        .Count();
+                            //var countDetails = _db.CatalogDetails.Where(ca => ca.AdvertId == campDetail.AdvertID).Count();
+                            //bounce += views / countDetails;
 
                         }
                         if (campDetail.Advert.AdvertTypeId == 1)
@@ -67,12 +67,9 @@ namespace OMKT.Controllers
                             wins += _db.GameDetailInteractions
                                     .Where(c => c.GameDetail.AdvertId == campDetail.AdvertID && c.Win == true && c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day)
                                     .Count();
-                            //var views = _db.GameDetailInteractions
-                            //        .Where(c => c.GameDetail.AdvertId == campDetail.AdvertID && c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day)
-                            //        .Count();
-                            //var countDetails = _db.CatalogDetails.Where(ca => ca.AdvertId == campDetail.AdvertID).Count();
-                            //bounce += views / countDetails;
-
+                            retries += _db.GameDetailInteractions
+                                    .Where(c => c.GameDetail.AdvertId == campDetail.AdvertID && c.StartDatetime.Year == check_date.Year && c.StartDatetime.Month == check_date.Month && c.StartDatetime.Day == check_date.Day)
+                                    .Count();
                         }
 
                         
@@ -95,9 +92,9 @@ namespace OMKT.Controllers
 
             var oSummary = new SummaryBoard();
             oSummary.Impressions = inter;
-            oSummary.LikesPercentage = decimal.Truncate(((likes / inter) * 100)).ToString();
+            oSummary.LikesPercentage = ((inter == 0 || likes == 0 ) ? 0 : decimal.Truncate(likes / inter * 100)).ToString();
             oSummary.TimeAverage = ((inter != 0) ? elapsedTime / inter : 0).ToString();
-            oSummary.Bounce = wins.ToString();
+            oSummary.WinsAverage = ((wins == 0 || retries == 0) ? 0 : decimal.Truncate(wins/retries * 100)).ToString();
             return PartialView("SummaryBoard", oSummary);
         }
 
