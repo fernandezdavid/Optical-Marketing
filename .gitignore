@@ -1,14 +1,5 @@
 # Ignored files
-.nuget/
 OMKT/bin/
 OMKT/obj/
-OMKT/Content/
-OMKT/img/
 OMKT/Properties/
-OMKT/Security/
-OMKT/Global.asax.cs
-*.csproj
-*.sln
-*.suo
-*.user
-*.asax
+

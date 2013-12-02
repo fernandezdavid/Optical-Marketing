@@ -9,7 +9,7 @@
           ['Hora', 'Personas'],
            @foreach (var item in Model)
            { 
-                @:[@item.Timestamp, @item.Average], 
+                @:['@item.Timestamp', @item.Average], 
            }]);        
             
          var options = {

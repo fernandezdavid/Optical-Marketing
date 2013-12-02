@@ -13,6 +13,6 @@ namespace OMKT.Models
 
         public string TimeAverage { get; set; }
 
-        public string Bounce { get; set; }
+        public string WinsAverage { get; set; }
     }
 }

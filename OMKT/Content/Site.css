@@ -1,0 +1,283 @@
+﻿/*----------------------------------------------------------
+The base color for this template is #5c87b2. If you'd like
+to use a different color start by replacing all instances of
+#5c87b2 with your new color.
+----------------------------------------------------------*/
+body {
+	/*background: url('/Content/images/swirl.png');*/
+	/*background: url('/Content/images/grid.png');*/
+	/*background: url('/Content/images/grey.png');*/
+	/*background: url('/Content/images/lightpaperfibers.png');*/
+	background: url('/Content/images/subtle_dots.png');
+	background-attachment: fixed;
+	font-size: .85em;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	margin: 0;
+	padding: 0;
+	color: #605F5F;
+}
+.rounded { border-radius: 4px ;
+	-webkit-border-radius: 4px ;
+	-moz-border-radius: 4px ;
+	}
+
+header,
+footer,
+nav,
+section {
+	display: block;
+}
+
+.page {
+	width: 75%;
+	max-width: 975px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.login-bar {
+	margin-top: 3px;padding-right: 20px
+}
+.content{ padding:20px 10px}
+.page-content{padding: 25px}
+.wbox {
+overflow: hidden;
+-webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+-moz-box-shadow: rgba(0,0,0,0.3) 0 1px 3px;
+border-radius: 4px;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+background: white;
+}
+
+header, #header {
+	position: relative;
+	margin-bottom: 0px;
+	color: #000;
+	padding: 0;
+}
+
+header h1, #header h1 {
+	font-weight: bold;
+	padding: 5px 0;
+	margin: 0;
+	color: #fff;
+	border: none;
+	line-height: 2em;
+	font-size: 32px !important;
+	text-shadow: 1px 1px 2px #111;
+}
+.header-logo {
+	width: 100%;
+padding: 10px;
+height: 85px;
+background: white;
+}
+#main 
+{
+	border-radius: 4px ;
+	-webkit-border-radius: 4px ;
+	-moz-border-radius: 4px ;
+	min-height: 400px;
+	/*background-color: rgba(100, 100, 100, 0.4);
+	padding: 12px;*/
+}
+#content {
+	/*background-color: rgba(0, 0, 0, 0.5);*/
+	padding: 15px 15px 15px 30px;
+	min-height: 420px
+}
+.slider-content {
+	/*background-color: rgba(100, 100, 100, 0.4);
+	padding: 10px;*/
+}
+
+footer, 
+#footer 
+{
+	margin-top: 20px;
+	color: #605F5F;
+	padding: 10px 0;
+	line-height: normal;
+	font-size: .9em;
+}
+footer ul.footer-links {
+	min-height: 50px;
+	padding-top:10px
+}
+footer ul.footer-links li {
+	display:inline;
+	padding-right:20px
+}
+footer ul.footer-links li a {
+	text-decoration: none;
+	color: #FFF;
+	font-weight: bold;
+	transition: 0.3s ease 0s;
+-ms-transition: 0.3s ease 0s;
+-moz-transition: 0.3s ease 0s;
+-webkit-transition: 0.3s ease 0s;
+-o-transition: 0.3s ease 0s;
+	border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 4px 4px 0 0;
+	-moz-border-radius: 4px 4px 0 0;
+}
+footer ul.footer-links li a:hover {
+	text-decoration: underline;
+}
+
+footer ul.footer-links li a:active {
+	
+	text-decoration: none;
+}
+
+footer .copyright{ text-align: right; width: 410px} 
+/* TAB MENU   
+----------------------------------------------------------*/
+ul#menu {
+	
+	position: relative;
+	margin: 25px 0 0 0;
+	text-align: right;
+}
+
+ul#menu li {
+	display: inline;
+	list-style: none;
+}
+
+ul#menu li#greeting {
+	padding: 10px 20px;
+	font-weight: bold;
+	text-decoration: none;
+	line-height: 2.8em;
+	color: #fff;
+}
+
+ul#menu li a 
+{
+	font-size: 16px;
+	padding: 10px 20px;
+	font-weight: bold;
+	text-decoration: none;
+	line-height: 2.8em;
+	color: #605f5f;
+	transition: 0.5s ease 0s;
+-ms-transition: 0.5s ease 0s;
+-moz-transition: 0.5s ease 0s;
+-webkit-transition: 0.3s ease 0s;
+-o-transition: 0.5s ease 0s;
+	border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 4px 4px 0 0;
+	-moz-border-radius: 4px 4px 0 0;
+}
+
+ul#menu li a:hover {
+	color: #E31E24;
+	text-decoration: none;
+}
+
+ul#menu li a:active {
+	color: #e2484d;
+	text-decoration: none;
+}
+
+ul#menu li.selected a {
+	background-color: #fff;
+	color: #000;
+}
+
+/* MISC  
+----------------------------------------------------------*/
+.clear {
+	clear: both;
+}
+
+.error {
+	color: #E31E24;
+}
+
+nav, 
+#menucontainer {
+	
+}
+
+div#title 
+{
+	
+	display: block;
+	height: 80px;
+	width: 400px;
+	float: left;
+	text-align: left;
+}
+.nav-bar { width: 500px;float: right; height:80px}
+.header-in{ height: 70px}
+div#title a {
+	
+}
+
+#logindisplay {
+	font-size: 1.1em;
+	display: block;
+	text-align: right;
+	margin-top: 5px;
+	color: White;
+}
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+
+
+/* Styles for editor and display helpers
+----------------------------------------------------------*/
+.display-label, 
+.editor-label {
+	margin: 1em 0 0 0;
+}
+
+.display-field, 
+.editor-field {
+	margin: 0.5em 0 0 0;
+}
+
+.text-box {
+	width: 30em;
+}
+
+.text-box.multi-line {
+	height: 6.5em;
+}
+
+.tri-state {
+	width: 6em;
+}
+ul.social 
+{
+	
+	margin-top: 10px
+
+}
+footer { background: #da4f49; color: #FFF}
+ul.social li {
+	display: inline;
+	list-style: none;
+}
+ul.social li a { color:#FFF } 
+ul.social li a:hover { opacity: 1; -moz-opacity: 1; text-decoration:none}
+.first-column { width: 45%; display: inline; float: left; padding: 10px; }
+.second-column{ width: 45%;display: inline;float: left; padding: 10px }
+.thumbnail
+		{
+			padding: 20px;
+			/*background-color: rgba(0,0,0,0.5);*/
+			border: none !important;
+			box-shadow: none !important;
+			min-height: 150px;
+		}
+.thumbnail .caption { /*color:#FFF !important*/}
+.top-bar-list { min-height: 40px}
+.header-dark{ background-image: url('/Content/images/back.png') }
+.header{ padding-bottom: 30px}	
+.form-horizontal .form-actions { background-color: #FFF;}
+.features-list i { color:#da4f49; }
