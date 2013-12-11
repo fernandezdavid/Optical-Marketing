@@ -106,7 +106,7 @@ namespace OMKT.Controllers
             //                  select new {  monitoring = g,
             //                      total = g.Sum(c => c.Average) 
             //                  });
-            var monitoring = db.Monitoring.Where(m => m.Timestamp.Day == now.Day).Take(limit);
+            var monitoring = db.Monitoring.OrderByDescending(m => m.Timestamp).Take(limit);
 
 
             var count = 0;
@@ -148,11 +148,11 @@ namespace OMKT.Controllers
                 count++;
             }
             performance.Add(new MonitoringOverview { Timestamp = "Ayer", Average = "90" });
-            performance.Add(new MonitoringOverview { Timestamp = "Hace 2 días", Average = "110" });
-            performance.Add(new MonitoringOverview { Timestamp = "Hace 3 días", Average = "340" });
-            performance.Add(new MonitoringOverview { Timestamp = "Hace 4 días", Average = "178" });
-            performance.Add(new MonitoringOverview { Timestamp = "Hace 5 días", Average = "222" });
-            performance.Add(new MonitoringOverview { Timestamp = "Hace 6 días", Average = "133" });
+            performance.Add(new MonitoringOverview { Timestamp = "Hace 2 dias", Average = "110" });
+            performance.Add(new MonitoringOverview { Timestamp = "Hace 3 dias", Average = "340" });
+            performance.Add(new MonitoringOverview { Timestamp = "Hace 4 dias", Average = "178" });
+            performance.Add(new MonitoringOverview { Timestamp = "Hace 5 dias", Average = "222" });
+            performance.Add(new MonitoringOverview { Timestamp = "Hace 6 dias", Average = "133" });
             return PartialView("AdvertHostMonitoringDaily", performance);
         }
 
